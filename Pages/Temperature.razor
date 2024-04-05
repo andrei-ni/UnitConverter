@@ -1,0 +1,290 @@
+﻿@page "/temperature"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Temperature</h3>
+
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(TemperatureModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(TemperatureModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Fahrenheit";
+    string toName = "Celsius";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+    
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Celsius":
+                switch (toName)
+                {
+                    case "Celsius":
+                        toNumber = fromNumber;
+                        break;
+                    case "Fahrenheit":
+                        toNumber = num * 1.8 + 32;
+                        break;
+                    case "Kelvin":
+                        toNumber = num + 273.15;
+                        break;
+                    case "Rankine":
+                        toNumber = (num + 273.15) * 1.8;
+                        break;
+                    case "Reaumure":
+                        toNumber = num * 0.8;
+                        break;
+                }
+                break;
+            case "Fahrenheit":
+                switch (toName)
+                {
+                    case "Fahrenheit":
+                        toNumber = fromNumber;
+                        break;
+                    case "Celsius":
+                        toNumber = (num - 32) / 1.8;
+                        break;
+                    case "Kelvin":
+                        toNumber = ((num - 32) * 1.8) + 273.15;
+                        break;
+                    case "Rankine":
+                        toNumber = num + 459.67;
+                        break;
+                    case "Reaumure":
+                        toNumber = (num - 32) * 0.44444;
+                        break;
+                }
+                break;
+            case "Kelvin":
+                switch (toName)
+                {
+                    case "Kelvin":
+                        toNumber = fromNumber;
+                        break;
+                    case "Celsius":
+                        toNumber = num - 273.15;
+                        break;
+                    case "Fahrenheit":
+                        toNumber = 1.8 * (num - 273.15) + 32;
+                        break;
+                    case "Rankine":
+                        toNumber = num * 1.8;
+                        break;
+                    case "Reaumure":
+                        toNumber = (num -273.15) * 0.8;
+                        break;
+                }
+                break;
+            case "Rankine":
+                switch (toName)
+                {
+                    case "Rankine":
+                        toNumber = fromNumber;
+                        break;
+                    case "Celsius":
+                        toNumber = (num -491.67) / 1.8;
+                        break;
+                    case "Fahrenheit":
+                        toNumber = num - 459.67;
+                        break;
+                    case "Kelvin":
+                        toNumber = num * 0.555;
+                        break;
+                    case "Reaumure":
+                        toNumber = (num - 491.67) * 0.44444;
+                        break;
+                }
+                break;
+            case "Reaumure":
+                switch (toName)
+                {
+                    case "Reaumure":
+                        toNumber = fromNumber;
+                        break;
+                    case "Celsius":
+                        toNumber = num / 0.8;
+                        break;
+                    case "Fahrenheit":
+                        toNumber = num * 2.2500 + 32.00;
+                        break;
+                    case "Kelvin":
+                        toNumber = num / 0.8 + 273.15;
+                        break;
+                    case "Rankine":
+                        toNumber = num * 2.2500 + 491.67;
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Celsius":
+                switch (fromName)
+                {
+                    case "Celsius":
+                        fromNumber = toNumber;
+                        break;
+                    case "Fahrenheit":
+                        fromNumber = num * 1.8 + 32;
+                        break;
+                    case "Kelvin":
+                        fromNumber = num + 273.15;
+                        break;
+                    case "Rankine":
+                        fromNumber = (num + 273.15) * 1.8;
+                        break;
+                    case "Reaumure":
+                        fromNumber = num * 0.8;
+                        break;
+                }
+                break;
+            case "Fahrenheit":
+                switch (fromName)
+                {
+                    case "Fahrenheit":
+                        fromNumber = toNumber;
+                        break;
+                    case "Celsius":
+                        fromNumber = (num - 32) / 1.8;
+                        break;
+                    case "Kelvin":
+                        fromNumber = ((num - 32) * 1.8) + 273.15;
+                        break;
+                    case "Rankine":
+                        fromNumber = num + 459.67;
+                        break;
+                    case "Reaumure":
+                        fromNumber = (num - 32) * 0.44444;
+                        break;
+                }
+                break;
+            case "Kelvin":
+                switch (fromName)
+                {
+                    case "Kelvin":
+                        fromNumber = toNumber;
+                        break;
+                    case "Celsius":
+                        fromNumber = num - 273.15;
+                        break;
+                    case "Fahrenheit":
+                        fromNumber = 1.8 * (num - 273.15) + 32;
+                        break;
+                    case "Rankine":
+                        fromNumber = num * 1.8;
+                        break;
+                    case "Reaumure":
+                        fromNumber = (num - 273.15) * 0.8;
+                        break;
+                }
+                break;
+            case "Rankine":
+                switch (fromName)
+                {
+                    case "Rankine":
+                        fromNumber = toNumber;
+                        break;
+                    case "Celsius":
+                        fromNumber = (num - 491.67) / 1.8;
+                        break;
+                    case "Fahrenheit":
+                        fromNumber = num - 459.67;
+                        break;
+                    case "Kelvin":
+                        fromNumber = num * 0.555;
+                        break;
+                    case "Reaumure":
+                        fromNumber = (num - 491.67) * 0.44444;
+                        break;
+                }
+                break;
+            case "Reaumure":
+                switch (fromName)
+                {
+                    case "Reaumure":
+                        fromNumber = toNumber;
+                        break;
+                    case "Celsius":
+                        fromNumber = num / 0.8;
+                        break;
+                    case "Fahrenheit":
+                        fromNumber = num * 2.2500 + 32.00;
+                        break;
+                    case "Kelvin":
+                        fromNumber = num / 0.8 + 273.15;
+                        break;
+                    case "Rankine":
+                        fromNumber = num * 2.2500 + 491.67;
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+
+
+    //var temperatureModel = new TemperatureModel();
+    //// Get the selected properties from TemperatureModel based on the names
+    //var fromProperty = typeof(TemperatureModel).GetProperty(fromName);
+    //var toProperty = typeof(TemperatureModel).GetProperty(toName);
+    //// Get the corresponding values from the properties
+    //fromNumber = (double)fromProperty.GetValue(temperatureModel);
+    //toNumber = (double)toProperty.GetValue(temperatureModel);
+}

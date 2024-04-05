@@ -1,0 +1,1581 @@
+﻿@page "/area"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Area</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(AreaModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(AreaModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Acres";
+    string toName = "SquareKilometers";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Acres":
+                switch (toName)
+                {
+                    case "Acres":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 40.468564224; // 1 acre = 40.468564224 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 6350425.2678; // 1 acre = 6,350,425.2678 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.40468564224; // 1 acre = 0.40468564224 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 4; // 1 acre = 4 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 40468564.224; // 1 acre = 40,468,564.224 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 43560; // 1 acre = 43,560 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 6272640; // 1 acre = 6,272,640 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.0040468564224; // 1 acre = 0.0040468564224 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 4046.8564224; // 1 acre = 4,046.8564224 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.0015625; // 1 acre = 0.0015625 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 4046856422.4; // 1 acre = 4,046,856,422.4 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 120; // 1 acre = 120 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 160; // 1 acre = 160 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 4840; // 1 acre = 4,840 square yards
+                        break;
+                }
+                break;
+            case "Ares":
+                switch (toName)
+                {
+                    case "Ares":
+                        toNumber = fromNumber;
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.024710538146717; // 1 are = 0.024710538146717 acres
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 3046.8564224; // 1 are = 3046.8564224 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.01; // 1 are = 0.01 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.03953686103672; // 1 are = 0.03953686103672 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 1000000; // 1 are = 1000000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 1076.391041671; // 1 are = 1076.391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 155000.310000155; // 1 are = 155000.310000155 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.0001; // 1 are = 0.0001 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 100; // 1 are = 100 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.0000386102151255; // 1 are = 0.0000386102151255 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 100000000; // 1 are = 100000000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.000316891006783; // 1 are = 0.000316891006783 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.005; // 1 are = 0.005 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.119599004630866; // 1 are = 0.119599004630866 square yards
+                        break;
+                }
+                break;
+            case "CircularInches":
+                switch (toName)
+                {
+                    case "CircularInches":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.0000015500031; // 1 circular inch = 0.0000015500031 ares
+                        break;
+                    case "Acres":
+                        toNumber = num * 2.2956882639e-7; // 1 circular inch = 2.2956882639e-7 acres
+                        break;
+                    case "Hectares":
+                        toNumber = num * 1.5500031e-8; // 1 circular inch = 1.5500031e-8 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 6.2000124e-8; // 1 circular inch = 6.2000124e-8 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 5.067075e-4; // 1 circular inch = 5.067075e-4 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 0.0005791667; // 1 circular inch = 0.0005791667 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 0.7853981634; // 1 circular inch = 0.7853981634 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 1.5500031e-10; // 1 circular inch = 1.5500031e-10 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.0005067075; // 1 circular inch = 0.0005067075 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 1.89795382e-10; // 1 circular inch = 1.89795382e-10 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 5.067075; // 1 circular inch = 5.067075 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 1.505960964e-6; // 1 circular inch = 1.505960964e-6 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 2.007947952e-6; // 1 circular inch = 2.007947952e-6 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.000603732; // 1 circular inch = 0.000603732 square yards
+                        break;
+                }
+                break;
+            case "Hectares":
+                switch (toName)
+                {
+                    case "Hectares":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 100; // 1 hectare = 100 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 1.61024e+7; // 1 hectare = 1.61024e+7 circular inches
+                        break;
+                    case "Acres":
+                        toNumber = num * 2.4710538147; // 1 hectare = 2.4710538147 acres
+                        break;
+                    case "Roods":
+                        toNumber = num * 9.884215259; // 1 hectare = 9.884215259 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 1.0e+8; // 1 hectare = 1.0e+8 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 107639.10417; // 1 hectare = 107,639.10417 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 15500031; // 1 hectare = 15,500,031 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.01; // 1 hectare = 0.01 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 10000; // 1 hectare = 10,000 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.0038610216; // 1 hectare = 0.0038610216 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 1.0e+10; // 1 hectare = 1.0e+10 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 29.99476007; // 1 hectare = 29.99476007 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 39.9992072; // 1 hectare = 39.9992072 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 11959.900463; // 1 hectare = 11,959.900463 square yards
+                        break;
+                }
+                break;
+            case "Roods":
+                switch (toName)
+                {
+                    case "Roods":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 40.468564224; // 1 rood = 40.468564224 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 6534000; // 1 rood = 6,534,000 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.1011714286; // 1 rood = 0.1011714286 hectares
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.25; // 1 rood = 0.25 acres
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 4046856.4224; // 1 rood = 4,046,856.4224 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 43560; // 1 rood = 43,560 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 6272640; // 1 rood = 6,272,640 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.0040468564; // 1 rood = 0.0040468564 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 4046.8564224; // 1 rood = 4,046.8564224 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.0015625; // 1 rood = 0.0015625 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 404685642.24; // 1 rood = 404,685,642.24 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 11.9488093; // 1 rood = 11.9488093 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 16; // 1 rood = 16 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 4840; // 1 rood = 4,840 square yards
+                        break;
+                }
+                break;
+            case "SquareCentimeters":
+                switch (toName)
+                {
+                    case "SquareCentimeters":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.0001; // 1 square centimeter = 0.0001 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 0.15500031000062; // 1 square centimeter = 0.15500031000062 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.00000001; // 1 square centimeter = 0.00000001 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.00000002471054; // 1 square centimeter = 0.00000002471054 roods
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.00000002471054; // 1 square centimeter = 0.00000002471054 acres
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 0.001076391041671; // 1 square centimeter = 0.001076391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 0.15500031000062; // 1 square centimeter = 0.15500031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.0000000001; // 1 square centimeter = 0.0000000001 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.0001; // 1 square centimeter = 0.0001 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.00000000003861022; // 1 square centimeter = 0.00000000003861022 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 0.01; // 1 square centimeter = 0.01 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.0000002919479; // 1 square centimeter = 0.0000002919479 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.000000392042598; // 1 square centimeter = 0.000000392042598 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.00011959900463018; // 1 square centimeter = 0.00011959900463018 square yards
+                        break;
+                }
+                break;
+            case "SquareFeetUS":
+                switch (toName)
+                {
+                    case "SquareFeetUS":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.009290304; // 1 square foot (US) = 0.009290304 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 144; // 1 square foot (US) = 144 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.00009290304; // 1 square foot (US) = 0.00009290304 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.00023067133175777; // 1 square foot (US) = 0.00023067133175777 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 929.0304; // 1 square foot (US) = 929.0304 square centimeters
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.000022956841138659; // 1 square foot (US) = 0.000022956841138659 acres
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 144; // 1 square foot (US) = 144 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.00000009290304; // 1 square foot (US) = 0.00000009290304 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.09290304; // 1 square foot (US) = 0.09290304 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.0000000358700643; // 1 square foot (US) = 0.0000000358700643 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 92903.04; // 1 square foot (US) = 92903.04 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.00000272384611711; // 1 square foot (US) = 0.00000272384611711 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.000003639586402052; // 1 square foot (US) = 0.000003639586402052 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.11111111111111; // 1 square foot (US) = 0.11111111111111 square yards
+                        break;
+                }
+                break;
+            case "SquareInches":
+                switch (toName)
+                {
+                    case "SquareInches":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.00064516; // 1 square inch = 0.00064516 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 1; // 1 square inch = 1 circular inch
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.000000064516; // 1 square inch = 0.000000064516 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.00000016099774661; // 1 square inch = 0.00000016099774661 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 6.4516; // 1 square inch = 6.4516 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 0.0069444444444444; // 1 square inch = 0.0069444444444444 square feet (US)
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.00000015942250797; // 1 square inch = 0.00000015942250797 acres
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.00000000064516; // 1 square inch = 0.00000000064516 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.00064516; // 1 square inch = 0.00064516 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.00000000024909762184; // 1 square inch = 0.00000000024909762184 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 645.16; // 1 square inch = 645.16 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.000000018979166667; // 1 square inch = 0.000000018979166667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.000000025260416667; // 1 square inch = 0.000000025260416667 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.0007716049382716; // 1 square inch = 0.0007716049382716 square yards
+                        break;
+                }
+                break;
+            case "SquareKilometers":
+                switch (toName)
+                {
+                    case "SquareKilometers":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 10000; // 1 square kilometer = 10000 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 1550003100.0062; // 1 square kilometer = 1,550,003,100.0062 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 100; // 1 square kilometer = 100 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 247.10538146717; // 1 square kilometer = 247.10538146717 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 10000000000; // 1 square kilometer = 10,000,000,000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 10763910.41671; // 1 square kilometer = 10,763,910.41671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 1550003100.0062; // 1 square kilometer = 1,550,003,100.0062 square inches
+                        break;
+                    case "Acres":
+                        toNumber = num * 247.10538146717; // 1 square kilometer = 247.10538146717 acres
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 1000000; // 1 square kilometer = 1,000,000 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 0.38610215854245; // 1 square kilometer = 0.38610215854245 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 1000000000000; // 1 square kilometer = 1,000,000,000,000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 291666666.66667; // 1 square kilometer = 291,666,666.66667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 3861021.5854245; // 1 square kilometer = 3,861,021.5854245 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 1195990.0463011; // 1 square kilometer = 1,195,990.0463011 square yards
+                        break;
+                }
+                break;
+            case "SquareMeters":
+                switch (toName)
+                {
+                    case "SquareMeters":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.01; // 1 square meter = 0.01 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 1550.0031000062; // 1 square meter = 1,550.0031000062 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.0001; // 1 square meter = 0.0001 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.00024710538146717; // 1 square meter = 0.00024710538146717 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 10000; // 1 square meter = 10,000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 10.76391041671; // 1 square meter = 10.76391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 1550.0031000062; // 1 square meter = 1,550.0031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.000001; // 1 square meter = 0.000001 square kilometers
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.00024710538146717; // 1 square meter = 0.00024710538146717 acres
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 3.8610215854245e-7; // 1 square meter = 3.8610215854245e-7 square miles
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 1000000; // 1 square meter = 1,000,000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.00029166666666667; // 1 square meter = 0.00029166666666667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.38610215854245; // 1 square meter = 0.38610215854245 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 1.1959900463011; // 1 square meter = 1.1959900463011 square yards
+                        break;
+                }
+                break;
+            case "SquareMiles":
+                switch (toName)
+                {
+                    case "SquareMiles":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 4046.8564224; // 1 square mile = 4,046.8564224 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 6.451599999999999e+9; // 1 square mile = 6,451,599,999,999.999 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 258.9988110336; // 1 square mile = 258.9988110336 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 1011.7141056; // 1 square mile = 1,011.7141056 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 2.589988110336e+10; // 1 square mile = 25,899,881,103.36 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 2.7888888888888887e+7; // 1 square mile = 27,888,888.888888888 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 4.0144895999999996e+9; // 1 square mile = 4,014,489,599.9999996 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 2.589988110336; // 1 square mile = 2.589988110336 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 2.589988110336e+6; // 1 square mile = 2,589,988.110336 square meters
+                        break;
+                    case "Acres":
+                        toNumber = num * 640; // 1 square mile = 640 acres
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 2.589988110336e+12; // 1 square mile = 2,589,988,110,336 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 7692307.692307692; // 1 square mile = 7,692,307.692307692 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 10117.141056; // 1 square mile = 10,117.141056 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 3.0976000000000003e+6; // 1 square mile = 3,097,600 square yards
+                        break;
+                }
+                break;
+            case "SquareMillimeters":
+                switch (toName)
+                {
+                    case "SquareMillimeters":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.0001; // 1 square millimeter = 0.0001 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 0.0015500031000062; // 1 square millimeter = 0.0015500031000062 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 1.0e-8; // 1 square millimeter = 1.0e-8 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 3.9536861040465e-5; // 1 square millimeter = 3.9536861040465e-5 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 0.01; // 1 square millimeter = 0.01 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 1.076391041671e-5; // 1 square millimeter = 1.076391041671e-5 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 0.0015500031000062; // 1 square millimeter = 0.0015500031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 1.0e-12; // 1 square millimeter = 1.0e-12 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 1.0e-6; // 1 square millimeter = 1.0e-6 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 3.8610215854245e-13; // 1 square millimeter = 3.8610215854245e-13 square miles
+                        break;
+                    case "Acres":
+                        toNumber = num * 2.4710538146717e-10; // 1 square millimeter = 2.4710538146717e-10 acres
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 7.372882779407e-8; // 1 square millimeter = 7.372882779407e-8 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 9.6887996750326e-7; // 1 square millimeter = 9.6887996750326e-7 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 1.1959900463011e-6; // 1 square millimeter = 1.1959900463011e-6 square yards
+                        break;
+                }
+                break;
+            case "SquareOfTimber":
+                switch (toName)
+                {
+                    case "SquareOfTimber":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 1.3526479971465; // 1 square of timber = 1.3526479971465 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 1650.5123903709; // 1 square of timber = 1650.5123903709 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.013526479971465; // 1 square of timber = 0.013526479971465 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 53.785919880328; // 1 square of timber = 53.785919880328 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 13526.479971465; // 1 square of timber = 13526.479971465 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 1457.7142800002; // 1 square of timber = 1457.7142800002 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 237196.79764133; // 1 square of timber = 237196.79764133 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.00013526479971465; // 1 square of timber = 0.00013526479971465 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 13.526479971465; // 1 square of timber = 13.526479971465 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 5.2207318702592e-6; // 1 square of timber = 5.2207318702592e-6 square miles
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.033415271255059; // 1 square of timber = 0.033415271255059 acres
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 73503212.063; // 1 square of timber = 73503212.063 square millimeters
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 968.87996750326; // 1 square of timber = 968.87996750326 square rods or poles
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 16.177713867654; // 1 square of timber = 16.177713867654 square yards
+                        break;
+                }
+                break;
+            case "SquareRodsOrPoles":
+                switch (toName)
+                {
+                    case "SquareRodsOrPoles":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.0032580087523781; // 1 square rod or pole = 0.0032580087523781 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 398.47048928405; // 1 square rod or pole = 398.47048928405 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.000032580087523781; // 1 square rod or pole = 0.000032580087523781 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.12951235029512; // 1 square rod or pole = 0.12951235029512 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 325.80087523781; // 1 square rod or pole = 325.80087523781 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 35.0589993475; // 1 square rod or pole = 35.0589993475 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 5715.3956; // 1 square rod or pole = 5715.3956 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.0000032580087523781; // 1 square rod or pole = 0.0000032580087523781 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.32580087523781; // 1 square rod or pole = 0.32580087523781 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 1.2573583529412e-7; // 1 square rod or pole = 1.2573583529412e-7 square miles
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.00082644041827743; // 1 square rod or pole = 0.00082644041827743 acres
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 325800.87523781; // 1 square rod or pole = 325800.87523781 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.0010329865508889; // 1 square rod or pole = 0.0010329865508889 square of timber
+                        break;
+                    case "SquareYards":
+                        toNumber = num * 0.17142366605539; // 1 square rod or pole = 0.17142366605539 square yards
+                        break;
+                }
+                break;
+            case "SquareYards":
+                switch (toName)
+                {
+                    case "SquareYards":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ares":
+                        toNumber = num * 0.00020661157024793; // 1 square yard = 0.00020661157024793 ares
+                        break;
+                    case "CircularInches":
+                        toNumber = num * 2529.9999999999995; // 1 square yard = 2529.9999999999995 circular inches
+                        break;
+                    case "Hectares":
+                        toNumber = num * 0.0000020661157024793; // 1 square yard = 0.0000020661157024793 hectares
+                        break;
+                    case "Roods":
+                        toNumber = num * 0.0082644628099174; // 1 square yard = 0.0082644628099174 roods
+                        break;
+                    case "SquareCentimeters":
+                        toNumber = num * 8361.2736; // 1 square yard = 8361.2736 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        toNumber = num * 9.000000000000002; // 1 square yard = 9.000000000000002 square feet (US)
+                        break;
+                    case "SquareInches":
+                        toNumber = num * 1296.0000000000002; // 1 square yard = 1296.0000000000002 square inches
+                        break;
+                    case "SquareKilometers":
+                        toNumber = num * 0.00000083612736; // 1 square yard = 0.00000083612736 square kilometers
+                        break;
+                    case "SquareMeters":
+                        toNumber = num * 0.83612736; // 1 square yard = 0.83612736 square meters
+                        break;
+                    case "SquareMiles":
+                        toNumber = num * 3.228305785123966e-7; // 1 square yard = 3.228305785123966e-7 square miles
+                        break;
+                    case "Acres":
+                        toNumber = num * 0.00020661157024793; // 1 square yard = 0.00020661157024793 acres
+                        break;
+                    case "SquareMillimeters":
+                        toNumber = num * 836127.36; // 1 square yard = 836127.36 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        toNumber = num * 0.0000026490066225166; // 1 square yard = 0.0000026490066225166 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        toNumber = num * 0.049388422722289; // 1 square yard = 0.049388422722289 square rods or poles
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Acres":
+                switch (fromName)
+                {
+                    case "Acres":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 40.468564224; // 1 acre = 40.468564224 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 6350425.2678; // 1 acre = 6,350,425.2678 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.40468564224; // 1 acre = 0.40468564224 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 4; // 1 acre = 4 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 40468564.224; // 1 acre = 40,468,564.224 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 43560; // 1 acre = 43,560 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 6272640; // 1 acre = 6,272,640 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.0040468564224; // 1 acre = 0.0040468564224 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 4046.8564224; // 1 acre = 4,046.8564224 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.0015625; // 1 acre = 0.0015625 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 4046856422.4; // 1 acre = 4,046,856,422.4 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 120; // 1 acre = 120 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 160; // 1 acre = 160 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 4840; // 1 acre = 4,840 square yards
+                        break;
+                }
+                break;
+            case "Ares":
+                switch (fromName)
+                {
+                    case "Ares":
+                        fromNumber = toNumber;
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.024710538146717; // 1 are = 0.024710538146717 acres
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 3046.8564224; // 1 are = 3046.8564224 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.01; // 1 are = 0.01 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.03953686103672; // 1 are = 0.03953686103672 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 1000000; // 1 are = 1000000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 1076.391041671; // 1 are = 1076.391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 155000.310000155; // 1 are = 155000.310000155 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.0001; // 1 are = 0.0001 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 100; // 1 are = 100 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.0000386102151255; // 1 are = 0.0000386102151255 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 100000000; // 1 are = 100000000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.000316891006783; // 1 are = 0.000316891006783 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.005; // 1 are = 0.005 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.119599004630866; // 1 are = 0.119599004630866 square yards
+                        break;
+                }
+                break;
+            case "CircularInches":
+                switch (fromName)
+                {
+                    case "CircularInches":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.0000015500031; // 1 circular inch = 0.0000015500031 ares
+                        break;
+                    case "Acres":
+                        fromNumber = num * 2.2956882639e-7; // 1 circular inch = 2.2956882639e-7 acres
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 1.5500031e-8; // 1 circular inch = 1.5500031e-8 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 6.2000124e-8; // 1 circular inch = 6.2000124e-8 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 5.067075e-4; // 1 circular inch = 5.067075e-4 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 0.0005791667; // 1 circular inch = 0.0005791667 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 0.7853981634; // 1 circular inch = 0.7853981634 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 1.5500031e-10; // 1 circular inch = 1.5500031e-10 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.0005067075; // 1 circular inch = 0.0005067075 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 1.89795382e-10; // 1 circular inch = 1.89795382e-10 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 5.067075; // 1 circular inch = 5.067075 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 1.505960964e-6; // 1 circular inch = 1.505960964e-6 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 2.007947952e-6; // 1 circular inch = 2.007947952e-6 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.000603732; // 1 circular inch = 0.000603732 square yards
+                        break;
+                }
+                break;
+            case "Hectares":
+                switch (fromName)
+                {
+                    case "Hectares":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 100; // 1 hectare = 100 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 1.61024e+7; // 1 hectare = 1.61024e+7 circular inches
+                        break;
+                    case "Acres":
+                        fromNumber = num * 2.4710538147; // 1 hectare = 2.4710538147 acres
+                        break;
+                    case "Roods":
+                        fromNumber = num * 9.884215259; // 1 hectare = 9.884215259 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 1.0e+8; // 1 hectare = 1.0e+8 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 107639.10417; // 1 hectare = 107,639.10417 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 15500031; // 1 hectare = 15,500,031 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.01; // 1 hectare = 0.01 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 10000; // 1 hectare = 10,000 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.0038610216; // 1 hectare = 0.0038610216 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 1.0e+10; // 1 hectare = 1.0e+10 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 29.99476007; // 1 hectare = 29.99476007 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 39.9992072; // 1 hectare = 39.9992072 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 11959.900463; // 1 hectare = 11,959.900463 square yards
+                        break;
+                }
+                break;
+            case "Roods":
+                switch (fromName)
+                {
+                    case "Roods":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 40.468564224; // 1 rood = 40.468564224 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 6534000; // 1 rood = 6,534,000 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.1011714286; // 1 rood = 0.1011714286 hectares
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.25; // 1 rood = 0.25 acres
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 4046856.4224; // 1 rood = 4,046,856.4224 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 43560; // 1 rood = 43,560 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 6272640; // 1 rood = 6,272,640 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.0040468564; // 1 rood = 0.0040468564 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 4046.8564224; // 1 rood = 4,046.8564224 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.0015625; // 1 rood = 0.0015625 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 404685642.24; // 1 rood = 404,685,642.24 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 11.9488093; // 1 rood = 11.9488093 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 16; // 1 rood = 16 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 4840; // 1 rood = 4,840 square yards
+                        break;
+                }
+                break;
+            case "SquareCentimeters":
+                switch (fromName)
+                {
+                    case "SquareCentimeters":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.0001; // 1 square centimeter = 0.0001 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 0.15500031000062; // 1 square centimeter = 0.15500031000062 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.00000001; // 1 square centimeter = 0.00000001 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.00000002471054; // 1 square centimeter = 0.00000002471054 roods
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.00000002471054; // 1 square centimeter = 0.00000002471054 acres
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 0.001076391041671; // 1 square centimeter = 0.001076391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 0.15500031000062; // 1 square centimeter = 0.15500031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.0000000001; // 1 square centimeter = 0.0000000001 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.0001; // 1 square centimeter = 0.0001 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.00000000003861022; // 1 square centimeter = 0.00000000003861022 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 0.01; // 1 square centimeter = 0.01 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.0000002919479; // 1 square centimeter = 0.0000002919479 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.000000392042598; // 1 square centimeter = 0.000000392042598 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.00011959900463018; // 1 square centimeter = 0.00011959900463018 square yards
+                        break;
+                }
+                break;
+            case "SquareFeetUS":
+                switch (fromName)
+                {
+                    case "SquareFeetUS":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.009290304; // 1 square foot (US) = 0.009290304 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 144; // 1 square foot (US) = 144 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.00009290304; // 1 square foot (US) = 0.00009290304 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.00023067133175777; // 1 square foot (US) = 0.00023067133175777 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 929.0304; // 1 square foot (US) = 929.0304 square centimeters
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.000022956841138659; // 1 square foot (US) = 0.000022956841138659 acres
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 144; // 1 square foot (US) = 144 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.00000009290304; // 1 square foot (US) = 0.00000009290304 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.09290304; // 1 square foot (US) = 0.09290304 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.0000000358700643; // 1 square foot (US) = 0.0000000358700643 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 92903.04; // 1 square foot (US) = 92903.04 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.00000272384611711; // 1 square foot (US) = 0.00000272384611711 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.000003639586402052; // 1 square foot (US) = 0.000003639586402052 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.11111111111111; // 1 square foot (US) = 0.11111111111111 square yards
+                        break;
+                }
+                break;
+            case "SquareInches":
+                switch (fromName)
+                {
+                    case "SquareInches":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.00064516; // 1 square inch = 0.00064516 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 1; // 1 square inch = 1 circular inch
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.000000064516; // 1 square inch = 0.000000064516 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.00000016099774661; // 1 square inch = 0.00000016099774661 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 6.4516; // 1 square inch = 6.4516 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 0.0069444444444444; // 1 square inch = 0.0069444444444444 square feet (US)
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.00000015942250797; // 1 square inch = 0.00000015942250797 acres
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.00000000064516; // 1 square inch = 0.00000000064516 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.00064516; // 1 square inch = 0.00064516 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.00000000024909762184; // 1 square inch = 0.00000000024909762184 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 645.16; // 1 square inch = 645.16 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.000000018979166667; // 1 square inch = 0.000000018979166667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.000000025260416667; // 1 square inch = 0.000000025260416667 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.0007716049382716; // 1 square inch = 0.0007716049382716 square yards
+                        break;
+                }
+                break;
+            case "SquareKilometers":
+                switch (fromName)
+                {
+                    case "SquareKilometers":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 10000; // 1 square kilometer = 10000 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 1550003100.0062; // 1 square kilometer = 1,550,003,100.0062 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 100; // 1 square kilometer = 100 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 247.10538146717; // 1 square kilometer = 247.10538146717 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 10000000000; // 1 square kilometer = 10,000,000,000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 10763910.41671; // 1 square kilometer = 10,763,910.41671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 1550003100.0062; // 1 square kilometer = 1,550,003,100.0062 square inches
+                        break;
+                    case "Acres":
+                        fromNumber = num * 247.10538146717; // 1 square kilometer = 247.10538146717 acres
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 1000000; // 1 square kilometer = 1,000,000 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 0.38610215854245; // 1 square kilometer = 0.38610215854245 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 1000000000000; // 1 square kilometer = 1,000,000,000,000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 291666666.66667; // 1 square kilometer = 291,666,666.66667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 3861021.5854245; // 1 square kilometer = 3,861,021.5854245 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 1195990.0463011; // 1 square kilometer = 1,195,990.0463011 square yards
+                        break;
+                }
+                break;
+            case "SquareMeters":
+                switch (fromName)
+                {
+                    case "SquareMeters":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.01; // 1 square meter = 0.01 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 1550.0031000062; // 1 square meter = 1,550.0031000062 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.0001; // 1 square meter = 0.0001 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.00024710538146717; // 1 square meter = 0.00024710538146717 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 10000; // 1 square meter = 10,000 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 10.76391041671; // 1 square meter = 10.76391041671 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 1550.0031000062; // 1 square meter = 1,550.0031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.000001; // 1 square meter = 0.000001 square kilometers
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.00024710538146717; // 1 square meter = 0.00024710538146717 acres
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 3.8610215854245e-7; // 1 square meter = 3.8610215854245e-7 square miles
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 1000000; // 1 square meter = 1,000,000 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.00029166666666667; // 1 square meter = 0.00029166666666667 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.38610215854245; // 1 square meter = 0.38610215854245 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 1.1959900463011; // 1 square meter = 1.1959900463011 square yards
+                        break;
+                }
+                break;
+            case "SquareMiles":
+                switch (fromName)
+                {
+                    case "SquareMiles":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 4046.8564224; // 1 square mile = 4,046.8564224 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 6.451599999999999e+9; // 1 square mile = 6,451,599,999,999.999 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 258.9988110336; // 1 square mile = 258.9988110336 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 1011.7141056; // 1 square mile = 1,011.7141056 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 2.589988110336e+10; // 1 square mile = 25,899,881,103.36 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 2.7888888888888887e+7; // 1 square mile = 27,888,888.888888888 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 4.0144895999999996e+9; // 1 square mile = 4,014,489,599.9999996 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 2.589988110336; // 1 square mile = 2.589988110336 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 2.589988110336e+6; // 1 square mile = 2,589,988.110336 square meters
+                        break;
+                    case "Acres":
+                        fromNumber = num * 640; // 1 square mile = 640 acres
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 2.589988110336e+12; // 1 square mile = 2,589,988,110,336 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 7692307.692307692; // 1 square mile = 7,692,307.692307692 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 10117.141056; // 1 square mile = 10,117.141056 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 3.0976000000000003e+6; // 1 square mile = 3,097,600 square yards
+                        break;
+                }
+                break;
+            case "SquareMillimeters":
+                switch (fromName)
+                {
+                    case "SquareMillimeters":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.0001; // 1 square millimeter = 0.0001 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 0.0015500031000062; // 1 square millimeter = 0.0015500031000062 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 1.0e-8; // 1 square millimeter = 1.0e-8 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 3.9536861040465e-5; // 1 square millimeter = 3.9536861040465e-5 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 0.01; // 1 square millimeter = 0.01 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 1.076391041671e-5; // 1 square millimeter = 1.076391041671e-5 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 0.0015500031000062; // 1 square millimeter = 0.0015500031000062 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 1.0e-12; // 1 square millimeter = 1.0e-12 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 1.0e-6; // 1 square millimeter = 1.0e-6 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 3.8610215854245e-13; // 1 square millimeter = 3.8610215854245e-13 square miles
+                        break;
+                    case "Acres":
+                        fromNumber = num * 2.4710538146717e-10; // 1 square millimeter = 2.4710538146717e-10 acres
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 7.372882779407e-8; // 1 square millimeter = 7.372882779407e-8 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 9.6887996750326e-7; // 1 square millimeter = 9.6887996750326e-7 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 1.1959900463011e-6; // 1 square millimeter = 1.1959900463011e-6 square yards
+                        break;
+                }
+                break;
+            case "SquareOfTimber":
+                switch (fromName)
+                {
+                    case "SquareOfTimber":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 1.3526479971465; // 1 square of timber = 1.3526479971465 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 1650.5123903709; // 1 square of timber = 1650.5123903709 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.013526479971465; // 1 square of timber = 0.013526479971465 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 53.785919880328; // 1 square of timber = 53.785919880328 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 13526.479971465; // 1 square of timber = 13526.479971465 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 1457.7142800002; // 1 square of timber = 1457.7142800002 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 237196.79764133; // 1 square of timber = 237196.79764133 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.00013526479971465; // 1 square of timber = 0.00013526479971465 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 13.526479971465; // 1 square of timber = 13.526479971465 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 5.2207318702592e-6; // 1 square of timber = 5.2207318702592e-6 square miles
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.033415271255059; // 1 square of timber = 0.033415271255059 acres
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 73503212.063; // 1 square of timber = 73503212.063 square millimeters
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 968.87996750326; // 1 square of timber = 968.87996750326 square rods or poles
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 16.177713867654; // 1 square of timber = 16.177713867654 square yards
+                        break;
+                }
+                break;
+            case "SquareRodsOrPoles":
+                switch (fromName)
+                {
+                    case "SquareRodsOrPoles":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.0032580087523781; // 1 square rod or pole = 0.0032580087523781 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 398.47048928405; // 1 square rod or pole = 398.47048928405 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.000032580087523781; // 1 square rod or pole = 0.000032580087523781 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.12951235029512; // 1 square rod or pole = 0.12951235029512 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 325.80087523781; // 1 square rod or pole = 325.80087523781 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 35.0589993475; // 1 square rod or pole = 35.0589993475 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 5715.3956; // 1 square rod or pole = 5715.3956 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.0000032580087523781; // 1 square rod or pole = 0.0000032580087523781 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.32580087523781; // 1 square rod or pole = 0.32580087523781 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 1.2573583529412e-7; // 1 square rod or pole = 1.2573583529412e-7 square miles
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.00082644041827743; // 1 square rod or pole = 0.00082644041827743 acres
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 325800.87523781; // 1 square rod or pole = 325800.87523781 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.0010329865508889; // 1 square rod or pole = 0.0010329865508889 square of timber
+                        break;
+                    case "SquareYards":
+                        fromNumber = num * 0.17142366605539; // 1 square rod or pole = 0.17142366605539 square yards
+                        break;
+                }
+                break;
+            case "SquareYards":
+                switch (fromName)
+                {
+                    case "SquareYards":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ares":
+                        fromNumber = num * 0.00020661157024793; // 1 square yard = 0.00020661157024793 ares
+                        break;
+                    case "CircularInches":
+                        fromNumber = num * 2529.9999999999995; // 1 square yard = 2529.9999999999995 circular inches
+                        break;
+                    case "Hectares":
+                        fromNumber = num * 0.0000020661157024793; // 1 square yard = 0.0000020661157024793 hectares
+                        break;
+                    case "Roods":
+                        fromNumber = num * 0.0082644628099174; // 1 square yard = 0.0082644628099174 roods
+                        break;
+                    case "SquareCentimeters":
+                        fromNumber = num * 8361.2736; // 1 square yard = 8361.2736 square centimeters
+                        break;
+                    case "SquareFeetUS":
+                        fromNumber = num * 9.000000000000002; // 1 square yard = 9.000000000000002 square feet (US)
+                        break;
+                    case "SquareInches":
+                        fromNumber = num * 1296.0000000000002; // 1 square yard = 1296.0000000000002 square inches
+                        break;
+                    case "SquareKilometers":
+                        fromNumber = num * 0.00000083612736; // 1 square yard = 0.00000083612736 square kilometers
+                        break;
+                    case "SquareMeters":
+                        fromNumber = num * 0.83612736; // 1 square yard = 0.83612736 square meters
+                        break;
+                    case "SquareMiles":
+                        fromNumber = num * 3.228305785123966e-7; // 1 square yard = 3.228305785123966e-7 square miles
+                        break;
+                    case "Acres":
+                        fromNumber = num * 0.00020661157024793; // 1 square yard = 0.00020661157024793 acres
+                        break;
+                    case "SquareMillimeters":
+                        fromNumber = num * 836127.36; // 1 square yard = 836127.36 square millimeters
+                        break;
+                    case "SquareOfTimber":
+                        fromNumber = num * 0.0000026490066225166; // 1 square yard = 0.0000026490066225166 square of timber
+                        break;
+                    case "SquareRodsOrPoles":
+                        fromNumber = num * 0.049388422722289; // 1 square yard = 0.049388422722289 square rods or poles
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

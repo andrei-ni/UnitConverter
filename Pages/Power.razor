@@ -1,0 +1,1770 @@
+﻿@page "/power"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Power</h3>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(PowerModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(PowerModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Watts";
+    string toName = "Kilowatts";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "FootPoundsForcePerMinute":
+                switch (toName)
+                {
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 737562149.277;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 550;
+                        break;
+                    case "Watts":
+                        toNumber = num * 0.0225969658;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 79.5774715;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 1.32629119;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 0.0221048531;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 0.000189829415;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 0.00000316382359;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 0.322831556;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 0.00538052593;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 0.0000186473;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 1.864273e-8;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 1.864273e-14;
+                        break;
+                    case "Petawatts":
+                        toNumber = num * 1.864273e-20;
+                        break;
+                }
+                break;
+            case "FootPoundsForcePerSecond":
+                switch (toName)
+                {
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 73756214.9277;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 550;
+                        break;
+                    case "Watts":
+                        toNumber = num * 0.737562149;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 2647795.5;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 44129.925;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 735.49875;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 0.079719371;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 0.00132865618;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 135.581794;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 2.25969657;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 0.000737562149;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 7.3756215e-7;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 7.3756215e-13;
+                        break;
+                    case "Petawatts":
+                        toNumber = num * 7.3756215e-19;
+                        break;
+                }
+                break;
+            case "Gigawatts":
+                switch (toName)
+                {
+                    case "Gigawatts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 1340482575.37;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 80428954622.2;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 1341022.0896;
+                        break;
+                    case "Watts":
+                        toNumber = num * 1e9;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3.6e12;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 6e10;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1e9;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 859845.22785899;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 14330.7537976498;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 101971621297.792;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 1699527021.62986;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 1e6;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 1000;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 0.001;
+                        break;
+                    case "Petawatts":
+                        toNumber = num * 1e-6;
+                        break;
+                }
+                break;
+            case "HorsepowersInternational":
+                switch (toName)
+                {
+                    case "HorsepowersInternational":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 550;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num * 0.0007457;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 33000;
+                        break;
+                    case "Watts":
+                        toNumber = num * 745.7;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 2684519.538;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 44742.01063;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 745.700177;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 0.6324181425;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 0.0105403024;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 542476.0659;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 9041.267765;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 0.7457;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 0.0007457;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 7.457e-10;
+                        break;
+                    case "Petawatts":
+                        toNumber = num * 7.457e-13;
+                        break;
+                }
+                break;
+            case "Watts":
+                switch (toName)
+                {
+                    case "Watts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 0.7375621493;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num * 1e-9;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 0.0013410221;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 44.253730289;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 0.0002390057;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 3.983428571e-6;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 0.1019716213;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 0.001699527;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 0.001;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 1e-6;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 1e-12;
+                        break;
+                    case "Petawatts":
+                        toNumber = num * 1e-15;
+                        break;
+                }
+                break;
+            case "JoulesPerHour":
+                switch (toName)
+                {
+                    case "JoulesPerHour":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 2679.22888;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 3.6e12;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 2684519.537;
+                        break;
+                    case "Watts":
+                        toNumber = num / 3600;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num / 44.58714714;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num / 3600;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num / 3.6e6;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 6e4;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num / 367095.0564;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num / 6118.25094;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 3.6e6;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 3.6e9;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 3.6e15;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 3.6e18;
+                        break;
+                }
+                break;
+            case "JoulesPerMinute":
+                switch (toName)
+                {
+                    case "JoulesPerMinute":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 44.58714714;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 6e10;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 1.013869675;
+                        break;
+                    case "Watts":
+                        toNumber = num / 60;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num / 60000;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 1000;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num / 1225.044842;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num / 20.41741403;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 60000;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 6e7;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 6e13;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 6e16;
+                        break;
+                }
+                break;
+            case "JoulesPerSecond":
+                switch (toName)
+                {
+                    case "JoulesPerSecond":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 1.355817948;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 1e9;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 745.699872;
+                        break;
+                    case "Watts":
+                        toNumber = num;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 88.02241413;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num / 4184;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 69667;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num / 9.80665;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num / 163.4441675;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 1000;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 1e6;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 1e12;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 1e15;
+                        break;
+                }
+                break;
+            case "KilocaloriesPerHour":
+                switch (toName)
+                {
+                    case "KilocaloriesPerHour":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 1.162220735;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 860421;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 641.615873;
+                        break;
+                    case "Watts":
+                        toNumber = num * 4184;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 4184;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 69.73666667;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 0.01162220735;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 69.8768241;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 41840;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 697.3333333;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 860.421;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 860421;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 8.60421e8;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 8.60421e11;
+                        break;
+                }
+                break;
+            case "KilocaloriesPerMinute":
+                switch (toName)
+                {
+                    case "KilocaloriesPerMinute":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 19.37044929;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 51684360;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 38.41693133;
+                        break;
+                    case "Watts":
+                        toNumber = num * 69.739981;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 4184;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 69.73333333;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1.162222222;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 1162.226956;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 418400;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 6973.333333;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 860.421;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 860421;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 8.60421e8;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 8.60421e11;
+                        break;
+                }
+                break;
+            case "KilogramForceMetersPerHour":
+                switch (toName)
+                {
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 706.155971;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 2780138850000;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 1941103.522;
+                        break;
+                    case "Watts":
+                        toNumber = num * 9.80665;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 35460;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 591;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 9.85;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num / 427.40077;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 7123.3462;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 118.514085;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 7162.8797;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 7162879.7;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 7.1628797e12;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 7.1628797e15;
+                        break;
+                }
+                break;
+            case "KilogramForceMetersPerMinute":
+                switch (toName)
+                {
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num / 11811.013;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 278013885000000;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num / 1941103.522;
+                        break;
+                    case "Watts":
+                        toNumber = num * 0.163333;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 59000;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 983.333;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 16.3889;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num / 42740.077;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num / 712.3346;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num / 716287.97;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 716287970;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 7.1628797e14;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 7.1628797e17;
+                        break;
+                }
+                break;
+            case "Kilowatts":
+                switch (toName)
+                {
+                    case "Kilowatts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 737.5621;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num / 1000;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 1.341022;
+                        break;
+                    case "Watts":
+                        toNumber = num * 1000;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3600000;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 60000;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1000;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 859.8452;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 14.33075;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 367.0978;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 6.118296;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 44.25373;
+                        break;
+                    case "Megawatts":
+                        toNumber = num / 1000;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 1e6;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 1e9;
+                        break;
+                }
+                break;
+            case "Megawatts":
+                switch (toName)
+                {
+                    case "Megawatts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 737562;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num * 0.001;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 1341.022;
+                        break;
+                    case "Watts":
+                        toNumber = num * 1e6;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3.6e9;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 6e7;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1e6;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 859845.2;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 14330.75;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 367097.8;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 6118.296;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 1000;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 44253.73;
+                        break;
+                    case "Terawatts":
+                        toNumber = num / 1000;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 1e6;
+                        break;
+                }
+                break;
+            case "Terawatts":
+                switch (toName)
+                {
+                    case "Terawatts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 7.37562e+12;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 1.341022e+9;
+                        break;
+                    case "Watts":
+                        toNumber = num * 1e+12;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3.6e+15;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 6e+13;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1e+12;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 8.598452e+14;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 1.433075e+13;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 3.670978e+15;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 6.118296e+13;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 1e+9;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 4.425373e+14;
+                        break;
+                    case "Petawatts":
+                        toNumber = num / 1000;
+                        break;
+                }
+                break;
+            case "Petawatts":
+                switch (toName)
+                {
+                    case "Petawatts":
+                        toNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        toNumber = num * 7.37562e+15;
+                        break;
+                    case "Gigawatts":
+                        toNumber = num * 1e+9;
+                        break;
+                    case "HorsepowersInternational":
+                        toNumber = num * 1.341022e+12;
+                        break;
+                    case "Watts":
+                        toNumber = num * 1e+15;
+                        break;
+                    case "JoulesPerHour":
+                        toNumber = num * 3.6e+18;
+                        break;
+                    case "JoulesPerMinute":
+                        toNumber = num * 6e+16;
+                        break;
+                    case "JoulesPerSecond":
+                        toNumber = num * 1e+15;
+                        break;
+                    case "KilocaloriesPerHour":
+                        toNumber = num * 8.598452e+17;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        toNumber = num * 1.433075e+16;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        toNumber = num * 3.670978e+18;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        toNumber = num * 6.118296e+16;
+                        break;
+                    case "Kilowatts":
+                        toNumber = num * 1e+12;
+                        break;
+                    case "Megawatts":
+                        toNumber = num * 1e+9;
+                        break;
+                    case "Terawatts":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        toNumber = num * 4.425373e+17;
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "FootPoundsForcePerMinute":
+                switch (fromName)
+                {
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 737562149.277;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 550;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 0.0225969658;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 79.5774715;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 1.32629119;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 0.0221048531;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 0.000189829415;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 0.00000316382359;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 0.322831556;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 0.00538052593;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 0.0000186473;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 1.864273e-8;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 1.864273e-14;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num * 1.864273e-20;
+                        break;
+                }
+                break;
+            case "FootPoundsForcePerSecond":
+                switch (fromName)
+                {
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 73756214.9277;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 550;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 0.737562149;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 2647795.5;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 44129.925;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 735.49875;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 0.079719371;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 0.00132865618;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 135.581794;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 2.25969657;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 0.000737562149;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 7.3756215e-7;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 7.3756215e-13;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num * 7.3756215e-19;
+                        break;
+                }
+                break;
+            case "Gigawatts":
+                switch (fromName)
+                {
+                    case "Gigawatts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 1340482575.37;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 80428954622.2;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 1341022.0896;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 1e9;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3.6e12;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 6e10;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1e9;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 859845.22785899;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 14330.7537976498;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 101971621297.792;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 1699527021.62986;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 1e6;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 1000;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 0.001;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num * 1e-6;
+                        break;
+                }
+                break;
+            case "HorsepowersInternational":
+                switch (fromName)
+                {
+                    case "HorsepowersInternational":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 550;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num * 0.0007457;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 33000;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 745.7;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 2684519.538;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 44742.01063;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 745.700177;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 0.6324181425;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 0.0105403024;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 542476.0659;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 9041.267765;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 0.7457;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 0.0007457;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 7.457e-10;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num * 7.457e-13;
+                        break;
+                }
+                break;
+            case "Watts":
+                switch (fromName)
+                {
+                    case "Watts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 0.7375621493;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num * 1e-9;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 0.0013410221;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 44.253730289;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 0.0002390057;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 3.983428571e-6;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 0.1019716213;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 0.001699527;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 0.001;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 1e-6;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 1e-12;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num * 1e-15;
+                        break;
+                }
+                break;
+            case "JoulesPerHour":
+                switch (fromName)
+                {
+                    case "JoulesPerHour":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 2679.22888;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 3.6e12;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 2684519.537;
+                        break;
+                    case "Watts":
+                        fromNumber = num / 3600;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num / 44.58714714;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num / 3600;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num / 3.6e6;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 6e4;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num / 367095.0564;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num / 6118.25094;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 3.6e6;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 3.6e9;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 3.6e15;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 3.6e18;
+                        break;
+                }
+                break;
+            case "JoulesPerMinute":
+                switch (fromName)
+                {
+                    case "JoulesPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 44.58714714;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 6e10;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 1.013869675;
+                        break;
+                    case "Watts":
+                        fromNumber = num / 60;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num / 60000;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 1000;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num / 1225.044842;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num / 20.41741403;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 60000;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 6e7;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 6e13;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 6e16;
+                        break;
+                }
+                break;
+            case "JoulesPerSecond":
+                switch (fromName)
+                {
+                    case "JoulesPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 1.355817948;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 1e9;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 745.699872;
+                        break;
+                    case "Watts":
+                        fromNumber = num;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 88.02241413;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num / 4184;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 69667;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num / 9.80665;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num / 163.4441675;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 1000;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 1e6;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 1e12;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 1e15;
+                        break;
+                }
+                break;
+            case "KilocaloriesPerHour":
+                switch (fromName)
+                {
+                    case "KilocaloriesPerHour":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 1.162220735;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 860421;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 641.615873;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 4184;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 4184;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 69.73666667;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 0.01162220735;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 69.8768241;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 41840;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 697.3333333;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 860.421;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 860421;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 8.60421e8;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 8.60421e11;
+                        break;
+                }
+                break;
+            case "KilocaloriesPerMinute":
+                switch (fromName)
+                {
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 19.37044929;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 51684360;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 38.41693133;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 69.739981;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 4184;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 69.73333333;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1.162222222;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 1162.226956;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 418400;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 6973.333333;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 860.421;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 860421;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 8.60421e8;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 8.60421e11;
+                        break;
+                }
+                break;
+            case "KilogramForceMetersPerHour":
+                switch (fromName)
+                {
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 706.155971;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 2780138850000;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 1941103.522;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 9.80665;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 35460;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 591;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 9.85;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num / 427.40077;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 7123.3462;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 118.514085;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 7162.8797;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 7162879.7;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 7.1628797e12;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 7.1628797e15;
+                        break;
+                }
+                break;
+            case "KilogramForceMetersPerMinute":
+                switch (fromName)
+                {
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num / 11811.013;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 278013885000000;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num / 1941103.522;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 0.163333;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 59000;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 983.333;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 16.3889;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num / 42740.077;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num / 712.3346;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num / 716287.97;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 716287970;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 7.1628797e14;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 7.1628797e17;
+                        break;
+                }
+                break;
+            case "Kilowatts":
+                switch (fromName)
+                {
+                    case "Kilowatts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 737.5621;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num / 1000;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 1.341022;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 1000;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3600000;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 60000;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1000;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 859.8452;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 14.33075;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 367.0978;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 6.118296;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 44.25373;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num / 1000;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 1e6;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 1e9;
+                        break;
+                }
+                break;
+            case "Megawatts":
+                switch (fromName)
+                {
+                    case "Megawatts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 737562;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num * 0.001;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 1341.022;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 1e6;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3.6e9;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 6e7;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1e6;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 859845.2;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 14330.75;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 367097.8;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 6118.296;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 1000;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 44253.73;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num / 1000;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 1e6;
+                        break;
+                }
+                break;
+            case "Terawatts":
+                switch (fromName)
+                {
+                    case "Terawatts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 7.37562e+12;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 1.341022e+9;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 1e+12;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3.6e+15;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 6e+13;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1e+12;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 8.598452e+14;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 1.433075e+13;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 3.670978e+15;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 6.118296e+13;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 1e+9;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 4.425373e+14;
+                        break;
+                    case "Petawatts":
+                        fromNumber = num / 1000;
+                        break;
+                }
+                break;
+            case "Petawatts":
+                switch (fromName)
+                {
+                    case "Petawatts":
+                        fromNumber = num;
+                        break;
+                    case "FootPoundsForcePerSecond":
+                        fromNumber = num * 7.37562e+15;
+                        break;
+                    case "Gigawatts":
+                        fromNumber = num * 1e+9;
+                        break;
+                    case "HorsepowersInternational":
+                        fromNumber = num * 1.341022e+12;
+                        break;
+                    case "Watts":
+                        fromNumber = num * 1e+15;
+                        break;
+                    case "JoulesPerHour":
+                        fromNumber = num * 3.6e+18;
+                        break;
+                    case "JoulesPerMinute":
+                        fromNumber = num * 6e+16;
+                        break;
+                    case "JoulesPerSecond":
+                        fromNumber = num * 1e+15;
+                        break;
+                    case "KilocaloriesPerHour":
+                        fromNumber = num * 8.598452e+17;
+                        break;
+                    case "KilocaloriesPerMinute":
+                        fromNumber = num * 1.433075e+16;
+                        break;
+                    case "KilogramForceMetersPerHour":
+                        fromNumber = num * 3.670978e+18;
+                        break;
+                    case "KilogramForceMetersPerMinute":
+                        fromNumber = num * 6.118296e+16;
+                        break;
+                    case "Kilowatts":
+                        fromNumber = num * 1e+12;
+                        break;
+                    case "Megawatts":
+                        fromNumber = num * 1e+9;
+                        break;
+                    case "Terawatts":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "FootPoundsForcePerMinute":
+                        fromNumber = num * 4.425373e+17;
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

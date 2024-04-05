@@ -1,0 +1,1224 @@
+﻿@page "/fuelconsumption"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Fuel Consumption</h3>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(FuelConsumptionModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(FuelConsumptionModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "GallonsUSPer100Miles";
+    string toName = "LitersPer100Kilometer";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "GallonsUSPer100Miles":
+                switch (toName)
+                {
+                    case "GallonsUSPer100Miles":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = num * 0.029488855077559; // 1 GallonsUSPer100Miles = 0.029488855077559 KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = num * 0.046875; // 1 GallonsUSPer100Miles = 0.046875 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = num * 0.00046875; // 1 GallonsUSPer100Miles = 0.00046875 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / (num * 0.00046875); // 1 GallonsUSPer100Miles = 100 / (0.00046875 KilometerPerKiloWattHour)
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 235.215; // 1 GallonsUSPer100Miles = 235.215 KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = num * 2.35215;
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 100 / (235.215 * 1000); // 1 GallonsUSPer100Miles = 100 / (235.215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 100 / num; // 1 GallonsUSPer100Miles = 100 / MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 33.705855642335; // 1 GallonsUSPer100Miles = 33.705855642335 MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 235.215 / num; // 1 GallonsUSPer100Miles = 235.215 / MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = 100 / (num * 0.046875); // 1 GallonsUSPer100Miles = 100 / (0.046875 WattHoursPerKilometer)
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 33.705855642335 / num; // 1 GallonsUSPer100Miles = 33.705855642335 / WattHoursPerMile
+                        break;
+                }
+                break;
+            case "KiloWattHoursPer100Miles":
+                switch (toName)
+                {
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = num;
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = num / 0.029488855077559; // 1 KiloWattHoursPer100Miles = 0.029488855077559 GallonsUSPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = num * 2.1337372131051; // 1 KiloWattHoursPer100Miles = 2.1337372131051 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = num * 0.021337372131051; // 1 KiloWattHoursPer100Miles = 0.021337372131051 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / (num * 0.021337372131051); // 1 KiloWattHoursPer100Miles = 100 / (0.021337372131051 KilometerPerKiloWattHour)
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 100 / (num * 0.235215); // 1 KiloWattHoursPer100Miles = 100 / (0.235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Miles = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 100 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPer100Miles = 100 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 100 / (num * 33.705855642335); // 1 KiloWattHoursPer100Miles = 100 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 100 / num; // 1 KiloWattHoursPer100Miles = 100 / MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 100 / (num * 2.35215); // 1 KiloWattHoursPer100Miles = 100 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = 100 / (num * 0.021337372131051); // 1 KiloWattHoursPer100Miles = 100 / (0.021337372131051 WattHoursPerKilometer)
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 100 / (num * 0.33605855642335); // 1 KiloWattHoursPer100Miles = 100 / (0.33605855642335 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KiloWattHoursPer100Kilometers":
+                switch (toName)
+                {
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = num / 2.1337372131051; // 1 KiloWattHoursPer100Kilometers = 1 / 2.1337372131051 KiloWattHoursPer100Miles
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = num / (2.1337372131051 * 0.029488855077559); // 1 KiloWattHoursPer100Kilometers = 1 / (2.1337372131051 * 0.029488855077559) GallonsUSPer100Miles
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = num / 100; // 1 KiloWattHoursPer100Kilometers = 1 / 100 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / num; // 1 KiloWattHoursPer100Kilometers = 100 / KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 100 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 100 / (num * 33.705855642335); // 1 KiloWattHoursPer100Kilometers = 100 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 100 / (num / 2.1337372131051); // 1 KiloWattHoursPer100Kilometers = 100 / (1 / 2.1337372131051 MilesPerKiloWattHour)
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 100 / (num * 2.35215); // 1 KiloWattHoursPer100Kilometers = 100 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = 100 / num; // 1 KiloWattHoursPer100Kilometers = 100 / WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 100 / (num / 2.1337372131051); // 1 KiloWattHoursPer100Kilometers = 100 / (1 / 2.1337372131051 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KiloWattHoursPerKilometer":
+                switch (toName)
+                {
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = num * 0.621371 / 100; // 1 KiloWattHoursPerKilometer = 0.621371 KiloWattHoursPer100Miles / 100
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = num * 0.01; // 1 KiloWattHoursPerKilometer = 0.01 KiloWattHoursPer100Kilometers
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = num * 0.621371 / (100 * 33.705855642335); // 1 KiloWattHoursPerKilometer = 0.621371 GallonsUSPer100Miles / (100 * 33.705855642335)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / (num * 0.00235215); // 1 KiloWattHoursPerKilometer = 1 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPerKilometer = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPerKilometer = 1 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 33.705855642335); // 1 KiloWattHoursPerKilometer = 1 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 KiloWattHoursPerKilometer = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num / 0.621371); // 1 KiloWattHoursPerKilometer = 1 / (1 / 0.621371 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KilometerPerKiloWattHour":
+                switch (toName)
+                {
+                    case "KilometerPerKiloWattHour":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 100 / (0.621371 KiloWattHoursPer100Miles)
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / num; // 1 KilometerPerKiloWattHour = 100 / KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / num; // 1 KilometerPerKiloWattHour = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 33.705855642335); // 1 KilometerPerKiloWattHour = 100 / (0.621371 * 33.705855642335 GallonsUSPer100Miles)
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / (num * 0.00235215); // 1 KilometerPerKiloWattHour = 1 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 0.00235215); // 1 KilometerPerKiloWattHour = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 0.00235215 * 1000); // 1 KilometerPerKiloWattHour = 1 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 33.705855642335); // 1 KilometerPerKiloWattHour = 1 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 1 / (0.621371 MilesPerKiloWattHour)
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 KilometerPerKiloWattHour = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num; // 1 KilometerPerKiloWattHour = 1 WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 1 / (0.621371 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KilometerPerLiter":
+                switch (toName)
+                {
+                    case "KilometerPerLiter":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 100 / (0.621371 * 2.35215) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / (num * 2.35215); // 1 KilometerPerLiter = 100 / (2.35215 KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 2.35215); // 1 KilometerPerLiter = 1 / (2.35215 KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 1 / num; // 1 KilometerPerLiter = 1 / KilometerPerKiloWattHour
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541); // 1 KilometerPerLiter = 100 / (0.621371 * 2.35215 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / num; // 1 KilometerPerLiter = 100 / LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / num; // 1 KilometerPerLiter = 1 / LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 2.35215 * 3.78541); // 1 KilometerPerLiter = 1 / (2.35215 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 1 / (0.621371 * 2.35215) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 KilometerPerLiter = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 2.35215; // 1 KilometerPerLiter = 2.35215 WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 1 / (0.621371 * 2.35215) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "LitersPer100Kilometer":
+                switch (toName)
+                {
+                    case "LitersPer100Kilometer":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 100 / (0.621371 * 2.35215 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / num; // 1 LitersPer100Kilometer = 100 / KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 100 / (num * 100); // 1 LitersPer100Kilometer = 100 / (100 * KilometerPerLiter)
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 LitersPer100Kilometer = 100 / (0.621371 * 2.35215 * 3.78541 * 100) GallonsUSPer100Miles
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * LitersPerMeter)
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 2.35215 * 3.78541 * 100); // 1 LitersPer100Kilometer = 1 / (2.35215 * 3.78541 * 100) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (2.35215 * 100) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 100; // 1 LitersPer100Kilometer = 100 * WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "LitersPerMeter":
+                switch (toName)
+                {
+                    case "LitersPerMeter":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 100 / (0.621371 * 2.35215 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / (num * 100); // 1 LitersPerMeter = 100 / (100 * KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 100); // 1 LitersPerMeter = 1 / (100 * KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / num; // 1 LitersPerMeter = 100 / KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / num; // 1 LitersPerMeter = 1 / KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = num * 100000; // 1 LitersPerMeter = 100000 * LitersPer100Kilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 LitersPerMeter = 100 / (0.621371 * 2.35215 * 3.78541 * 100) GallonsUSPer100Miles
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 2.35215 * 3.78541 * 100); // 1 LitersPerMeter = 1 / (2.35215 * 3.78541 * 100) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215 * 100); // 1 LitersPerMeter = 1 / (2.35215 * 100) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 100; // 1 LitersPerMeter = 100 * WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerGallonUS":
+                switch (toName)
+                {
+                    case "MilesPerGallonUS":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 2.35215 * 3.78541 * 100); // 1 MilesPerGallonUS = 100 / (2.35215 * 3.78541 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 MilesPerGallonUS = 100 / (0.621371 * 2.35215 * 3.78541 * 100) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerGallonUS = 100 / (0.621371 * 2.35215) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 MilesPerGallonUS = 1 / (2.35215) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = (100 * 3.785411784) / (1.609344 * num); 
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (2.35215 * 100) LitersPerMeter
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / num; // 1 MilesPerGallonUS = 100 / GallonsUSPer100Miles
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 MilesPerGallonUS = 1 / (2.35215) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 100 / (0.621371 * 2.35215); // 1 MilesPerGallonUS = (num * 100) / (0.621371 * 2.35215) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerKiloWattHour":
+                switch (toName)
+                {
+                    case "MilesPerKiloWattHour":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371); // 1 MilesPerKiloWattHour = 100 / (0.621371) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / (num * 0.621371 * 1.60934); // 1 MilesPerKiloWattHour = 100 / (0.621371 * 1.60934) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 0.621371 * 1.60934); // 1 MilesPerKiloWattHour = 1 / (0.621371 * 1.60934) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371); // 1 MilesPerKiloWattHour = 1 / (0.621371) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / (num * 2.35215 * 0.621371); // 1 MilesPerKiloWattHour = 1 / (2.35215 * 0.621371) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 2.35215 * 0.621371); // 1 MilesPerKiloWattHour = 100 / (2.35215 * 0.621371) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 2.35215 * 0.621371 * 100); // 1 MilesPerKiloWattHour = 1 / (2.35215 * 0.621371 * 100) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 0.621371 * 3.78541); // 1 MilesPerKiloWattHour = 1 / (0.621371 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 3.78541); // 1 MilesPerKiloWattHour = 100 / (0.621371 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 2.35215); // 1 MilesPerKiloWattHour = 1 / (2.35215) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 0.621371; // 1 MilesPerKiloWattHour = (num * 0.621371) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371); // 1 MilesPerKiloWattHour = 1 / (0.621371) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerLiter":
+                switch (toName)
+                {
+                    case "MilesPerLiter":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / (num * 0.621371 * 1.60934 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 1.60934 * 2.35215) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / (num * 0.621371 * 1.60934 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 1.60934 * 2.35215) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215 * 100) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215 * 100) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 0.621371 * 2.35215 * 100 * 1000); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215 * 100 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 2.35215); // 1 MilesPerLiter = 1 / (2.35215) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) MilesPerKiloWattHour
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215) GallonsUSPer100Miles
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num * 0.621371 * 2.35215; // 1 MilesPerLiter = (num * 0.621371 * 2.35215) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "WattHoursPerKilometer":
+                switch (toName)
+                {
+                    case "WattHoursPerKilometer":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / (num * 0.621371); // 1 WattHoursPerKilometer = 100 / (0.621371) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 100 / num; // 1 WattHoursPerKilometer = 100 / 1 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1 / num; // 1 WattHoursPerKilometer = 1 / 1 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = num; // 1 WattHoursPerKilometer = num KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = num * 3.78541; // 1 WattHoursPerKilometer = (num * 3.78541) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = 100 / (num * 3.78541); // 1 WattHoursPerKilometer = 100 / (num * 3.78541) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1 / (num * 3.78541 * 1000); // 1 WattHoursPerKilometer = 1 / (num * 3.78541 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 1 / (0.621371 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / (num * 0.621371); // 1 WattHoursPerKilometer = 1 / (0.621371) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 1 / (0.621371 * 3.78541) MilesPerLiter
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 100 / (0.621371 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "WattHoursPerMile":
+                        toNumber = 1 / (num * 0.621371); // 1 WattHoursPerKilometer = 1 / (0.621371) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "WattHoursPerMile":
+                switch (toName)
+                {
+                    case "WattHoursPerMile":
+                        toNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        toNumber = 100 / num; // 1 WattHoursPerMile = 100 / num KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        toNumber = 160.9344 / num; // 1 WattHoursPerMile = 160.9344 / num KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        toNumber = 1.609344 / num; // 1 WattHoursPerMile = 1.609344 / num KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        toNumber = num / 1.609344; // 1 WattHoursPerMile = num / 1.609344 KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        toNumber = 235.2146 / (num * 1.609344); // 1 WattHoursPerMile = 235.2146 / (num * 1.609344) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        toNumber = (100 * 1.609344) / (num * 3.78541); // 1 WattHoursPerMile = (100 * 1.609344) / (num * 3.78541) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        toNumber = 1000 / (num * 3.78541); // 1 WattHoursPerMile = 1000 / (num * 3.78541) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        toNumber = 1 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 1 / (num * 1.609344 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        toNumber = 1 / num; // 1 WattHoursPerMile = 1 / num MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        toNumber = 1 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 1 / (num * 1.609344 * 3.78541) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        toNumber = num / 1.609344; // 1 WattHoursPerMile = num / 1.609344 WattHoursPerKilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        toNumber = 100 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 100 / (num * 1.609344 * 3.78541) GallonsUSPer100Miles
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "GallonsUSPer100Miles":
+                switch (fromName)
+                {
+                    case "GallonsUSPer100Miles":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = num * 0.029488855077559; // 1 GallonsUSPer100Miles = 0.029488855077559 KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = num * 0.046875; // 1 GallonsUSPer100Miles = 0.046875 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = num * 0.00046875; // 1 GallonsUSPer100Miles = 0.00046875 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / (num * 0.00046875); // 1 GallonsUSPer100Miles = 100 / (0.00046875 KilometerPerKiloWattHour)
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 235.215; // 1 GallonsUSPer100Miles = 235.215 KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = num * 2.35215;
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 100 / (235.215 * 1000); // 1 GallonsUSPer100Miles = 100 / (235.215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 100 / num; // 1 GallonsUSPer100Miles = 100 / MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 33.705855642335; // 1 GallonsUSPer100Miles = 33.705855642335 MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 235.215 / num; // 1 GallonsUSPer100Miles = 235.215 / MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = 100 / (num * 0.046875); // 1 GallonsUSPer100Miles = 100 / (0.046875 WattHoursPerKilometer)
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 33.705855642335 / num; // 1 GallonsUSPer100Miles = 33.705855642335 / WattHoursPerMile
+                        break;
+                }
+                break;
+            case "KiloWattHoursPer100Miles":
+                switch (fromName)
+                {
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = num;
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = num / 0.029488855077559; // 1 KiloWattHoursPer100Miles = 0.029488855077559 GallonsUSPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = num * 2.1337372131051; // 1 KiloWattHoursPer100Miles = 2.1337372131051 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = num * 0.021337372131051; // 1 KiloWattHoursPer100Miles = 0.021337372131051 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / (num * 0.021337372131051); // 1 KiloWattHoursPer100Miles = 100 / (0.021337372131051 KilometerPerKiloWattHour)
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 100 / (num * 0.235215); // 1 KiloWattHoursPer100Miles = 100 / (0.235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Miles = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 100 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPer100Miles = 100 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 100 / (num * 33.705855642335); // 1 KiloWattHoursPer100Miles = 100 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 100 / num; // 1 KiloWattHoursPer100Miles = 100 / MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 100 / (num * 2.35215); // 1 KiloWattHoursPer100Miles = 100 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = 100 / (num * 0.021337372131051); // 1 KiloWattHoursPer100Miles = 100 / (0.021337372131051 WattHoursPerKilometer)
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 100 / (num * 0.33605855642335); // 1 KiloWattHoursPer100Miles = 100 / (0.33605855642335 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KiloWattHoursPer100Kilometers":
+                switch (fromName)
+                {
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = num / 2.1337372131051; // 1 KiloWattHoursPer100Kilometers = 1 / 2.1337372131051 KiloWattHoursPer100Miles
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = num / (2.1337372131051 * 0.029488855077559); // 1 KiloWattHoursPer100Kilometers = 1 / (2.1337372131051 * 0.029488855077559) GallonsUSPer100Miles
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = num / 100; // 1 KiloWattHoursPer100Kilometers = 1 / 100 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / num; // 1 KiloWattHoursPer100Kilometers = 100 / KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 100 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPer100Kilometers = 100 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 100 / (num * 33.705855642335); // 1 KiloWattHoursPer100Kilometers = 100 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 100 / (num / 2.1337372131051); // 1 KiloWattHoursPer100Kilometers = 100 / (1 / 2.1337372131051 MilesPerKiloWattHour)
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 100 / (num * 2.35215); // 1 KiloWattHoursPer100Kilometers = 100 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = 100 / num; // 1 KiloWattHoursPer100Kilometers = 100 / WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 100 / (num / 2.1337372131051); // 1 KiloWattHoursPer100Kilometers = 100 / (1 / 2.1337372131051 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KiloWattHoursPerKilometer":
+                switch (fromName)
+                {
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = num * 0.621371 / 100; // 1 KiloWattHoursPerKilometer = 0.621371 KiloWattHoursPer100Miles / 100
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = num * 0.01; // 1 KiloWattHoursPerKilometer = 0.01 KiloWattHoursPer100Kilometers
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = num * 0.621371 / (100 * 33.705855642335); // 1 KiloWattHoursPerKilometer = 0.621371 GallonsUSPer100Miles / (100 * 33.705855642335)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / (num * 0.00235215); // 1 KiloWattHoursPerKilometer = 1 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 0.00235215); // 1 KiloWattHoursPerKilometer = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 0.00235215 * 1000); // 1 KiloWattHoursPerKilometer = 1 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 33.705855642335); // 1 KiloWattHoursPerKilometer = 1 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 KiloWattHoursPerKilometer = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = 1 / num; // 1 KiloWattHoursPerKilometer = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num / 0.621371); // 1 KiloWattHoursPerKilometer = 1 / (1 / 0.621371 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KilometerPerKiloWattHour":
+                switch (fromName)
+                {
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 100 / (0.621371 KiloWattHoursPer100Miles)
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / num; // 1 KilometerPerKiloWattHour = 100 / KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / num; // 1 KilometerPerKiloWattHour = 1 / KiloWattHoursPerKilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 33.705855642335); // 1 KilometerPerKiloWattHour = 100 / (0.621371 * 33.705855642335 GallonsUSPer100Miles)
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / (num * 0.00235215); // 1 KilometerPerKiloWattHour = 1 / (0.00235215 KilometerPerLiter)
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 0.00235215); // 1 KilometerPerKiloWattHour = 100 / (0.00235215 LitersPer100Kilometer)
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 0.00235215 * 1000); // 1 KilometerPerKiloWattHour = 1 / (0.00235215 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 33.705855642335); // 1 KilometerPerKiloWattHour = 1 / (33.705855642335 MilesPerGallonUS)
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 1 / (0.621371 MilesPerKiloWattHour)
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 KilometerPerKiloWattHour = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num; // 1 KilometerPerKiloWattHour = 1 WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371); // 1 KilometerPerKiloWattHour = 1 / (0.621371 WattHoursPerMile)
+                        break;
+                }
+                break;
+            case "KilometerPerLiter":
+                switch (fromName)
+                {
+                    case "KilometerPerLiter":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 100 / (0.621371 * 2.35215) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / (num * 2.35215); // 1 KilometerPerLiter = 100 / (2.35215 KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 2.35215); // 1 KilometerPerLiter = 1 / (2.35215 KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 1 / num; // 1 KilometerPerLiter = 1 / KilometerPerKiloWattHour
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541); // 1 KilometerPerLiter = 100 / (0.621371 * 2.35215 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / num; // 1 KilometerPerLiter = 100 / LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / num; // 1 KilometerPerLiter = 1 / LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 2.35215 * 3.78541); // 1 KilometerPerLiter = 1 / (2.35215 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 1 / (0.621371 * 2.35215) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 KilometerPerLiter = 1 / (2.35215 MilesPerLiter)
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 2.35215; // 1 KilometerPerLiter = 2.35215 WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215); // 1 KilometerPerLiter = 1 / (0.621371 * 2.35215) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "LitersPer100Kilometer":
+                switch (fromName)
+                {
+                    case "LitersPer100Kilometer":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 100 / (0.621371 * 2.35215 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / num; // 1 LitersPer100Kilometer = 100 / KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 100 / (num * 100); // 1 LitersPer100Kilometer = 100 / (100 * KilometerPerLiter)
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 LitersPer100Kilometer = 100 / (0.621371 * 2.35215 * 3.78541 * 100) GallonsUSPer100Miles
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 100); // 1 LitersPer100Kilometer = 1 / (100 * LitersPerMeter)
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 2.35215 * 3.78541 * 100); // 1 LitersPer100Kilometer = 1 / (2.35215 * 3.78541 * 100) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (2.35215 * 100) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 100; // 1 LitersPer100Kilometer = 100 * WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPer100Kilometer = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "LitersPerMeter":
+                switch (fromName)
+                {
+                    case "LitersPerMeter":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 100 / (0.621371 * 2.35215 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / (num * 100); // 1 LitersPerMeter = 100 / (100 * KiloWattHoursPer100Kilometers)
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 100); // 1 LitersPerMeter = 1 / (100 * KiloWattHoursPerKilometer)
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / num; // 1 LitersPerMeter = 100 / KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / num; // 1 LitersPerMeter = 1 / KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = num * 100000; // 1 LitersPerMeter = 100000 * LitersPer100Kilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 LitersPerMeter = 100 / (0.621371 * 2.35215 * 3.78541 * 100) GallonsUSPer100Miles
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 2.35215 * 3.78541 * 100); // 1 LitersPerMeter = 1 / (2.35215 * 3.78541 * 100) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215 * 100); // 1 LitersPerMeter = 1 / (2.35215 * 100) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 100; // 1 LitersPerMeter = 100 * WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 LitersPerMeter = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerGallonUS":
+                switch (fromName)
+                {
+                    case "MilesPerGallonUS":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 2.35215 * 3.78541 * 100); // 1 MilesPerGallonUS = 100 / (2.35215 * 3.78541 * 100) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 3.78541 * 100); // 1 MilesPerGallonUS = 100 / (0.621371 * 2.35215 * 3.78541 * 100) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerGallonUS = 100 / (0.621371 * 2.35215) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 MilesPerGallonUS = 1 / (2.35215) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = (100 * 3.785411784) / (1.609344 * num);
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (2.35215 * 100) LitersPerMeter
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / num; // 1 MilesPerGallonUS = 100 / GallonsUSPer100Miles
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 MilesPerGallonUS = 1 / (2.35215) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 100 / (0.621371 * 2.35215); // 1 MilesPerGallonUS = (num * 100) / (0.621371 * 2.35215) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerGallonUS = 1 / (0.621371 * 2.35215 * 100) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerKiloWattHour":
+                switch (fromName)
+                {
+                    case "MilesPerKiloWattHour":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371); // 1 MilesPerKiloWattHour = 100 / (0.621371) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / (num * 0.621371 * 1.60934); // 1 MilesPerKiloWattHour = 100 / (0.621371 * 1.60934) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 0.621371 * 1.60934); // 1 MilesPerKiloWattHour = 1 / (0.621371 * 1.60934) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371); // 1 MilesPerKiloWattHour = 1 / (0.621371) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / (num * 2.35215 * 0.621371); // 1 MilesPerKiloWattHour = 1 / (2.35215 * 0.621371) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 2.35215 * 0.621371); // 1 MilesPerKiloWattHour = 100 / (2.35215 * 0.621371) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 2.35215 * 0.621371 * 100); // 1 MilesPerKiloWattHour = 1 / (2.35215 * 0.621371 * 100) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 0.621371 * 3.78541); // 1 MilesPerKiloWattHour = 1 / (0.621371 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 3.78541); // 1 MilesPerKiloWattHour = 100 / (0.621371 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 2.35215); // 1 MilesPerKiloWattHour = 1 / (2.35215) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 0.621371; // 1 MilesPerKiloWattHour = (num * 0.621371) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371); // 1 MilesPerKiloWattHour = 1 / (0.621371) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "MilesPerLiter":
+                switch (fromName)
+                {
+                    case "MilesPerLiter":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / (num * 0.621371 * 1.60934 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 1.60934 * 2.35215) KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / (num * 0.621371 * 1.60934 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 1.60934 * 2.35215) KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215 * 100) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215 * 100); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215 * 100) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215 * 100 * 1000); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215 * 100 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 2.35215); // 1 MilesPerLiter = 1 / (2.35215) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) MilesPerKiloWattHour
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 100 / (0.621371 * 2.35215) GallonsUSPer100Miles
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num * 0.621371 * 2.35215; // 1 MilesPerLiter = (num * 0.621371 * 2.35215) WattHoursPerKilometer
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371 * 2.35215); // 1 MilesPerLiter = 1 / (0.621371 * 2.35215) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "WattHoursPerKilometer":
+                switch (fromName)
+                {
+                    case "WattHoursPerKilometer":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / (num * 0.621371); // 1 WattHoursPerKilometer = 100 / (0.621371) KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 100 / num; // 1 WattHoursPerKilometer = 100 / 1 KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1 / num; // 1 WattHoursPerKilometer = 1 / 1 KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = num; // 1 WattHoursPerKilometer = num KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = num * 3.78541; // 1 WattHoursPerKilometer = (num * 3.78541) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = 100 / (num * 3.78541); // 1 WattHoursPerKilometer = 100 / (num * 3.78541) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1 / (num * 3.78541 * 1000); // 1 WattHoursPerKilometer = 1 / (num * 3.78541 * 1000) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 1 / (0.621371 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / (num * 0.621371); // 1 WattHoursPerKilometer = 1 / (0.621371) MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 1 / (0.621371 * 3.78541) MilesPerLiter
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 0.621371 * 3.78541); // 1 WattHoursPerKilometer = 100 / (0.621371 * 3.78541) GallonsUSPer100Miles
+                        break;
+                    case "WattHoursPerMile":
+                        fromNumber = 1 / (num * 0.621371); // 1 WattHoursPerKilometer = 1 / (0.621371) WattHoursPerMile
+                        break;
+                }
+                break;
+            case "WattHoursPerMile":
+                switch (fromName)
+                {
+                    case "WattHoursPerMile":
+                        fromNumber = num;
+                        break;
+                    case "KiloWattHoursPer100Miles":
+                        fromNumber = 100 / num; // 1 WattHoursPerMile = 100 / num KiloWattHoursPer100Miles
+                        break;
+                    case "KiloWattHoursPer100Kilometers":
+                        fromNumber = 160.9344 / num; // 1 WattHoursPerMile = 160.9344 / num KiloWattHoursPer100Kilometers
+                        break;
+                    case "KiloWattHoursPerKilometer":
+                        fromNumber = 1.609344 / num; // 1 WattHoursPerMile = 1.609344 / num KiloWattHoursPerKilometer
+                        break;
+                    case "KilometerPerKiloWattHour":
+                        fromNumber = num / 1.609344; // 1 WattHoursPerMile = num / 1.609344 KilometerPerKiloWattHour
+                        break;
+                    case "KilometerPerLiter":
+                        fromNumber = 235.2146 / (num * 1.609344); // 1 WattHoursPerMile = 235.2146 / (num * 1.609344) KilometerPerLiter
+                        break;
+                    case "LitersPer100Kilometer":
+                        fromNumber = (100 * 1.609344) / (num * 3.78541); // 1 WattHoursPerMile = (100 * 1.609344) / (num * 3.78541) LitersPer100Kilometer
+                        break;
+                    case "LitersPerMeter":
+                        fromNumber = 1000 / (num * 3.78541); // 1 WattHoursPerMile = 1000 / (num * 3.78541) LitersPerMeter
+                        break;
+                    case "MilesPerGallonUS":
+                        fromNumber = 1 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 1 / (num * 1.609344 * 3.78541) MilesPerGallonUS
+                        break;
+                    case "MilesPerKiloWattHour":
+                        fromNumber = 1 / num; // 1 WattHoursPerMile = 1 / num MilesPerKiloWattHour
+                        break;
+                    case "MilesPerLiter":
+                        fromNumber = 1 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 1 / (num * 1.609344 * 3.78541) MilesPerLiter
+                        break;
+                    case "WattHoursPerKilometer":
+                        fromNumber = num / 1.609344; // 1 WattHoursPerMile = num / 1.609344 WattHoursPerKilometer
+                        break;
+                    case "GallonsUSPer100Miles":
+                        fromNumber = 100 / (num * 1.609344 * 3.78541); // 1 WattHoursPerMile = 100 / (num * 1.609344 * 3.78541) GallonsUSPer100Miles
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

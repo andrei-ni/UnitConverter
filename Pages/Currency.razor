@@ -1,0 +1,2204 @@
+﻿@page "/currency"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Currency</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(CurrencyModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(CurrencyModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "RomanianLeu";
+    string toName = "Euro";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "AustralianDollar":
+                switch (toName)
+                {
+                    case "AustralianDollar":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.546; // 1 AUD = 0.546 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 1.959; // 1 AUD = 1.959 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.967; // 1 AUD = 0.967 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 5.186; // 1 AUD = 5.186 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.621; // 1 AUD = 0.621 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 52.158; // 1 AUD = 52.158 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 2.501; // 1 AUD = 2.501 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 78.394; // 1 AUD = 78.394 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 13.074; // 1 AUD = 13.074 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 6.47; // 1 AUD = 6.47 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 3.179; // 1 AUD = 3.179 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 57.573; // 1 AUD = 57.573 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 11.123; // 1 AUD = 11.123 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 786.017; // 1 AUD = 786.017 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.678; // 1 AUD = 0.678 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 4.824; // 1 AUD = 4.824 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.753; // 1 AUD = 0.753 USD
+                        break;
+                }
+                break;
+            case "BrittishPoundSterling":
+                switch (toName)
+                {
+                    case "BrittishPoundSterling":
+                        toNumber = fromNumber;
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 1.829; // 1 GBP = 1.829 AUD
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 4.405; // 1 GBP = 4.405 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 1.736; // 1 GBP = 1.736 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 9.312; // 1 GBP = 9.312 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 1.115; // 1 GBP = 1.115 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 92.988; // 1 GBP = 92.988 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 4.455; // 1 GBP = 4.455 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 140.163; // 1 GBP = 140.163 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 23.419; // 1 GBP = 23.419 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 11.617; // 1 GBP = 11.617 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 5.697; // 1 GBP = 5.697 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 102.866; // 1 GBP = 102.866 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 19.863; // 1 GBP = 19.863 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 1404.449; // 1 GBP = 1404.449 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 1.208; // 1 GBP = 1.208 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 8.622; // 1 GBP = 8.622 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 1.361; // 1 GBP = 1.361 USD
+                        break;
+                }
+                break;
+            case "BulgarianLev":
+                switch (toName)
+                {
+                    case "BulgarianLev":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.227; // 1 BGN = 0.227 GBP
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.535; // 1 BGN = 0.535 AUD
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.518; // 1 BGN = 0.518 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 2.691; // 1 BGN = 2.691 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.511; // 1 BGN = 0.511 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 42.507; // 1 BGN = 42.507 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 2.144; // 1 BGN = 2.144 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 6.788; // 1 BGN = 6.788 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 11.383; // 1 BGN = 11.383 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 5.653; // 1 BGN = 5.653 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 2.778; // 1 BGN = 2.778 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 50.098; // 1 BGN = 50.098 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 9.657; // 1 BGN = 9.657 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 681.062; // 1 BGN = 681.062 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.588; // 1 BGN = 0.588 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 4.205; // 1 BGN = 4.205 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.568; // 1 BGN = 0.568 USD
+                        break;
+                }
+                break;
+            case "CanadianDollar":
+                switch (toName)
+                {
+                    case "CanadianDollar":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.57; // 1 CAD = 0.57 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 1.93; // 1 CAD = 1.93 BGN
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 1.08; // 1 CAD = 1.08 AUD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 5.27; // 1 CAD = 5.27 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.66; // 1 CAD = 0.66 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 55.06; // 1 CAD = 55.06 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 2.81; // 1 CAD = 2.81 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 87.87; // 1 CAD = 87.87 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 18.55; // 1 CAD = 18.55 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 9.22; // 1 CAD = 9.22 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 4.53; // 1 CAD = 4.53 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 81.45; // 1 CAD = 81.45 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 15.78; // 1 CAD = 15.78 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 1114.82; // 1 CAD = 1114.82 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.77; // 1 CAD = 0.77 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 5.50; // 1 CAD = 5.50 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.79; // 1 CAD = 0.79 USD
+                        break;
+                }
+                break;
+            case "ChineseYuanRenmimbi":
+                switch (toName)
+                {
+                    case "ChineseYuanRenmimbi":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.11; // 1 CNY = 0.11 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.24; // 1 CNY = 0.24 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.19; // 1 CNY = 0.19 CAD
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.21; // 1 CNY = 0.21 AUD
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.13; // 1 CNY = 0.13 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 11.17; // 1 CNY = 11.17 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.50; // 1 CNY = 0.50 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 15.72; // 1 CNY = 15.72 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 3.35; // 1 CNY = 3.35 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 1.67; // 1 CNY = 1.67 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.62; // 1 CNY = 0.62 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 11.22; // 1 CNY = 11.22 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 2.17; // 1 CNY = 2.17 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 153.46; // 1 CNY = 153.46 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.14; // 1 CNY = 0.14 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.90; // 1 CNY = 0.90 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.15; // 1 CNY = 0.15 USD
+                        break;
+                }
+                break;
+            case "Euro":
+                switch (toName)
+                {
+                    case "Euro":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.85; // 1 EUR = 0.85 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 1.96; // 1 EUR = 1.96 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 1.53; // 1 EUR = 1.53 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 7.80; // 1 EUR = 7.80 CNY
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 1.63; // 1 EUR = 1.63 AUD
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 89.48; // 1 EUR = 89.48 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 4.19; // 1 EUR = 4.19 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 131.81; // 1 EUR = 131.81 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 27.93; // 1 EUR = 27.93 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 10.50; // 1 EUR = 10.50 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 4.94; // 1 EUR = 4.94 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 89.78; // 1 EUR = 89.78 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 17.25; // 1 EUR = 17.25 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 1221.45; // 1 EUR = 1221.45 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 1.08; // 1 EUR = 1.08 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 8.18; // 1 EUR = 8.18 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 1.21; // 1 EUR = 1.21 USD
+                        break;
+                }
+                break;
+            case "IndianRupee":
+                switch (toName)
+                {
+                    case "IndianRupee":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.0094; // 1 INR = 0.0094 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.022; // 1 INR = 0.022 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.019; // 1 INR = 0.019 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.097; // 1 INR = 0.097 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.011; // 1 INR = 0.011 EUR
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.018; // 1 INR = 0.018 AUD
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.045; // 1 INR = 0.045 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 1.44; // 1 INR = 1.44 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 0.39; // 1 INR = 0.39 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.11; // 1 INR = 0.11 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.051; // 1 INR = 0.051 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 1.14; // 1 INR = 1.14 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 0.22; // 1 INR = 0.22 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 15.70; // 1 INR = 15.70 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.012; // 1 INR = 0.012 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.090; // 1 INR = 0.090 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.013; // 1 INR = 0.013 USD
+                        break;
+                }
+                break;
+            case "IsraeliShekel":
+                switch (toName)
+                {
+                    case "IsraeliShekel":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.19; // 1 ILS = 0.19 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.44; // 1 ILS = 0.44 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.38; // 1 ILS = 0.38 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 1.96; // 1 ILS = 1.96 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.22; // 1 ILS = 0.22 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 22.36; // 1 ILS = 22.36 INR
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.36; // 1 ILS = 0.36 AUD
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 28.73; // 1 ILS = 28.73 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 7.80; // 1 ILS = 7.80 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 2.18; // 1 ILS = 2.18 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 1.01; // 1 ILS = 1.01 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 22.30; // 1 ILS = 22.30 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 4.35; // 1 ILS = 4.35 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 313.23; // 1 ILS = 313.23 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.24; // 1 ILS = 0.24 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 1.77; // 1 ILS = 1.77 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.26; // 1 ILS = 0.26 USD
+                        break;
+                }
+                break;
+            case "JapaneseYen":
+                switch (toName)
+                {
+                    case "JapaneseYen":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.0066; // 1 JPY = 0.0066 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.015; // 1 JPY = 0.015 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.011; // 1 JPY = 0.011 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.066; // 1 JPY = 0.066 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.0075; // 1 JPY = 0.0075 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 0.75; // 1 JPY = 0.75 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.035; // 1 JPY = 0.035 ILS
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.012; // 1 JPY = 0.012 AUD
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 0.27; // 1 JPY = 0.27 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.075; // 1 JPY = 0.075 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.035; // 1 JPY = 0.035 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 0.75; // 1 JPY = 0.75 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 0.15; // 1 JPY = 0.15 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 11.21; // 1 JPY = 11.21 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.0083; // 1 JPY = 0.0083 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.059; // 1 JPY = 0.059 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.0092; // 1 JPY = 0.0092 USD
+                        break;
+                }
+                break;
+            case "MexicanPeso":
+                switch (toName)
+                {
+                    case "MexicanPeso":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.037; // 1 MXN = 0.037 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.085; // 1 MXN = 0.085 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.061; // 1 MXN = 0.061 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.37; // 1 MXN = 0.37 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.042; // 1 MXN = 0.042 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 4.22; // 1 MXN = 4.22 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.19; // 1 MXN = 0.19 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 3.71; // 1 MXN = 3.71 JPY
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.067; // 1 MXN = 0.067 AUD
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.19; // 1 MXN = 0.19 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.19; // 1 MXN = 0.19 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 4.22; // 1 MXN = 4.22 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 0.84; // 1 MXN = 0.84 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 62.12; // 1 MXN = 62.12 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.046; // 1 MXN = 0.046 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.33; // 1 MXN = 0.33 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.049; // 1 MXN = 0.049 USD
+                        break;
+                }
+                break;
+            case "NorwegianKrone":
+                switch (toName)
+                {
+                    case "NorwegianKrone":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.084; // 1 NOK = 0.084 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.19; // 1 NOK = 0.19 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.14; // 1 NOK = 0.14 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.85; // 1 NOK = 0.85 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.097; // 1 NOK = 0.097 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 9.69; // 1 NOK = 9.69 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.43; // 1 NOK = 0.43 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 8.36; // 1 NOK = 8.36 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 5.31; // 1 NOK = 5.31 MXN
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.15; // 1 NOK = 0.15 AUD
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.43; // 1 NOK = 0.43 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 9.69; // 1 NOK = 9.69 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 1.93; // 1 NOK = 1.93 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 142.62; // 1 NOK = 142.62 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.10; // 1 NOK = 0.10 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.72; // 1 NOK = 0.72 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.11; // 1 NOK = 0.11 USD
+                        break;
+                }
+                break;
+            case "RomanianLeu":
+                switch (toName)
+                {
+                    case "RomanianLeu":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.17; // 1 RON = 0.17 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.42; // 1 RON = 0.42 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.21; // 1 RON = 0.21 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 1.40; // 1 RON = 1.40 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.22; // 1 RON = 0.22 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 21.68; // 1 RON = 21.68 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.88; // 1 RON = 0.88 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 17.01; // 1 RON = 17.01 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 3.99; // 1 RON = 3.99 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 2.31; // 1 RON = 2.31 NOK
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.34; // 1 RON = 0.34 AUD
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 16.55; // 1 RON = 16.55 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 3.82; // 1 RON = 3.82 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 254.71; // 1 RON = 254.71 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.24; // 1 RON = 0.24 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 2.17; // 1 RON = 2.17 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.25; // 1 RON = 0.25 USD
+                        break;
+                }
+                break;
+            case "RussianRuble":
+                switch (toName)
+                {
+                    case "RussianRuble":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.0097; // 1 RUB = 0.0097 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.023; // 1 RUB = 0.023 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.017; // 1 RUB = 0.017 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.080; // 1 RUB = 0.080 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.011; // 1 RUB = 0.011 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 0.93; // 1 RUB = 0.93 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.044; // 1 RUB = 0.044 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 1.40; // 1 RUB = 1.40 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 0.26; // 1 RUB = 0.26 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.088; // 1 RUB = 0.088 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.060; // 1 RUB = 0.060 RON
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.016; // 1 RUB = 0.016 AUD
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 0.20; // 1 RUB = 0.20 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 14.07; // 1 RUB = 14.07 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.012; // 1 RUB = 0.012 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.091; // 1 RUB = 0.091 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.011; // 1 RUB = 0.011 USD
+                        break;
+                }
+                break;
+            case "SouthAfrianRand":
+                switch (toName)
+                {
+                    case "SouthAfrianRand":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.049; // 1 ZAR = 0.049 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.11; // 1 ZAR = 0.11 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.067; // 1 ZAR = 0.067 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.46; // 1 ZAR = 0.46 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.056; // 1 ZAR = 0.056 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 4.66; // 1 ZAR = 4.66 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.24; // 1 ZAR = 0.24 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 7.46; // 1 ZAR = 7.46 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 1.38; // 1 ZAR = 1.38 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.47; // 1 ZAR = 0.47 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.32; // 1 ZAR = 0.32 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 5.01; // 1 ZAR = 5.01 RUB
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.072; // 1 ZAR = 0.072 AUD
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 63.72; // 1 ZAR = 63.72 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.060; // 1 ZAR = 0.060 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.45; // 1 ZAR = 0.45 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.057; // 1 ZAR = 0.057 USD
+                        break;
+                }
+                break;
+            case "SouthKoreanWon":
+                switch (toName)
+                {
+                    case "SouthKoreanWon":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.00064; // 1 KRW = 0.00064 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.0014; // 1 KRW = 0.0014 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.00085; // 1 KRW = 0.00085 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 0.0058; // 1 KRW = 0.0058 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.00071; // 1 KRW = 0.00071 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 0.059; // 1 KRW = 0.059 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.0030; // 1 KRW = 0.0030 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 0.091; // 1 KRW = 0.091 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 0.017; // 1 KRW = 0.017 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 0.0058; // 1 KRW = 0.0058 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.0040; // 1 KRW = 0.0040 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 0.063; // 1 KRW = 0.063 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 0.016; // 1 KRW = 0.016 ZAR
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.00092; // 1 KRW = 0.00092 AUD
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.00087; // 1 KRW = 0.00087 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 0.0065; // 1 KRW = 0.0065 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.00079; // 1 KRW = 0.00079 USD
+                        break;
+                }
+                break;
+            case "SwissFrank":
+                switch (toName)
+                {
+                    case "SwissFrank":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.72; // 1 CHF = 0.72 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 1.56; // 1 CHF = 1.56 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.95; // 1 CHF = 0.95 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 6.45; // 1 CHF = 6.45 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.81; // 1 CHF = 0.81 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 68.54; // 1 CHF = 68.54 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 3.46; // 1 CHF = 3.46 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 112.61; // 1 CHF = 112.61 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 20.94; // 1 CHF = 20.94 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 8.32; // 1 CHF = 8.32 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 5.69; // 1 CHF = 5.69 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 76.55; // 1 CHF = 76.55 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 14.23; // 1 CHF = 14.23 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 1142.35; // 1 CHF = 1142.35 KRW
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 1.09; // 1 CHF = 1.09 AUD
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 8.14; // 1 CHF = 8.14 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.93; // 1 CHF = 0.93 USD
+                        break;
+                }
+                break;
+            case "TurkishLira":
+                switch (toName)
+                {
+                    case "TurkishLira":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.099; // 1 TRY = 0.099 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 0.221; // 1 TRY = 0.221 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 0.15; // 1 TRY = 0.15 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 1.02; // 1 TRY = 1.02 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.13; // 1 TRY = 0.13 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 11.24; // 1 TRY = 11.24 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 0.51; // 1 TRY = 0.51 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 14.01; // 1 TRY = 14.01 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 3.28; // 1 TRY = 3.28 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 1.31; // 1 TRY = 1.31 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 0.89; // 1 TRY = 0.89 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 12.03; // 1 TRY = 12.03 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 2.24; // 1 TRY = 2.24 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 179.95; // 1 TRY = 179.95 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.12; // 1 TRY = 0.12 CHF
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 0.18; // 1 TRY = 0.18 AUD
+                        break;
+                    case "UnitedStatesDollar":
+                        toNumber = num * 0.11; // 1 TRY = 0.11 USD
+                        break;
+                }
+                break;
+            case "UnitedStatesDollar":
+                switch (toName)
+                {
+                    case "UnitedStatesDollar":
+                        toNumber = fromNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        toNumber = num * 0.71; // 1 USD = 0.71 GBP
+                        break;
+                    case "BulgarianLev":
+                        toNumber = num * 1.63; // 1 USD = 1.63 BGN
+                        break;
+                    case "CanadianDollar":
+                        toNumber = num * 1.23; // 1 USD = 1.23 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        toNumber = num * 6.48; // 1 USD = 6.48 CNY
+                        break;
+                    case "Euro":
+                        toNumber = num * 0.84; // 1 USD = 0.84 EUR
+                        break;
+                    case "IndianRupee":
+                        toNumber = num * 74.94; // 1 USD = 74.94 INR
+                        break;
+                    case "IsraeliShekel":
+                        toNumber = num * 3.27; // 1 USD = 3.27 ILS
+                        break;
+                    case "JapaneseYen":
+                        toNumber = num * 110.53; // 1 USD = 110.53 JPY
+                        break;
+                    case "MexicanPeso":
+                        toNumber = num * 20.47; // 1 USD = 20.47 MXN
+                        break;
+                    case "NorwegianKrone":
+                        toNumber = num * 8.60; // 1 USD = 8.60 NOK
+                        break;
+                    case "RomanianLeu":
+                        toNumber = num * 4.12; // 1 USD = 4.12 RON
+                        break;
+                    case "RussianRuble":
+                        toNumber = num * 73.09; // 1 USD = 73.09 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        toNumber = num * 14.66; // 1 USD = 14.66 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        toNumber = num * 1159.88; // 1 USD = 1159.88 KRW
+                        break;
+                    case "SwissFrank":
+                        toNumber = num * 0.92; // 1 USD = 0.92 CHF
+                        break;
+                    case "TurkishLira":
+                        toNumber = num * 9.03; // 1 USD = 9.03 TRY
+                        break;
+                    case "AustralianDollar":
+                        toNumber = num * 1.33; // 1 USD = 1.33 AUD
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "AustralianDollar":
+                switch (fromName)
+                {
+                    case "AustralianDollar":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.546; // 1 AUD = 0.546 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 1.959; // 1 AUD = 1.959 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.967; // 1 AUD = 0.967 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 5.186; // 1 AUD = 5.186 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.621; // 1 AUD = 0.621 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 52.158; // 1 AUD = 52.158 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 2.501; // 1 AUD = 2.501 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 78.394; // 1 AUD = 78.394 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 13.074; // 1 AUD = 13.074 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 6.47; // 1 AUD = 6.47 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 3.179; // 1 AUD = 3.179 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 57.573; // 1 AUD = 57.573 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 11.123; // 1 AUD = 11.123 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 786.017; // 1 AUD = 786.017 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.678; // 1 AUD = 0.678 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 4.824; // 1 AUD = 4.824 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.753; // 1 AUD = 0.753 USD
+                        break;
+                }
+                break;
+            case "BrittishPoundSterling":
+                switch (fromName)
+                {
+                    case "BrittishPoundSterling":
+                        fromNumber = toNumber;
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 1.829; // 1 GBP = 1.829 AUD
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 4.405; // 1 GBP = 4.405 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 1.736; // 1 GBP = 1.736 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 9.312; // 1 GBP = 9.312 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 1.115; // 1 GBP = 1.115 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 92.988; // 1 GBP = 92.988 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 4.455; // 1 GBP = 4.455 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 140.163; // 1 GBP = 140.163 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 23.419; // 1 GBP = 23.419 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 11.617; // 1 GBP = 11.617 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 5.697; // 1 GBP = 5.697 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 102.866; // 1 GBP = 102.866 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 19.863; // 1 GBP = 19.863 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 1404.449; // 1 GBP = 1404.449 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 1.208; // 1 GBP = 1.208 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 8.622; // 1 GBP = 8.622 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 1.361; // 1 GBP = 1.361 USD
+                        break;
+                }
+                break;
+            case "BulgarianLev":
+                switch (fromName)
+                {
+                    case "BulgarianLev":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.227; // 1 BGN = 0.227 GBP
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.535; // 1 BGN = 0.535 AUD
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.518; // 1 BGN = 0.518 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 2.691; // 1 BGN = 2.691 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.511; // 1 BGN = 0.511 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 42.507; // 1 BGN = 42.507 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 2.144; // 1 BGN = 2.144 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 6.788; // 1 BGN = 6.788 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 11.383; // 1 BGN = 11.383 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 5.653; // 1 BGN = 5.653 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 2.778; // 1 BGN = 2.778 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 50.098; // 1 BGN = 50.098 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 9.657; // 1 BGN = 9.657 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 681.062; // 1 BGN = 681.062 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.588; // 1 BGN = 0.588 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 4.205; // 1 BGN = 4.205 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.568; // 1 BGN = 0.568 USD
+                        break;
+                }
+                break;
+            case "CanadianDollar":
+                switch (fromName)
+                {
+                    case "CanadianDollar":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.57; // 1 CAD = 0.57 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 1.93; // 1 CAD = 1.93 BGN
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 1.08; // 1 CAD = 1.08 AUD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 5.27; // 1 CAD = 5.27 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.66; // 1 CAD = 0.66 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 55.06; // 1 CAD = 55.06 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 2.81; // 1 CAD = 2.81 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 87.87; // 1 CAD = 87.87 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 18.55; // 1 CAD = 18.55 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 9.22; // 1 CAD = 9.22 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 4.53; // 1 CAD = 4.53 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 81.45; // 1 CAD = 81.45 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 15.78; // 1 CAD = 15.78 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 1114.82; // 1 CAD = 1114.82 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.77; // 1 CAD = 0.77 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 5.50; // 1 CAD = 5.50 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.79; // 1 CAD = 0.79 USD
+                        break;
+                }
+                break;
+            case "ChineseYuanRenmimbi":
+                switch (fromName)
+                {
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.11; // 1 CNY = 0.11 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.24; // 1 CNY = 0.24 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.19; // 1 CNY = 0.19 CAD
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.21; // 1 CNY = 0.21 AUD
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.13; // 1 CNY = 0.13 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 11.17; // 1 CNY = 11.17 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.50; // 1 CNY = 0.50 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 15.72; // 1 CNY = 15.72 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 3.35; // 1 CNY = 3.35 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 1.67; // 1 CNY = 1.67 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.62; // 1 CNY = 0.62 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 11.22; // 1 CNY = 11.22 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 2.17; // 1 CNY = 2.17 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 153.46; // 1 CNY = 153.46 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.14; // 1 CNY = 0.14 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.90; // 1 CNY = 0.90 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.15; // 1 CNY = 0.15 USD
+                        break;
+                }
+                break;
+            case "Euro":
+                switch (fromName)
+                {
+                    case "Euro":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.85; // 1 EUR = 0.85 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 1.96; // 1 EUR = 1.96 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 1.53; // 1 EUR = 1.53 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 7.80; // 1 EUR = 7.80 CNY
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 1.63; // 1 EUR = 1.63 AUD
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 89.48; // 1 EUR = 89.48 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 4.19; // 1 EUR = 4.19 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 131.81; // 1 EUR = 131.81 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 27.93; // 1 EUR = 27.93 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 10.50; // 1 EUR = 10.50 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 4.94; // 1 EUR = 4.94 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 89.78; // 1 EUR = 89.78 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 17.25; // 1 EUR = 17.25 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 1221.45; // 1 EUR = 1221.45 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 1.08; // 1 EUR = 1.08 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 8.18; // 1 EUR = 8.18 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 1.21; // 1 EUR = 1.21 USD
+                        break;
+                }
+                break;
+            case "IndianRupee":
+                switch (fromName)
+                {
+                    case "IndianRupee":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.0094; // 1 INR = 0.0094 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.022; // 1 INR = 0.022 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.019; // 1 INR = 0.019 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.097; // 1 INR = 0.097 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.011; // 1 INR = 0.011 EUR
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.018; // 1 INR = 0.018 AUD
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.045; // 1 INR = 0.045 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 1.44; // 1 INR = 1.44 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 0.39; // 1 INR = 0.39 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.11; // 1 INR = 0.11 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.051; // 1 INR = 0.051 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 1.14; // 1 INR = 1.14 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 0.22; // 1 INR = 0.22 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 15.70; // 1 INR = 15.70 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.012; // 1 INR = 0.012 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.090; // 1 INR = 0.090 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.013; // 1 INR = 0.013 USD
+                        break;
+                }
+                break;
+            case "IsraeliShekel":
+                switch (fromName)
+                {
+                    case "IsraeliShekel":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.19; // 1 ILS = 0.19 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.44; // 1 ILS = 0.44 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.38; // 1 ILS = 0.38 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 1.96; // 1 ILS = 1.96 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.22; // 1 ILS = 0.22 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 22.36; // 1 ILS = 22.36 INR
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.36; // 1 ILS = 0.36 AUD
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 28.73; // 1 ILS = 28.73 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 7.80; // 1 ILS = 7.80 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 2.18; // 1 ILS = 2.18 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 1.01; // 1 ILS = 1.01 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 22.30; // 1 ILS = 22.30 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 4.35; // 1 ILS = 4.35 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 313.23; // 1 ILS = 313.23 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.24; // 1 ILS = 0.24 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 1.77; // 1 ILS = 1.77 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.26; // 1 ILS = 0.26 USD
+                        break;
+                }
+                break;
+            case "JapaneseYen":
+                switch (fromName)
+                {
+                    case "JapaneseYen":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.0066; // 1 JPY = 0.0066 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.015; // 1 JPY = 0.015 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.011; // 1 JPY = 0.011 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.066; // 1 JPY = 0.066 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.0075; // 1 JPY = 0.0075 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 0.75; // 1 JPY = 0.75 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.035; // 1 JPY = 0.035 ILS
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.012; // 1 JPY = 0.012 AUD
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 0.27; // 1 JPY = 0.27 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.075; // 1 JPY = 0.075 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.035; // 1 JPY = 0.035 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 0.75; // 1 JPY = 0.75 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 0.15; // 1 JPY = 0.15 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 11.21; // 1 JPY = 11.21 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.0083; // 1 JPY = 0.0083 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.059; // 1 JPY = 0.059 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.0092; // 1 JPY = 0.0092 USD
+                        break;
+                }
+                break;
+            case "MexicanPeso":
+                switch (fromName)
+                {
+                    case "MexicanPeso":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.037; // 1 MXN = 0.037 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.085; // 1 MXN = 0.085 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.061; // 1 MXN = 0.061 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.37; // 1 MXN = 0.37 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.042; // 1 MXN = 0.042 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 4.22; // 1 MXN = 4.22 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.19; // 1 MXN = 0.19 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 3.71; // 1 MXN = 3.71 JPY
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.067; // 1 MXN = 0.067 AUD
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.19; // 1 MXN = 0.19 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.19; // 1 MXN = 0.19 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 4.22; // 1 MXN = 4.22 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 0.84; // 1 MXN = 0.84 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 62.12; // 1 MXN = 62.12 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.046; // 1 MXN = 0.046 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.33; // 1 MXN = 0.33 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.049; // 1 MXN = 0.049 USD
+                        break;
+                }
+                break;
+            case "NorwegianKrone":
+                switch (fromName)
+                {
+                    case "NorwegianKrone":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.084; // 1 NOK = 0.084 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.19; // 1 NOK = 0.19 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.14; // 1 NOK = 0.14 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.85; // 1 NOK = 0.85 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.097; // 1 NOK = 0.097 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 9.69; // 1 NOK = 9.69 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.43; // 1 NOK = 0.43 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 8.36; // 1 NOK = 8.36 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 5.31; // 1 NOK = 5.31 MXN
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.15; // 1 NOK = 0.15 AUD
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.43; // 1 NOK = 0.43 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 9.69; // 1 NOK = 9.69 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 1.93; // 1 NOK = 1.93 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 142.62; // 1 NOK = 142.62 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.10; // 1 NOK = 0.10 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.72; // 1 NOK = 0.72 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.11; // 1 NOK = 0.11 USD
+                        break;
+                }
+                break;
+            case "RomanianLeu":
+                switch (fromName)
+                {
+                    case "RomanianLeu":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.17; // 1 RON = 0.17 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.42; // 1 RON = 0.42 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.21; // 1 RON = 0.21 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 1.40; // 1 RON = 1.40 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.22; // 1 RON = 0.22 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 21.68; // 1 RON = 21.68 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.88; // 1 RON = 0.88 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 17.01; // 1 RON = 17.01 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 3.99; // 1 RON = 3.99 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 2.31; // 1 RON = 2.31 NOK
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.34; // 1 RON = 0.34 AUD
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 16.55; // 1 RON = 16.55 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 3.82; // 1 RON = 3.82 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 254.71; // 1 RON = 254.71 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.24; // 1 RON = 0.24 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 2.17; // 1 RON = 2.17 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.25; // 1 RON = 0.25 USD
+                        break;
+                }
+                break;
+            case "RussianRuble":
+                switch (fromName)
+                {
+                    case "RussianRuble":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.0097; // 1 RUB = 0.0097 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.023; // 1 RUB = 0.023 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.017; // 1 RUB = 0.017 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.080; // 1 RUB = 0.080 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.011; // 1 RUB = 0.011 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 0.93; // 1 RUB = 0.93 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.044; // 1 RUB = 0.044 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 1.40; // 1 RUB = 1.40 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 0.26; // 1 RUB = 0.26 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.088; // 1 RUB = 0.088 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.060; // 1 RUB = 0.060 RON
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.016; // 1 RUB = 0.016 AUD
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 0.20; // 1 RUB = 0.20 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 14.07; // 1 RUB = 14.07 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.012; // 1 RUB = 0.012 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.091; // 1 RUB = 0.091 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.011; // 1 RUB = 0.011 USD
+                        break;
+                }
+                break;
+            case "SouthAfrianRand":
+                switch (fromName)
+                {
+                    case "SouthAfrianRand":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.049; // 1 ZAR = 0.049 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.11; // 1 ZAR = 0.11 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.067; // 1 ZAR = 0.067 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.46; // 1 ZAR = 0.46 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.056; // 1 ZAR = 0.056 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 4.66; // 1 ZAR = 4.66 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.24; // 1 ZAR = 0.24 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 7.46; // 1 ZAR = 7.46 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 1.38; // 1 ZAR = 1.38 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.47; // 1 ZAR = 0.47 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.32; // 1 ZAR = 0.32 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 5.01; // 1 ZAR = 5.01 RUB
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.072; // 1 ZAR = 0.072 AUD
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 63.72; // 1 ZAR = 63.72 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.060; // 1 ZAR = 0.060 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.45; // 1 ZAR = 0.45 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.057; // 1 ZAR = 0.057 USD
+                        break;
+                }
+                break;
+            case "SouthKoreanWon":
+                switch (fromName)
+                {
+                    case "SouthKoreanWon":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.00064; // 1 KRW = 0.00064 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.0014; // 1 KRW = 0.0014 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.00085; // 1 KRW = 0.00085 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 0.0058; // 1 KRW = 0.0058 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.00071; // 1 KRW = 0.00071 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 0.059; // 1 KRW = 0.059 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.0030; // 1 KRW = 0.0030 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 0.091; // 1 KRW = 0.091 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 0.017; // 1 KRW = 0.017 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 0.0058; // 1 KRW = 0.0058 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.0040; // 1 KRW = 0.0040 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 0.063; // 1 KRW = 0.063 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 0.016; // 1 KRW = 0.016 ZAR
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.00092; // 1 KRW = 0.00092 AUD
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.00087; // 1 KRW = 0.00087 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 0.0065; // 1 KRW = 0.0065 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.00079; // 1 KRW = 0.00079 USD
+                        break;
+                }
+                break;
+            case "SwissFrank":
+                switch (fromName)
+                {
+                    case "SwissFrank":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.72; // 1 CHF = 0.72 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 1.56; // 1 CHF = 1.56 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.95; // 1 CHF = 0.95 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 6.45; // 1 CHF = 6.45 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.81; // 1 CHF = 0.81 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 68.54; // 1 CHF = 68.54 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 3.46; // 1 CHF = 3.46 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 112.61; // 1 CHF = 112.61 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 20.94; // 1 CHF = 20.94 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 8.32; // 1 CHF = 8.32 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 5.69; // 1 CHF = 5.69 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 76.55; // 1 CHF = 76.55 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 14.23; // 1 CHF = 14.23 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 1142.35; // 1 CHF = 1142.35 KRW
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 1.09; // 1 CHF = 1.09 AUD
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 8.14; // 1 CHF = 8.14 TRY
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.93; // 1 CHF = 0.93 USD
+                        break;
+                }
+                break;
+            case "TurkishLira":
+                switch (fromName)
+                {
+                    case "TurkishLira":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.099; // 1 TRY = 0.099 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 0.221; // 1 TRY = 0.221 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 0.15; // 1 TRY = 0.15 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 1.02; // 1 TRY = 1.02 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.13; // 1 TRY = 0.13 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 11.24; // 1 TRY = 11.24 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 0.51; // 1 TRY = 0.51 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 14.01; // 1 TRY = 14.01 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 3.28; // 1 TRY = 3.28 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 1.31; // 1 TRY = 1.31 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 0.89; // 1 TRY = 0.89 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 12.03; // 1 TRY = 12.03 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 2.24; // 1 TRY = 2.24 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 179.95; // 1 TRY = 179.95 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.12; // 1 TRY = 0.12 CHF
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 0.18; // 1 TRY = 0.18 AUD
+                        break;
+                    case "UnitedStatesDollar":
+                        fromNumber = num * 0.11; // 1 TRY = 0.11 USD
+                        break;
+                }
+                break;
+            case "UnitedStatesDollar":
+                switch (fromName)
+                {
+                    case "UnitedStatesDollar":
+                        fromNumber = toNumber;
+                        break;
+                    case "BrittishPoundSterling":
+                        fromNumber = num * 0.71; // 1 USD = 0.71 GBP
+                        break;
+                    case "BulgarianLev":
+                        fromNumber = num * 1.63; // 1 USD = 1.63 BGN
+                        break;
+                    case "CanadianDollar":
+                        fromNumber = num * 1.23; // 1 USD = 1.23 CAD
+                        break;
+                    case "ChineseYuanRenmimbi":
+                        fromNumber = num * 6.48; // 1 USD = 6.48 CNY
+                        break;
+                    case "Euro":
+                        fromNumber = num * 0.84; // 1 USD = 0.84 EUR
+                        break;
+                    case "IndianRupee":
+                        fromNumber = num * 74.94; // 1 USD = 74.94 INR
+                        break;
+                    case "IsraeliShekel":
+                        fromNumber = num * 3.27; // 1 USD = 3.27 ILS
+                        break;
+                    case "JapaneseYen":
+                        fromNumber = num * 110.53; // 1 USD = 110.53 JPY
+                        break;
+                    case "MexicanPeso":
+                        fromNumber = num * 20.47; // 1 USD = 20.47 MXN
+                        break;
+                    case "NorwegianKrone":
+                        fromNumber = num * 8.60; // 1 USD = 8.60 NOK
+                        break;
+                    case "RomanianLeu":
+                        fromNumber = num * 4.12; // 1 USD = 4.12 RON
+                        break;
+                    case "RussianRuble":
+                        fromNumber = num * 73.09; // 1 USD = 73.09 RUB
+                        break;
+                    case "SouthAfrianRand":
+                        fromNumber = num * 14.66; // 1 USD = 14.66 ZAR
+                        break;
+                    case "SouthKoreanWon":
+                        fromNumber = num * 1159.88; // 1 USD = 1159.88 KRW
+                        break;
+                    case "SwissFrank":
+                        fromNumber = num * 0.92; // 1 USD = 0.92 CHF
+                        break;
+                    case "TurkishLira":
+                        fromNumber = num * 9.03; // 1 USD = 9.03 TRY
+                        break;
+                    case "AustralianDollar":
+                        fromNumber = num * 1.33; // 1 USD = 1.33 AUD
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

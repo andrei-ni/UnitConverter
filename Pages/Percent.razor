@@ -1,0 +1,64 @@
+﻿@page "/percent"
+
+<h3>Percent Calculator</h3>
+
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">What is %</span>
+        <br />
+        <InputNumber DisplayName="" @bind-Value="firstTargetNumber" />
+
+        <br />
+        <span class="">of:</span>
+        <br />
+        <InputNumber DisplayName="" @bind-Value="firstOfNumber" />
+
+        <br />
+
+        <span class="btn btn-primary mt-2 mb-1" @onclick="()=>ConvertFirst(firstTargetNumber, firstOfNumber)">Calculate</span>
+
+        <br />
+        <span class="">Result: @firstResult</span>
+
+    </div>
+
+    @* OR *@
+    <hr />
+    <div class="flex-row">
+
+        <InputNumber DisplayName="" @bind-Value="secondTargetNumber" />
+        <br />
+        <span class="">is what percent of:</span>
+        <br />
+
+        <InputNumber DisplayName="" @bind-Value="secondOfNumber" />
+
+        <br />
+
+        <span class="btn btn-primary mt-2 mb-1" @onclick="()=>ConvertSecond(secondTargetNumber, secondOfNumber)">Calculate</span>
+
+        <br />
+        <span class="">Result: @secondResult</span>
+
+    </div>
+</div>
+
+@code {
+    double firstTargetNumber;
+    double secondTargetNumber;
+    double firstOfNumber;
+    double secondOfNumber;
+    double firstResult;
+    double secondResult;
+
+    public async Task ConvertFirst(double firstNum, double secondNum)
+    {
+        firstResult = (firstNum / 100) * secondNum;
+        //await InvokeAsync(StateHasChanged);
+    }
+    public async Task ConvertSecond(double firstNum, double secondNum)
+    {
+        secondResult = (firstNum / secondNum) * 100;
+    }
+}

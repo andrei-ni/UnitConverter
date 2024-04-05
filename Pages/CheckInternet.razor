@@ -1,0 +1,16 @@
+﻿@page "/internet"
+
+<h3>Weather</h3>
+
+<button class="btn btn-dark" @onclick="Check">Check internet</button>
+
+@code {
+
+    private async void Check()
+    {
+        var hasInternet = Microsoft.Maui.Networking.Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
+        var internetType = Connectivity.ConnectionProfiles.FirstOrDefault();
+        await Application.Current.MainPage.DisplayAlert("Internet", $"Status: {hasInternet} of type {internetType}", "Ok");
+    }
+
+}

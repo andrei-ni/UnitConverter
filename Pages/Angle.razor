@@ -1,0 +1,1778 @@
+﻿@page "/angle"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Angle</h3>
+
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(AngleModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(AngleModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Arcminute";
+    string toName = "Arcsecond";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Arcminute":
+                switch (toName)
+                {
+                    case "Arcminute":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 60; // 1 arcminute = 60 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 21600; // 1 arcminute = 1/21600 circle
+                        break;
+                    case "Degree":
+                        toNumber = num / 60; // 1 arcminute = 1/60 degree
+                        break;
+                    case "Gon":
+                        toNumber = num / 54; // 1 arcminute = 1/54 gon
+                        break;
+                    case "Grad":
+                        toNumber = num / 60; // 1 arcminute = 1/60 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num / 3.375; // 1 arcminute = 1/3.375 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num / 3.333; // 1 arcminute = 1/3.333 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num / 3.375; // 1 arcminute = 1/3.375 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 270; // 1 arcminute = 1/270 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 90; // 1 arcminute = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.000290888208665722; // 1 arcminute = 0.000290888208665722 radian
+                        break;
+                    case "Revolution":
+                        toNumber = num / 1296000; // 1 arcminute = 1/1296000 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 160; // 1 arcminute = 1/160 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num / 60; // 1 arcminute = 1/60 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 21600; // 1 arcminute = 1/21600 turn
+                        break;
+                }
+                break;
+            case "Arcsecond":
+                switch (toName)
+                {
+                    case "Arcsecond":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num / 60; // 1 arcsecond = 1/60 arcminute
+                        break;
+                    case "Circle":
+                        toNumber = num / 1296000; // 1 arcsecond = 1/1296000 circle
+                        break;
+                    case "Degree":
+                        toNumber = num / 3600; // 1 arcsecond = 1/3600 degree
+                        break;
+                    case "Gon":
+                        toNumber = num / 3240; // 1 arcsecond = 1/3240 gon
+                        break;
+                    case "Grad":
+                        toNumber = num / 3600; // 1 arcsecond = 1/3600 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num / 202.5; // 1 arcsecond = 1/202.5 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num / 200; // 1 arcsecond = 1/200 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num / 202.5; // 1 arcsecond = 1/202.5 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 16200; // 1 arcsecond = 1/16200 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 5400; // 1 arcsecond = 1/5400 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.00000484813681109536; // 1 arcsecond = 0.00000484813681109536 radian
+                        break;
+                    case "Revolution":
+                        toNumber = num / 7776000; // 1 arcsecond = 1/7776000 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 9600; // 1 arcsecond = 1/9600 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num / 3600; // 1 arcsecond = 1/3600 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 1296000; // 1 arcsecond = 1/1296000 turn
+                        break;
+                }
+                break;
+            case "Circle":
+                switch (toName)
+                {
+                    case "Circle":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 1296000; // 1 circle = 1296000 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 46656000; // 1 circle = 46656000 arcseconds
+                        break;
+                    case "Degree":
+                        toNumber = num * 360; // 1 circle = 360 degrees
+                        break;
+                    case "Gon":
+                        toNumber = num * 400; // 1 circle = 400 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 360; // 1 circle = 360 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 6283.18530717959; // 1 circle = 6283.18530717959 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 6300; // 1 circle = 6300 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 6283.18530717959; // 1 circle = 6283.18530717959 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 4; // 1 circle = 4 octants
+                        break;
+                    case "Quadrant":
+                        toNumber = num * 1; // 1 circle = 1 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 6.28318530717959; // 1 circle = 6.28318530717959 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num * 1; // 1 circle = 1 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num * 6.66666666666667; // 1 circle = 6.66666666666667 sextants
+                        break;
+                    case "Sign":
+                        toNumber = num * 360; // 1 circle = 360 signs
+                        break;
+                    case "Turn":
+                        toNumber = num * 1; // 1 circle = 1 turn
+                        break;
+                }
+                break;
+            case "Degree":
+                switch (toName)
+                {
+                    case "Degree":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 60; // 1 degree = 60 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 3600; // 1 degree = 3600 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 360; // 1 degree = 1/360 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 1.11111111111111; // 1 degree = 1.11111111111111 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 1.11111111111111; // 1 degree = 1.11111111111111 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 17.7777777777778; // 1 degree = 17.7777777777778 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 18; // 1 degree = 18 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 17.7777777777778; // 1 degree = 17.7777777777778 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 45; // 1 degree = 1/45 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 90; // 1 degree = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.0174532925199433; // 1 degree = 0.0174532925199433 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 360; // 1 degree = 1/360 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 60; // 1 degree = 1/60 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.166666666666667; // 1 degree = 0.166666666666667 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 360; // 1 degree = 1/360 turn
+                        break;
+                }
+                break;
+            case "Gon":
+                switch (toName)
+                {
+                    case "Gon":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 54; // 1 gon = 54 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 3240; // 1 gon = 3240 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 400; // 1 gon = 1/400 circle
+                        break;
+                    case "Degree":
+                        toNumber = num * 0.9; // 1 gon = 0.9 degree
+                        break;
+                    case "Grad":
+                        toNumber = num * 0.9; // 1 gon = 0.9 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 16; // 1 gon = 16 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 16; // 1 gon = 16 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 16; // 1 gon = 16 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 50; // 1 gon = 1/50 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 100; // 1 gon = 1/100 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.015707963267949; // 1 gon = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 400; // 1 gon = 1/400 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 66.6666666666667; // 1 gon = 1/66.6666666666667 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.1; // 1 gon = 0.1 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 400; // 1 gon = 1/400 turn
+                        break;
+                }
+                break;
+            case "Grad":
+                switch (toName)
+                {
+                    case "Grad":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 60; // 1 grad = 60 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 3600; // 1 grad = 3600 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 400; // 1 grad = 1/400 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 1.11111111111111; // 1 grad = 1.11111111111111 gon
+                        break;
+                    case "Degree":
+                        toNumber = num * 1.11111111111111; // 1 grad = 1.11111111111111 degree
+                        break;
+                    case "MilNato":
+                        toNumber = num * 16; // 1 grad = 16 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 16; // 1 grad = 16 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 16; // 1 grad = 16 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 45; // 1 grad = 1/45 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 90; // 1 grad = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.015707963267949; // 1 grad = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 400; // 1 grad = 1/400 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 60; // 1 grad = 1/60 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.1; // 1 grad = 0.1 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 400; // 1 grad = 1/400 turn
+                        break;
+                }
+                break;
+            case "MilNato":
+                switch (toName)
+                {
+                    case "MilNato":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 3.375; // 1 mil (NATO) = 3.375 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 202.5; // 1 mil (NATO) = 202.5 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 6400; // 1 mil (NATO) = 1/6400 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 0.625; // 1 mil (NATO) = 0.625 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 0.625; // 1 mil (NATO) = 0.625 grad
+                        break;
+                    case "Degree":
+                        toNumber = num * 0.9; // 1 mil (NATO) = 0.9 degree
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 1.25; // 1 mil (NATO) = 1.25 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 0.9375; // 1 mil (NATO) = 0.9375 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 8000; // 1 mil (NATO) = 1/8000 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 16000; // 1 mil (NATO) = 1/16000 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.0009817477042468; // 1 mil (NATO) = 0.0009817477042468 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 6400; // 1 mil (NATO) = 1/6400 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 1066.66666666667; // 1 mil (NATO) = 1/1066.66666666667 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.00625; // 1 mil (NATO) = 0.00625 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 6400; // 1 mil (NATO) = 1/6400 turn
+                        break;
+                }
+                break;
+            case "MilSovietUnion":
+                switch (toName)
+                {
+                    case "MilSovietUnion":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 3.375; // 1 mil (Soviet Union) = 3.375 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 202.5; // 1 mil (Soviet Union) = 202.5 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 0.625; // 1 mil (Soviet Union) = 0.625 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 0.625; // 1 mil (Soviet Union) = 0.625 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 0.8; // 1 mil (Soviet Union) = 0.8 mil (NATO)
+                        break;
+                    case "Degree":
+                        toNumber = num * 0.9; // 1 mil (Soviet Union) = 0.9 degree
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 0.75; // 1 mil (Soviet Union) = 0.75 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 8000; // 1 mil (Soviet Union) = 1/8000 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 16000; // 1 mil (Soviet Union) = 1/16000 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.0009817477042468; // 1 mil (Soviet Union) = 0.0009817477042468 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 1066.66666666667; // 1 mil (Soviet Union) = 1/1066.66666666667 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.00625; // 1 mil (Soviet Union) = 0.00625 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 turn
+                        break;
+                }
+                break;
+            case "MilSweden":
+                switch (toName)
+                {
+                    case "MilSweden":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 4.8; // 1 mil (Sweden) = 4.8 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 288; // 1 mil (Sweden) = 288 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 6000; // 1 mil (Sweden) = 1/6000 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 0.6; // 1 mil (Sweden) = 0.6 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 0.6; // 1 mil (Sweden) = 0.6 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 0.75; // 1 mil (Sweden) = 0.75 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num / 0.75; // 1 mil (Sweden) = 1.33333333333333 mil (Soviet Union)
+                        break;
+                    case "Degree":
+                        toNumber = num * 0.9; // 1 mil (Sweden) = 0.9 degree
+                        break;
+                    case "Octant":
+                        toNumber = num / 7500; // 1 mil (Sweden) = 1/7500 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 15000; // 1 mil (Sweden) = 1/15000 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.0010471975511966; // 1 mil (Sweden) = 0.0010471975511966 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 6000; // 1 mil (Sweden) = 1/6000 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 1000; // 1 mil (Sweden) = 1/1000 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.006; // 1 mil (Sweden) = 0.006 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 6000; // 1 mil (Sweden) = 1/6000 turn
+                        break;
+                }
+                break;
+            case "Octant":
+                switch (toName)
+                {
+                    case "Octant":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 480; // 1 octant = 480 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 28800; // 1 octant = 28,800 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 45; // 1 octant = 1/45 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 8; // 1 octant = 8 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 8; // 1 octant = 8 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 10; // 1 octant = 10 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num / 0.66666666666667; // 1 octant = 1.5 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 7500; // 1 octant = 7,500 mil (Sweden)
+                        break;
+                    case "Degree":
+                        toNumber = num * 9; // 1 octant = 9 degrees
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 2; // 1 octant = 1/2 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.015707963267949; // 1 octant = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 45; // 1 octant = 1/45 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 7.5; // 1 octant = 1/7.5 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.08; // 1 octant = 0.08 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 45; // 1 octant = 1/45 turn
+                        break;
+                }
+                break;
+            case "Quadrant":
+                switch (toName)
+                {
+                    case "Quadrant":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 90; // 1 quadrant = 90 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 5400; // 1 quadrant = 5,400 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 90; // 1 quadrant = 1/90 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 100; // 1 quadrant = 100 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 100; // 1 quadrant = 100 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 125; // 1 quadrant = 125 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num / 0.53333333333333; // 1 quadrant = 1.875 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 3000; // 1 quadrant = 3,000 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 2; // 1 quadrant = 2 octants
+                        break;
+                    case "Degree":
+                        toNumber = num * 90; // 1 quadrant = 90 degrees
+                        break;
+                    case "Radian":
+                        toNumber = num * 1.5707963267949; // 1 quadrant = 1.5707963267949 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num / 90; // 1 quadrant = 1/90 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 15; // 1 quadrant = 1/15 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 0.33333333333333; // 1 quadrant = 0.33333333333333 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 90; // 1 quadrant = 1/90 turn
+                        break;
+                }
+                break;
+            case "Radian":
+                switch (toName)
+                {
+                    case "Radian":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 3437.7467707849; // 1 radian = 3437.7467707849 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 206264.8062471; // 1 radian = 206264.8062471 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 63.661977236758; // 1 radian = 63.661977236758 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 63.661977236758; // 1 radian = 63.661977236758 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 79.577471545948; // 1 radian = 79.577471545948 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 106.1032953946; // 1 radian = 106.1032953946 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 190.98593132471; // 1 radian = 190.98593132471 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num / 0.78539816339745; // 1 radian = 1.2732395447352 octants
+                        break;
+                    case "Quadrant":
+                        toNumber = num / 1.5707963267949; // 1 radian = 0.63661977236758 quadrants
+                        break;
+                    case "Degree":
+                        toNumber = num * 57.295779513082; // 1 radian = 57.295779513082 degrees
+                        break;
+                    case "Revolution":
+                        toNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num / 0.5235987755983; // 1 radian = 1.9106332362491 sextants
+                        break;
+                    case "Sign":
+                        toNumber = num * 1.9098593171027; // 1 radian = 1.9098593171027 sign
+                        break;
+                    case "Turn":
+                        toNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 turn
+                        break;
+                }
+                break;
+            case "Revolution":
+                switch (toName)
+                {
+                    case "Revolution":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 206264.8062471; // 1 revolution = 206264.8062471 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 12375888.374827; // 1 revolution = 12375888.374827 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num * 0.15915494309189; // 1 revolution = 0.15915494309189 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 159.15494309189; // 1 revolution = 159.15494309189 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 159.15494309189; // 1 revolution = 159.15494309189 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 199.99999999998; // 1 revolution = 199.99999999998 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 266.66666666662; // 1 revolution = 266.66666666662 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 478.71382000118; // 1 revolution = 478.71382000118 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 2; // 1 revolution = 2 octants
+                        break;
+                    case "Quadrant":
+                        toNumber = num * 4; // 1 revolution = 4 quadrants
+                        break;
+                    case "Radian":
+                        toNumber = num * 6.2831853071796; // 1 revolution = 6.2831853071796 radians
+                        break;
+                    case "Degree":
+                        toNumber = num * 360; // 1 revolution = 360 degrees
+                        break;
+                    case "Sextant":
+                        toNumber = num * 6; // 1 revolution = 6 sextants
+                        break;
+                    case "Sign":
+                        toNumber = num * 6.2831853071796; // 1 revolution = 6.2831853071796 signs
+                        break;
+                    case "Turn":
+                        toNumber = num; // 1 revolution = 1 turn
+                        break;
+                }
+                break;
+            case "Sextant":
+                switch (toName)
+                {
+                    case "Sextant":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 3437.7467707849; // 1 sextant = 3437.7467707849 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 206264.80624692; // 1 sextant = 206264.80624692 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 166.66666666667; // 1 sextant = 166.66666666667 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 166.66666666667; // 1 sextant = 166.66666666667 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 208.33333333329; // 1 sextant = 208.33333333329 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 277.77777777772; // 1 sextant = 277.77777777772 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 498.06590000131; // 1 sextant = 498.06590000131 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 0.33333333333333; // 1 sextant = 0.33333333333333 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num * 0.66666666666667; // 1 sextant = 0.66666666666667 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 1.0471975511966; // 1 sextant = 1.0471975511966 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 revolutions
+                        break;
+                    case "Degree":
+                        toNumber = num * 60; // 1 sextant = 60 degrees
+                        break;
+                    case "Sign":
+                        toNumber = num * 1.0471975511966; // 1 sextant = 1.0471975511966 signs
+                        break;
+                    case "Turn":
+                        toNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 turns
+                        break;
+                }
+                break;
+            case "Sign":
+                switch (toName)
+                {
+                    case "Sign":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 3267.5904085893; // 1 sign = 3267.5904085893 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 196055.42451536; // 1 sign = 196055.42451536 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 157.07963267949; // 1 sign = 157.07963267949 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 157.07963267949; // 1 sign = 157.07963267949 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 196.34954084937; // 1 sign = 196.34954084937 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 261.79938779915; // 1 sign = 261.79938779915 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 469.98059222059; // 1 sign = 469.98059222059 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 0.31415926535898; // 1 sign = 0.31415926535898 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num * 0.62831853071796; // 1 sign = 0.62831853071796 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 0.98803162409286; // 1 sign = 0.98803162409286 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 revolutions
+                        break;
+                    case "Sextant":
+                        toNumber = num * 0.95531661812451; // 1 sign = 0.95531661812451 sextant
+                        break;
+                    case "Degree":
+                        toNumber = num * 36; // 1 sign = 36 degrees
+                        break;
+                    case "Turn":
+                        toNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 turns
+                        break;
+                }
+                break;
+            case "Turn":
+                switch (toName)
+                {
+                    case "Turn":
+                        toNumber = fromNumber;
+                        break;
+                    case "Arcminute":
+                        toNumber = num * 21600; // 1 turn = 21600 arcminutes
+                        break;
+                    case "Arcsecond":
+                        toNumber = num * 1296000; // 1 turn = 1296000 arcseconds
+                        break;
+                    case "Circle":
+                        toNumber = num * 1; // 1 turn = 1 circle
+                        break;
+                    case "Gon":
+                        toNumber = num * 400; // 1 turn = 400 gon
+                        break;
+                    case "Grad":
+                        toNumber = num * 400; // 1 turn = 400 grad
+                        break;
+                    case "MilNato":
+                        toNumber = num * 500; // 1 turn = 500 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        toNumber = num * 666.66666666667; // 1 turn = 666.66666666667 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        toNumber = num * 1200; // 1 turn = 1200 mil (Sweden)
+                        break;
+                    case "Octant":
+                        toNumber = num * 0.5; // 1 turn = 0.5 octant
+                        break;
+                    case "Quadrant":
+                        toNumber = num * 1; // 1 turn = 1 quadrant
+                        break;
+                    case "Radian":
+                        toNumber = num * 6.2831853071796; // 1 turn = 6.2831853071796 radians
+                        break;
+                    case "Revolution":
+                        toNumber = num * 1; // 1 turn = 1 revolution
+                        break;
+                    case "Sextant":
+                        toNumber = num * 6; // 1 turn = 6 sextant
+                        break;
+                    case "Sign":
+                        toNumber = num * 63.661977236758; // 1 turn = 63.661977236758 sign
+                        break;
+                    case "Degree":
+                        toNumber = num * 360; // 1 turn = 360 degrees
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Arcminute":
+                switch (fromName)
+                {
+                    case "Arcminute":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 60; // 1 arcminute = 60 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 21600; // 1 arcminute = 1/21600 circle
+                        break;
+                    case "Degree":
+                        fromNumber = num / 60; // 1 arcminute = 1/60 degree
+                        break;
+                    case "Gon":
+                        fromNumber = num / 54; // 1 arcminute = 1/54 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num / 60; // 1 arcminute = 1/60 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num / 3.375; // 1 arcminute = 1/3.375 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num / 3.333; // 1 arcminute = 1/3.333 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num / 3.375; // 1 arcminute = 1/3.375 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 270; // 1 arcminute = 1/270 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 90; // 1 arcminute = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.000290888208665722; // 1 arcminute = 0.000290888208665722 radian
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 1296000; // 1 arcminute = 1/1296000 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 160; // 1 arcminute = 1/160 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num / 60; // 1 arcminute = 1/60 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 21600; // 1 arcminute = 1/21600 turn
+                        break;
+                }
+                break;
+            case "Arcsecond":
+                switch (fromName)
+                {
+                    case "Arcsecond":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num / 60; // 1 arcsecond = 1/60 arcminute
+                        break;
+                    case "Circle":
+                        fromNumber = num / 1296000; // 1 arcsecond = 1/1296000 circle
+                        break;
+                    case "Degree":
+                        fromNumber = num / 3600; // 1 arcsecond = 1/3600 degree
+                        break;
+                    case "Gon":
+                        fromNumber = num / 3240; // 1 arcsecond = 1/3240 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num / 3600; // 1 arcsecond = 1/3600 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num / 202.5; // 1 arcsecond = 1/202.5 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num / 200; // 1 arcsecond = 1/200 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num / 202.5; // 1 arcsecond = 1/202.5 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 16200; // 1 arcsecond = 1/16200 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 5400; // 1 arcsecond = 1/5400 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.00000484813681109536; // 1 arcsecond = 0.00000484813681109536 radian
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 7776000; // 1 arcsecond = 1/7776000 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 9600; // 1 arcsecond = 1/9600 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num / 3600; // 1 arcsecond = 1/3600 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 1296000; // 1 arcsecond = 1/1296000 turn
+                        break;
+                }
+                break;
+            case "Circle":
+                switch (fromName)
+                {
+                    case "Circle":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 1296000; // 1 circle = 1296000 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 46656000; // 1 circle = 46656000 arcseconds
+                        break;
+                    case "Degree":
+                        fromNumber = num * 360; // 1 circle = 360 degrees
+                        break;
+                    case "Gon":
+                        fromNumber = num * 400; // 1 circle = 400 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 360; // 1 circle = 360 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 6283.18530717959; // 1 circle = 6283.18530717959 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 6300; // 1 circle = 6300 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 6283.18530717959; // 1 circle = 6283.18530717959 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 4; // 1 circle = 4 octants
+                        break;
+                    case "Quadrant":
+                        fromNumber = num * 1; // 1 circle = 1 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 6.28318530717959; // 1 circle = 6.28318530717959 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num * 1; // 1 circle = 1 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num * 6.66666666666667; // 1 circle = 6.66666666666667 sextants
+                        break;
+                    case "Sign":
+                        fromNumber = num * 360; // 1 circle = 360 signs
+                        break;
+                    case "Turn":
+                        fromNumber = num * 1; // 1 circle = 1 turn
+                        break;
+                }
+                break;
+            case "Degree":
+                switch (fromName)
+                {
+                    case "Degree":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 60; // 1 degree = 60 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 3600; // 1 degree = 3600 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 360; // 1 degree = 1/360 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 1.11111111111111; // 1 degree = 1.11111111111111 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 1.11111111111111; // 1 degree = 1.11111111111111 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 17.7777777777778; // 1 degree = 17.7777777777778 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 18; // 1 degree = 18 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 17.7777777777778; // 1 degree = 17.7777777777778 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 45; // 1 degree = 1/45 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 90; // 1 degree = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.0174532925199433; // 1 degree = 0.0174532925199433 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 360; // 1 degree = 1/360 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 60; // 1 degree = 1/60 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.166666666666667; // 1 degree = 0.166666666666667 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 360; // 1 degree = 1/360 turn
+                        break;
+                }
+                break;
+            case "Gon":
+                switch (fromName)
+                {
+                    case "Gon":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 54; // 1 gon = 54 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 3240; // 1 gon = 3240 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 400; // 1 gon = 1/400 circle
+                        break;
+                    case "Degree":
+                        fromNumber = num * 0.9; // 1 gon = 0.9 degree
+                        break;
+                    case "Grad":
+                        fromNumber = num * 0.9; // 1 gon = 0.9 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 16; // 1 gon = 16 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 16; // 1 gon = 16 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 16; // 1 gon = 16 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 50; // 1 gon = 1/50 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 100; // 1 gon = 1/100 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.015707963267949; // 1 gon = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 400; // 1 gon = 1/400 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 66.6666666666667; // 1 gon = 1/66.6666666666667 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.1; // 1 gon = 0.1 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 400; // 1 gon = 1/400 turn
+                        break;
+                }
+                break;
+            case "Grad":
+                switch (fromName)
+                {
+                    case "Grad":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 60; // 1 grad = 60 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 3600; // 1 grad = 3600 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 400; // 1 grad = 1/400 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 1.11111111111111; // 1 grad = 1.11111111111111 gon
+                        break;
+                    case "Degree":
+                        fromNumber = num * 1.11111111111111; // 1 grad = 1.11111111111111 degree
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 16; // 1 grad = 16 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 16; // 1 grad = 16 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 16; // 1 grad = 16 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 45; // 1 grad = 1/45 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 90; // 1 grad = 1/90 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.015707963267949; // 1 grad = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 400; // 1 grad = 1/400 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 60; // 1 grad = 1/60 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.1; // 1 grad = 0.1 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 400; // 1 grad = 1/400 turn
+                        break;
+                }
+                break;
+            case "MilNato":
+                switch (fromName)
+                {
+                    case "MilNato":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 3.375; // 1 mil (NATO) = 3.375 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 202.5; // 1 mil (NATO) = 202.5 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 6400; // 1 mil (NATO) = 1/6400 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 0.625; // 1 mil (NATO) = 0.625 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 0.625; // 1 mil (NATO) = 0.625 grad
+                        break;
+                    case "Degree":
+                        fromNumber = num * 0.9; // 1 mil (NATO) = 0.9 degree
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 1.25; // 1 mil (NATO) = 1.25 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 0.9375; // 1 mil (NATO) = 0.9375 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 8000; // 1 mil (NATO) = 1/8000 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 16000; // 1 mil (NATO) = 1/16000 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.0009817477042468; // 1 mil (NATO) = 0.0009817477042468 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 6400; // 1 mil (NATO) = 1/6400 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 1066.66666666667; // 1 mil (NATO) = 1/1066.66666666667 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.00625; // 1 mil (NATO) = 0.00625 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 6400; // 1 mil (NATO) = 1/6400 turn
+                        break;
+                }
+                break;
+            case "MilSovietUnion":
+                switch (fromName)
+                {
+                    case "MilSovietUnion":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 3.375; // 1 mil (Soviet Union) = 3.375 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 202.5; // 1 mil (Soviet Union) = 202.5 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 0.625; // 1 mil (Soviet Union) = 0.625 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 0.625; // 1 mil (Soviet Union) = 0.625 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 0.8; // 1 mil (Soviet Union) = 0.8 mil (NATO)
+                        break;
+                    case "Degree":
+                        fromNumber = num * 0.9; // 1 mil (Soviet Union) = 0.9 degree
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 0.75; // 1 mil (Soviet Union) = 0.75 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 8000; // 1 mil (Soviet Union) = 1/8000 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 16000; // 1 mil (Soviet Union) = 1/16000 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.0009817477042468; // 1 mil (Soviet Union) = 0.0009817477042468 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 1066.66666666667; // 1 mil (Soviet Union) = 1/1066.66666666667 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.00625; // 1 mil (Soviet Union) = 0.00625 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 6400; // 1 mil (Soviet Union) = 1/6400 turn
+                        break;
+                }
+                break;
+            case "MilSweden":
+                switch (fromName)
+                {
+                    case "MilSweden":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 4.8; // 1 mil (Sweden) = 4.8 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 288; // 1 mil (Sweden) = 288 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 6000; // 1 mil (Sweden) = 1/6000 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 0.6; // 1 mil (Sweden) = 0.6 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 0.6; // 1 mil (Sweden) = 0.6 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 0.75; // 1 mil (Sweden) = 0.75 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num / 0.75; // 1 mil (Sweden) = 1.33333333333333 mil (Soviet Union)
+                        break;
+                    case "Degree":
+                        fromNumber = num * 0.9; // 1 mil (Sweden) = 0.9 degree
+                        break;
+                    case "Octant":
+                        fromNumber = num / 7500; // 1 mil (Sweden) = 1/7500 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 15000; // 1 mil (Sweden) = 1/15000 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.0010471975511966; // 1 mil (Sweden) = 0.0010471975511966 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 6000; // 1 mil (Sweden) = 1/6000 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 1000; // 1 mil (Sweden) = 1/1000 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.006; // 1 mil (Sweden) = 0.006 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 6000; // 1 mil (Sweden) = 1/6000 turn
+                        break;
+                }
+                break;
+            case "Octant":
+                switch (fromName)
+                {
+                    case "Octant":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 480; // 1 octant = 480 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 28800; // 1 octant = 28,800 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 45; // 1 octant = 1/45 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 8; // 1 octant = 8 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 8; // 1 octant = 8 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 10; // 1 octant = 10 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num / 0.66666666666667; // 1 octant = 1.5 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 7500; // 1 octant = 7,500 mil (Sweden)
+                        break;
+                    case "Degree":
+                        fromNumber = num * 9; // 1 octant = 9 degrees
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 2; // 1 octant = 1/2 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.015707963267949; // 1 octant = 0.015707963267949 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 45; // 1 octant = 1/45 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 7.5; // 1 octant = 1/7.5 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.08; // 1 octant = 0.08 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 45; // 1 octant = 1/45 turn
+                        break;
+                }
+                break;
+            case "Quadrant":
+                switch (fromName)
+                {
+                    case "Quadrant":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 90; // 1 quadrant = 90 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 5400; // 1 quadrant = 5,400 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 90; // 1 quadrant = 1/90 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 100; // 1 quadrant = 100 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 100; // 1 quadrant = 100 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 125; // 1 quadrant = 125 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num / 0.53333333333333; // 1 quadrant = 1.875 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 3000; // 1 quadrant = 3,000 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 2; // 1 quadrant = 2 octants
+                        break;
+                    case "Degree":
+                        fromNumber = num * 90; // 1 quadrant = 90 degrees
+                        break;
+                    case "Radian":
+                        fromNumber = num * 1.5707963267949; // 1 quadrant = 1.5707963267949 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 90; // 1 quadrant = 1/90 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 15; // 1 quadrant = 1/15 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 0.33333333333333; // 1 quadrant = 0.33333333333333 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 90; // 1 quadrant = 1/90 turn
+                        break;
+                }
+                break;
+            case "Radian":
+                switch (fromName)
+                {
+                    case "Radian":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 3437.7467707849; // 1 radian = 3437.7467707849 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 206264.8062471; // 1 radian = 206264.8062471 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 63.661977236758; // 1 radian = 63.661977236758 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 63.661977236758; // 1 radian = 63.661977236758 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 79.577471545948; // 1 radian = 79.577471545948 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 106.1032953946; // 1 radian = 106.1032953946 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 190.98593132471; // 1 radian = 190.98593132471 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num / 0.78539816339745; // 1 radian = 1.2732395447352 octants
+                        break;
+                    case "Quadrant":
+                        fromNumber = num / 1.5707963267949; // 1 radian = 0.63661977236758 quadrants
+                        break;
+                    case "Degree":
+                        fromNumber = num * 57.295779513082; // 1 radian = 57.295779513082 degrees
+                        break;
+                    case "Revolution":
+                        fromNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num / 0.5235987755983; // 1 radian = 1.9106332362491 sextants
+                        break;
+                    case "Sign":
+                        fromNumber = num * 1.9098593171027; // 1 radian = 1.9098593171027 sign
+                        break;
+                    case "Turn":
+                        fromNumber = num / 6.2831853071796; // 1 radian = 1/6.2831853071796 turn
+                        break;
+                }
+                break;
+            case "Revolution":
+                switch (fromName)
+                {
+                    case "Revolution":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 206264.8062471; // 1 revolution = 206264.8062471 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 12375888.374827; // 1 revolution = 12375888.374827 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num * 0.15915494309189; // 1 revolution = 0.15915494309189 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 159.15494309189; // 1 revolution = 159.15494309189 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 159.15494309189; // 1 revolution = 159.15494309189 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 199.99999999998; // 1 revolution = 199.99999999998 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 266.66666666662; // 1 revolution = 266.66666666662 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 478.71382000118; // 1 revolution = 478.71382000118 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 2; // 1 revolution = 2 octants
+                        break;
+                    case "Quadrant":
+                        fromNumber = num * 4; // 1 revolution = 4 quadrants
+                        break;
+                    case "Radian":
+                        fromNumber = num * 6.2831853071796; // 1 revolution = 6.2831853071796 radians
+                        break;
+                    case "Degree":
+                        fromNumber = num * 360; // 1 revolution = 360 degrees
+                        break;
+                    case "Sextant":
+                        fromNumber = num * 6; // 1 revolution = 6 sextants
+                        break;
+                    case "Sign":
+                        fromNumber = num * 6.2831853071796; // 1 revolution = 6.2831853071796 signs
+                        break;
+                    case "Turn":
+                        fromNumber = num; // 1 revolution = 1 turn
+                        break;
+                }
+                break;
+            case "Sextant":
+                switch (fromName)
+                {
+                    case "Sextant":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 3437.7467707849; // 1 sextant = 3437.7467707849 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 206264.80624692; // 1 sextant = 206264.80624692 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 166.66666666667; // 1 sextant = 166.66666666667 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 166.66666666667; // 1 sextant = 166.66666666667 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 208.33333333329; // 1 sextant = 208.33333333329 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 277.77777777772; // 1 sextant = 277.77777777772 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 498.06590000131; // 1 sextant = 498.06590000131 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 0.33333333333333; // 1 sextant = 0.33333333333333 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num * 0.66666666666667; // 1 sextant = 0.66666666666667 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 1.0471975511966; // 1 sextant = 1.0471975511966 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 revolutions
+                        break;
+                    case "Degree":
+                        fromNumber = num * 60; // 1 sextant = 60 degrees
+                        break;
+                    case "Sign":
+                        fromNumber = num * 1.0471975511966; // 1 sextant = 1.0471975511966 signs
+                        break;
+                    case "Turn":
+                        fromNumber = num * 0.16666666666667; // 1 sextant = 0.16666666666667 turns
+                        break;
+                }
+                break;
+            case "Sign":
+                switch (fromName)
+                {
+                    case "Sign":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 3267.5904085893; // 1 sign = 3267.5904085893 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 196055.42451536; // 1 sign = 196055.42451536 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 157.07963267949; // 1 sign = 157.07963267949 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 157.07963267949; // 1 sign = 157.07963267949 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 196.34954084937; // 1 sign = 196.34954084937 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 261.79938779915; // 1 sign = 261.79938779915 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 469.98059222059; // 1 sign = 469.98059222059 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 0.31415926535898; // 1 sign = 0.31415926535898 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num * 0.62831853071796; // 1 sign = 0.62831853071796 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 0.98803162409286; // 1 sign = 0.98803162409286 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 revolutions
+                        break;
+                    case "Sextant":
+                        fromNumber = num * 0.95531661812451; // 1 sign = 0.95531661812451 sextant
+                        break;
+                    case "Degree":
+                        fromNumber = num * 36; // 1 sign = 36 degrees
+                        break;
+                    case "Turn":
+                        fromNumber = num * 0.15707963267949; // 1 sign = 0.15707963267949 turns
+                        break;
+                }
+                break;
+            case "Turn":
+                switch (fromName)
+                {
+                    case "Turn":
+                        fromNumber = toNumber;
+                        break;
+                    case "Arcminute":
+                        fromNumber = num * 21600; // 1 turn = 21600 arcminutes
+                        break;
+                    case "Arcsecond":
+                        fromNumber = num * 1296000; // 1 turn = 1296000 arcseconds
+                        break;
+                    case "Circle":
+                        fromNumber = num * 1; // 1 turn = 1 circle
+                        break;
+                    case "Gon":
+                        fromNumber = num * 400; // 1 turn = 400 gon
+                        break;
+                    case "Grad":
+                        fromNumber = num * 400; // 1 turn = 400 grad
+                        break;
+                    case "MilNato":
+                        fromNumber = num * 500; // 1 turn = 500 mil (NATO)
+                        break;
+                    case "MilSovietUnion":
+                        fromNumber = num * 666.66666666667; // 1 turn = 666.66666666667 mil (Soviet Union)
+                        break;
+                    case "MilSweden":
+                        fromNumber = num * 1200; // 1 turn = 1200 mil (Sweden)
+                        break;
+                    case "Octant":
+                        fromNumber = num * 0.5; // 1 turn = 0.5 octant
+                        break;
+                    case "Quadrant":
+                        fromNumber = num * 1; // 1 turn = 1 quadrant
+                        break;
+                    case "Radian":
+                        fromNumber = num * 6.2831853071796; // 1 turn = 6.2831853071796 radians
+                        break;
+                    case "Revolution":
+                        fromNumber = num * 1; // 1 turn = 1 revolution
+                        break;
+                    case "Sextant":
+                        fromNumber = num * 6; // 1 turn = 6 sextant
+                        break;
+                    case "Sign":
+                        fromNumber = num * 63.661977236758; // 1 turn = 63.661977236758 sign
+                        break;
+                    case "Degree":
+                        fromNumber = num * 360; // 1 turn = 360 degrees
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+
+}

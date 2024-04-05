@@ -1,0 +1,916 @@
+﻿@page "/force"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Force</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(ForceModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(ForceModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Newtons";
+    string toName = "TonnesForce";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Dynes":
+                switch (toName)
+                {
+                    case "Dynes":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 0.00000101972; // 1 Dyne = 0.00000101972 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 1e-8; // 1 Dyne = 1e-8 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 2.2480894383812e-12; // 1 Dyne = 2.2480894383812e-12 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 1e-14; // 1 Dyne = 1e-14 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 0.00001; // 1 Dyne = 0.00001 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 2.2480894383812e-6; // 1 Dyne = 2.2480894383812e-6 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 0.000072331; // 1 Dyne = 0.000072331 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 1e-11; // 1 Dyne = 1e-11 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 1.0197162129779e-12; // 1 Dyne = 1.0197162129779e-12 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 1.1243575366673e-15; // 1 Dyne = 1.1243575366673e-15 TonsForceUS
+                        break;
+                }
+                break;
+            case "KilogramsForce":
+                switch (toName)
+                {
+                    case "KilogramsForce":
+                        toNumber = num;
+                        break;
+                    case "Dynes":
+                        toNumber = num * 980665; // 1 KilogramsForce = 980665 Dynes
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 0.00980665; // 1 KilogramsForce = 0.00980665 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.00220462; // 1 KilogramsForce = 0.00220462 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.00000980665; // 1 KilogramsForce = 0.00000980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 9.80665; // 1 KilogramsForce = 9.80665 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 2.20462; // 1 KilogramsForce = 2.20462 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 70.9315; // 1 KilogramsForce = 70.9315 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 0.01; // 1 KilogramsForce = 0.01 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.001; // 1 KilogramsForce = 0.001 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.00110231; // 1 KilogramsForce = 0.00110231 TonsForceUS
+                        break;
+                }
+                break;
+            case "KiloNewtons":
+                switch (toName)
+                {
+                    case "KiloNewtons":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 101.9716; // 1 KiloNewtons = 101.9716 KilogramsForce
+                        break;
+                    case "Dynes":
+                        toNumber = num * 100000000; // 1 KiloNewtons = 100000000 Dynes
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.224809; // 1 KiloNewtons = 0.224809 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.001; // 1 KiloNewtons = 0.001 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 1000; // 1 KiloNewtons = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 224.809; // 1 KiloNewtons = 224.809 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 7259.49; // 1 KiloNewtons = 7259.49 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 10; // 1 KiloNewtons = 10 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.1019716; // 1 KiloNewtons = 0.1019716 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.112404; // 1 KiloNewtons = 0.112404 TonsForceUS
+                        break;
+                }
+                break;
+            case "Kips":
+                switch (toName)
+                {
+                    case "Kips":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 453.59237; // 1 Kips = 453.59237 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 4.448222; // 1 Kips = 4.448222 KiloNewtons
+                        break;
+                    case "Dynes":
+                        toNumber = num * 44482216.216; // 1 Kips = 44482216.216 Dynes
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.004448222; // 1 Kips = 0.004448222 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 4448.222; // 1 Kips = 4448.222 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 1000; // 1 Kips = 1000 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 32485.584; // 1 Kips = 32485.584 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 4.448222; // 1 Kips = 4.448222 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.45359237; // 1 Kips = 0.45359237 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.5; // 1 Kips = 0.5 TonsForceUS
+                        break;
+                }
+                break;
+            case "MegaNewtons":
+                switch (toName)
+                {
+                    case "MegaNewtons":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 101971.621298; // 1 MegaNewtons = 101971.621298 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 1000; // 1 MegaNewtons = 1000 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 224.808943; // 1 MegaNewtons = 224.808943 Kips
+                        break;
+                    case "Dynes":
+                        toNumber = num * 10000000000; // 1 MegaNewtons = 10,000,000,000 Dynes
+                        break;
+                    case "Newtons":
+                        toNumber = num * 1000000; // 1 MegaNewtons = 1,000,000 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 224808.943099; // 1 MegaNewtons = 224,808.943099 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 7245409.90794; // 1 MegaNewtons = 7,245,409.90794 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 1000; // 1 MegaNewtons = 1000 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 101.971621298; // 1 MegaNewtons = 101.971621298 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 112.404475; // 1 MegaNewtons = 112.404475 TonsForceUS
+                        break;
+                }
+                break;
+            case "Newtons":
+                switch (toName)
+                {
+                    case "Newtons":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 0.101971621298; // 1 Newton = 0.101971621298 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 0.001; // 1 Newton = 0.001 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.000224808943; // 1 Newton = 0.000224808943 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.000001; // 1 Newton = 0.000001 MegaNewtons
+                        break;
+                    case "Dynes":
+                        toNumber = num * 100000; // 1 Newton = 100,000 Dynes
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 0.224808943099; // 1 Newton = 0.224808943099 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 7.24540990794; // 1 Newton = 7.24540990794 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 0.001; // 1 Newton = 0.001 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.000101971621298; // 1 Newton = 0.000101971621298 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.000112404475; // 1 Newton = 0.000112404475 TonsForceUS
+                        break;
+                }
+                break;
+            case "PoundsForce":
+                switch (toName)
+                {
+                    case "PoundsForce":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 0.453592; // 1 PoundForce = 0.453592 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 0.00444822161526; // 1 PoundForce = 0.00444822161526 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.001; // 1 PoundForce = 0.001 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.00000444822161526; // 1 PoundForce = 0.00000444822161526 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 4.44822161526; // 1 PoundForce = 4.44822161526 Newtons
+                        break;
+                    case "Dynes":
+                        toNumber = num * 444822.161526; // 1 PoundForce = 444822.161526 Dynes
+                        break;
+                    case "Poundals":
+                        toNumber = num * 32.1740485564; // 1 PoundForce = 32.1740485564 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 0.00444822161526; // 1 PoundForce = 0.00444822161526 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.000453592; // 1 PoundForce = 0.000453592 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.0005; // 1 PoundForce = 0.0005 TonsForceUS
+                        break;
+                }
+                break;
+            case "Poundals":
+                switch (toName)
+                {
+                    case "Poundals":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 0.138254954376; // 1 Poundal = 0.138254954376 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 0.00135581794833; // 1 Poundal = 0.00135581794833 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.0000140980814033; // 1 Poundal = 0.0000140980814033 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 1.35581794833e-6; // 1 Poundal = 1.35581794833e-6 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 0.138254954376; // 1 Poundal = 0.138254954376 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 0.031081;
+                        break;
+                    case "Dynes":
+                        toNumber = num * 13825.4954376; // 1 Poundal = 13825.4954376 Dynes
+                        break;
+                    case "Sthene":
+                        toNumber = num * 0.00135581794833; // 1 Poundal = 0.00135581794833 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.000138254954376; // 1 Poundal = 0.000138254954376 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 0.000152543; // 1 Poundal = 0.000152543 TonsForceUS
+                        break;
+                }
+                break;
+            case "Sthene":
+                switch (toName)
+                {
+                    case "Sthene":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 1000; // 1 Sthene = 1000 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 9.80665; // 1 Sthene = 9.80665 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.01019716213; // 1 Sthene = 0.01019716213 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.00980665; // 1 Sthene = 0.00980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 1000; // 1 Sthene = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 224.8089430986; // 1 Sthene = 224.8089430986 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 72591.3831276; // 1 Sthene = 72591.3831276 Poundals
+                        break;
+                    case "Dynes":
+                        toNumber = num * 100000000; // 1 Sthene = 100000000 Dynes
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 1; // 1 Sthene = 1 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 1.1023113109; // 1 Sthene = 1.1023113109 TonsForceUS
+                        break;
+                }
+                break;
+            case "TonnesForce":
+                switch (toName)
+                {
+                    case "TonnesForce":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 1000; // 1 TonnesForce = 1000 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 9.80665; // 1 TonnesForce = 9.80665 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.01019716213; // 1 TonnesForce = 0.01019716213 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.00980665; // 1 TonnesForce = 0.00980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 1000; // 1 TonnesForce = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 2204.6226218488; // 1 TonnesForce = 2204.6226218488 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 715169.79245733; // 1 TonnesForce = 715169.79245733 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 1; // 1 TonnesForce = 1 Sthene
+                        break;
+                    case "Dynes":
+                        toNumber = num * 1000000000; // 1 TonnesForce = 1000000000 Dynes
+                        break;
+                    case "TonsForceUS":
+                        toNumber = num * 1.1023113109; // 1 TonnesForce = 1.1023113109 TonsForceUS
+                        break;
+                }
+                break;
+            case "TonsForceUS":
+                switch (toName)
+                {
+                    case "TonsForceUS":
+                        toNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        toNumber = num * 907.18474; // 1 TonsForceUS = 907.18474 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        toNumber = num * 8.896443230521; // 1 TonsForceUS = 8.896443230521 KiloNewtons
+                        break;
+                    case "Kips":
+                        toNumber = num * 0.00980665; // 1 TonsForceUS = 0.00980665 Kips
+                        break;
+                    case "MegaNewtons":
+                        toNumber = num * 0.008896443230521; // 1 TonsForceUS = 0.008896443230521 MegaNewtons
+                        break;
+                    case "Newtons":
+                        toNumber = num * 8896.443230521; // 1 TonsForceUS = 8896.443230521 Newtons
+                        break;
+                    case "PoundsForce":
+                        toNumber = num * 2000; // 1 TonsForceUS = 2000 PoundsForce
+                        break;
+                    case "Poundals":
+                        toNumber = num * 650171.52742664; // 1 TonsForceUS = 650171.52742664 Poundals
+                        break;
+                    case "Sthene":
+                        toNumber = num * 0.90718474; // 1 TonsForceUS = 0.90718474 Sthene
+                        break;
+                    case "TonnesForce":
+                        toNumber = num * 0.90718474; // 1 TonsForceUS = 0.90718474 TonnesForce
+                        break;
+                    case "Dynes":
+                        toNumber = num * 907184740; // 1 TonsForceUS = 907184740 Dynes
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Dynes":
+                switch (fromName)
+                {
+                    case "Dynes":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 0.00000101972; // 1 Dyne = 0.00000101972 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 1e-8; // 1 Dyne = 1e-8 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 2.2480894383812e-12; // 1 Dyne = 2.2480894383812e-12 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 1e-14; // 1 Dyne = 1e-14 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 0.00001; // 1 Dyne = 0.00001 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 2.2480894383812e-6; // 1 Dyne = 2.2480894383812e-6 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 0.000072331; // 1 Dyne = 0.000072331 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 1e-11; // 1 Dyne = 1e-11 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 1.0197162129779e-12; // 1 Dyne = 1.0197162129779e-12 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 1.1243575366673e-15; // 1 Dyne = 1.1243575366673e-15 TonsForceUS
+                        break;
+                }
+                break;
+            case "KilogramsForce":
+                switch (fromName)
+                {
+                    case "KilogramsForce":
+                        fromNumber = num;
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 980665; // 1 KilogramsForce = 980665 Dynes
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 0.00980665; // 1 KilogramsForce = 0.00980665 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.00220462; // 1 KilogramsForce = 0.00220462 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.00000980665; // 1 KilogramsForce = 0.00000980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 9.80665; // 1 KilogramsForce = 9.80665 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 2.20462; // 1 KilogramsForce = 2.20462 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 70.9315; // 1 KilogramsForce = 70.9315 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 0.01; // 1 KilogramsForce = 0.01 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.001; // 1 KilogramsForce = 0.001 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.00110231; // 1 KilogramsForce = 0.00110231 TonsForceUS
+                        break;
+                }
+                break;
+            case "KiloNewtons":
+                switch (fromName)
+                {
+                    case "KiloNewtons":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 101.9716; // 1 KiloNewtons = 101.9716 KilogramsForce
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 100000000; // 1 KiloNewtons = 100000000 Dynes
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.224809; // 1 KiloNewtons = 0.224809 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.001; // 1 KiloNewtons = 0.001 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 1000; // 1 KiloNewtons = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 224.809; // 1 KiloNewtons = 224.809 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 7259.49; // 1 KiloNewtons = 7259.49 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 10; // 1 KiloNewtons = 10 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.1019716; // 1 KiloNewtons = 0.1019716 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.112404; // 1 KiloNewtons = 0.112404 TonsForceUS
+                        break;
+                }
+                break;
+            case "Kips":
+                switch (fromName)
+                {
+                    case "Kips":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 453.59237; // 1 Kips = 453.59237 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 4.448222; // 1 Kips = 4.448222 KiloNewtons
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 44482216.216; // 1 Kips = 44482216.216 Dynes
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.004448222; // 1 Kips = 0.004448222 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 4448.222; // 1 Kips = 4448.222 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 1000; // 1 Kips = 1000 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 32485.584; // 1 Kips = 32485.584 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 4.448222; // 1 Kips = 4.448222 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.45359237; // 1 Kips = 0.45359237 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.5; // 1 Kips = 0.5 TonsForceUS
+                        break;
+                }
+                break;
+            case "MegaNewtons":
+                switch (fromName)
+                {
+                    case "MegaNewtons":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 101971.621298; // 1 MegaNewtons = 101971.621298 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 1000; // 1 MegaNewtons = 1000 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 224.808943; // 1 MegaNewtons = 224.808943 Kips
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 10000000000; // 1 MegaNewtons = 10,000,000,000 Dynes
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 1000000; // 1 MegaNewtons = 1,000,000 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 224808.943099; // 1 MegaNewtons = 224,808.943099 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 7245409.90794; // 1 MegaNewtons = 7,245,409.90794 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 1000; // 1 MegaNewtons = 1000 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 101.971621298; // 1 MegaNewtons = 101.971621298 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 112.404475; // 1 MegaNewtons = 112.404475 TonsForceUS
+                        break;
+                }
+                break;
+            case "Newtons":
+                switch (fromName)
+                {
+                    case "Newtons":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 0.101971621298; // 1 Newton = 0.101971621298 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 0.001; // 1 Newton = 0.001 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.000224808943; // 1 Newton = 0.000224808943 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.000001; // 1 Newton = 0.000001 MegaNewtons
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 100000; // 1 Newton = 100,000 Dynes
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 0.224808943099; // 1 Newton = 0.224808943099 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 7.24540990794; // 1 Newton = 7.24540990794 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 0.001; // 1 Newton = 0.001 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.000101971621298; // 1 Newton = 0.000101971621298 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.000112404475; // 1 Newton = 0.000112404475 TonsForceUS
+                        break;
+                }
+                break;
+            case "PoundsForce":
+                switch (fromName)
+                {
+                    case "PoundsForce":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 0.453592; // 1 PoundForce = 0.453592 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 0.00444822161526; // 1 PoundForce = 0.00444822161526 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.001; // 1 PoundForce = 0.001 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.00000444822161526; // 1 PoundForce = 0.00000444822161526 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 4.44822161526; // 1 PoundForce = 4.44822161526 Newtons
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 444822.161526; // 1 PoundForce = 444822.161526 Dynes
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 32.1740485564; // 1 PoundForce = 32.1740485564 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 0.00444822161526; // 1 PoundForce = 0.00444822161526 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.000453592; // 1 PoundForce = 0.000453592 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.0005; // 1 PoundForce = 0.0005 TonsForceUS
+                        break;
+                }
+                break;
+            case "Poundals":
+                switch (fromName)
+                {
+                    case "Poundals":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 0.138254954376; // 1 Poundal = 0.138254954376 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 0.00135581794833; // 1 Poundal = 0.00135581794833 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.0000140980814033; // 1 Poundal = 0.0000140980814033 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 1.35581794833e-6; // 1 Poundal = 1.35581794833e-6 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 0.138254954376; // 1 Poundal = 0.138254954376 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 0.031081;
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 13825.4954376; // 1 Poundal = 13825.4954376 Dynes
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 0.00135581794833; // 1 Poundal = 0.00135581794833 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.000138254954376; // 1 Poundal = 0.000138254954376 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 0.000152543; // 1 Poundal = 0.000152543 TonsForceUS
+                        break;
+                }
+                break;
+            case "Sthene":
+                switch (fromName)
+                {
+                    case "Sthene":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 1000; // 1 Sthene = 1000 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 9.80665; // 1 Sthene = 9.80665 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.01019716213; // 1 Sthene = 0.01019716213 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.00980665; // 1 Sthene = 0.00980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 1000; // 1 Sthene = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 224.8089430986; // 1 Sthene = 224.8089430986 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 72591.3831276; // 1 Sthene = 72591.3831276 Poundals
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 100000000; // 1 Sthene = 100000000 Dynes
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 1; // 1 Sthene = 1 TonnesForce
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 1.1023113109; // 1 Sthene = 1.1023113109 TonsForceUS
+                        break;
+                }
+                break;
+            case "TonnesForce":
+                switch (fromName)
+                {
+                    case "TonnesForce":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 1000; // 1 TonnesForce = 1000 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 9.80665; // 1 TonnesForce = 9.80665 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.01019716213; // 1 TonnesForce = 0.01019716213 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.00980665; // 1 TonnesForce = 0.00980665 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 1000; // 1 TonnesForce = 1000 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 2204.6226218488; // 1 TonnesForce = 2204.6226218488 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 715169.79245733; // 1 TonnesForce = 715169.79245733 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 1; // 1 TonnesForce = 1 Sthene
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 1000000000; // 1 TonnesForce = 1000000000 Dynes
+                        break;
+                    case "TonsForceUS":
+                        fromNumber = num * 1.1023113109; // 1 TonnesForce = 1.1023113109 TonsForceUS
+                        break;
+                }
+                break;
+            case "TonsForceUS":
+                switch (fromName)
+                {
+                    case "TonsForceUS":
+                        fromNumber = num;
+                        break;
+                    case "KilogramsForce":
+                        fromNumber = num * 907.18474; // 1 TonsForceUS = 907.18474 KilogramsForce
+                        break;
+                    case "KiloNewtons":
+                        fromNumber = num * 8.896443230521; // 1 TonsForceUS = 8.896443230521 KiloNewtons
+                        break;
+                    case "Kips":
+                        fromNumber = num * 0.00980665; // 1 TonsForceUS = 0.00980665 Kips
+                        break;
+                    case "MegaNewtons":
+                        fromNumber = num * 0.008896443230521; // 1 TonsForceUS = 0.008896443230521 MegaNewtons
+                        break;
+                    case "Newtons":
+                        fromNumber = num * 8896.443230521; // 1 TonsForceUS = 8896.443230521 Newtons
+                        break;
+                    case "PoundsForce":
+                        fromNumber = num * 2000; // 1 TonsForceUS = 2000 PoundsForce
+                        break;
+                    case "Poundals":
+                        fromNumber = num * 650171.52742664; // 1 TonsForceUS = 650171.52742664 Poundals
+                        break;
+                    case "Sthene":
+                        fromNumber = num * 0.90718474; // 1 TonsForceUS = 0.90718474 Sthene
+                        break;
+                    case "TonnesForce":
+                        fromNumber = num * 0.90718474; // 1 TonsForceUS = 0.90718474 TonnesForce
+                        break;
+                    case "Dynes":
+                        fromNumber = num * 907184740; // 1 TonsForceUS = 907184740 Dynes
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

@@ -1,0 +1,1397 @@
+﻿@page "/bitsandbytes"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Bits And Bytes</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(BitsAndBytesModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(BitsAndBytesModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Bits";
+    string toName = "GigabytesGB";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Bits":
+                switch (toName)
+                {
+                    case "Bits":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num / 8; // 1 byte = 8 bits
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num / 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num / 8000; // 1 kilobyte = 8000 bits
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num / 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num / 8_000_000; // 1 megabyte = 8,000,000 bits
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num / 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 8_000_000_000; // 1 gigabyte = 8,000,000,000 bits
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 8_000_000_000_000; // 1 terabyte = 8,000,000,000,000 bits
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_000_000_000_000_000; // 1 petabit = 1,000,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 bits
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 bits
+                        break;
+                }
+                break;
+            case "Bytes":
+                switch (toName)
+                {
+                    case "Bytes":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bits":
+                        toNumber = num * 8; // 1 byte = 8 bits
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8 / 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num / 1000; // 1 kilobyte = 1000 bytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8 / 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num / 1_000_000; // 1 megabyte = 1,000,000 bytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8 / 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 1_000_000_000; // 1 gigabyte = 1,000,000,000 bytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 8 / 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 1_000_000_000_000; // 1 terabyte = 1,000,000,000,000 bytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num * 8 / 1_000_000_000_000_000; // 1 petabit = 1,000,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 bytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num * 8 / 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 bytes
+                        break;
+                }
+                break;
+            case "KilobitsKb":
+                switch (toName)
+                {
+                    case "KilobitsKb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1000 / 8; // 1 kilobit = 1000 bits, 1 byte = 8 bits
+                        break;
+                    case "Bits":
+                        toNumber = num * 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num / 8; // 1 kilobyte = 8 kilobits
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num / 1000; // 1 megabit = 1000 kilobits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 1000 / 8 / 1000; // 1 megabyte = 8 megabits, 1 megabit = 1000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num / 1_000_000; // 1 gigabit = 1,000,000 kilobits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 1000 / 8 / 1_000_000; // 1 gigabyte = 8 gigabits, 1 gigabit = 1,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 1_000_000_000; // 1 terabit = 1,000,000,000 kilobits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num * 1000 / 8 / 1_000_000_000; // 1 terabyte = 8 terabits, 1 terabit = 1,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_000_000_000_000; // 1 petabit = 1,000,000,000,000 kilobits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num * 1000 / 8 / 1_000_000_000_000; // 1 petabyte = 8 petabits, 1 petabit = 1,000,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000 kilobits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num * 1000 / 8 / 1_000_000_000_000_000; // 1 exabyte = 8 exabits, 1 exabit = 1,000,000,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                }
+                break;
+            case "KilobytesKB":
+                switch (toName)
+                {
+                    case "KilobytesKB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1024; // 1 kilobyte = 1024 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8; // 1 kilobyte = 8 kilobits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8 * 1024; // 1 kilobyte = 8 kilobits, 1 kilobit = 1024 bits
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8 / 1000; // 1 kilobyte = 8 kilobits, 1 megabit = 1000 kilobits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num / 1000; // 1 kilobyte = 1000 kilobytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8 / 1_000_000; // 1 kilobyte = 8 kilobits, 1 gigabit = 1,000,000 kilobits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 1_000_000; // 1 kilobyte = 1,000,000 kilobytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 8 / 1_000_000_000; // 1 kilobyte = 8 kilobits, 1 terabit = 1,000,000,000 kilobits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 1_000_000_000; // 1 kilobyte = 1,000,000,000 kilobytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num * 8 / 1_000_000_000_000; // 1 kilobyte = 8 kilobits, 1 petabit = 1,000,000,000,000 kilobits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 1_000_000_000_000; // 1 kilobyte = 1,000,000,000,000 kilobytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num * 8 / 1_000_000_000_000_000; // 1 kilobyte = 8 kilobits, 1 exabit = 1,000,000,000,000,000 kilobits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 1_000_000_000_000_000; // 1 kilobyte = 1,000,000,000,000,000 kilobytes
+                        break;
+                }
+                break;
+            case "MegabitsMb":
+                switch (toName)
+                {
+                    case "MegabitsMb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 125000; // 1 megabit = 125,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 1000; // 1 megabit = 1000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 125; // 1 megabit = 125 kilobytes
+                        break;
+                    case "Bits":
+                        toNumber = num * 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num / 8; // 1 megabit = 1/8 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num / 1000; // 1 megabit = 1/1000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 8000; // 1 megabit = 1/8000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 1_000_000; // 1 megabit = 1/1,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 8_000_000; // 1 megabit = 1/8,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_000_000_000; // 1 megabit = 1/1,000,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8_000_000_000; // 1 megabit = 1/8,000,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000_000_000_000; // 1 megabit = 1/1,000,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000_000_000_000; // 1 megabit = 1/8,000,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "MegabytesMB":
+                switch (toName)
+                {
+                    case "MegabytesMB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1_000_000; // 1 megabyte = 1,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8_000; // 1 megabyte = 8,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 1_000; // 1 megabyte = 1,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8; // 1 megabyte = 8 megabits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8_000_000; // 1 megabyte = 8,000,000 bits
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num / 125; // 1 megabyte = 1/125 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 1000; // 1 megabyte = 1/1000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 1_250_000; // 1 megabyte = 1/1,250,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 1_000_000; // 1 megabyte = 1/1,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_250_000_000; // 1 megabyte = 1/1,250,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 1_000_000_000; // 1 megabyte = 1/1,000,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_250_000_000_000; // 1 megabyte = 1/1,250,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 1_000_000_000_000; // 1 megabyte = 1/1,000,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "GigabitsGb":
+                switch (toName)
+                {
+                    case "GigabitsGb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 125_000_000; // 1 gigabit = 125,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 1_000; // 1 gigabit = 1,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 125_000; // 1 gigabit = 125,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 1_000; // 1 gigabit = 1,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 125; // 1 gigabit = 125 megabytes
+                        break;
+                    case "Bits":
+                        toNumber = num * 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num / 8; // 1 gigabit = 1/8 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 1_000; // 1 gigabit = 1/1,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 8_000; // 1 gigabit = 1/8,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_000_000; // 1 gigabit = 1/1,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8_000_000; // 1 gigabit = 1/8,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000_000_000; // 1 gigabit = 1/1,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000_000_000; // 1 gigabit = 1/8,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "GigabytesGB":
+                switch (toName)
+                {
+                    case "GigabytesGB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1_000_000_000; // 1 gigabyte = 1,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8_000_000; // 1 gigabyte = 8,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 1_000_000; // 1 gigabyte = 1,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8_000; // 1 gigabyte = 8,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 1_000; // 1 gigabyte = 1,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8; // 1 gigabyte = 8 gigabits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8_000_000_000; // 1 gigabyte = 8,000,000,000 bits
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num / 125; // 1 gigabyte = 1/125 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 1_000; // 1 gigabyte = 1/1,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 125_000; // 1 gigabyte = 1/125,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 1_000_000; // 1 gigabyte = 1/1,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 125_000_000; // 1 gigabyte = 1/125,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 1_000_000_000; // 1 gigabyte = 1/1,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "TerabitsTb":
+                switch (toName)
+                {
+                    case "TerabitsTb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 125_000_000_000; // 1 terabit = 125,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 1_000_000; // 1 terabit = 1,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 125_000_000; // 1 terabit = 125,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 1_000_000; // 1 terabit = 1,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 125_000; // 1 terabit = 125,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 1_000; // 1 terabit = 1,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 125; // 1 terabit = 125 gigabytes
+                        break;
+                    case "Bits":
+                        toNumber = num * 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num / 8; // 1 terabit = 1/8 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 1_000; // 1 terabit = 1/1,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8_000; // 1 terabit = 1/8,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000_000; // 1 terabit = 1/1,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000_000; // 1 terabit = 1/8,000,000 exabytes
+                        break;
+                }
+                break;
+            case "TerabytesTB":
+                switch (toName)
+                {
+                    case "TerabytesTB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1_000_000_000_000; // 1 terabyte = 1,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8_000_000_000; // 1 terabyte = 8,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 1_000_000_000; // 1 terabyte = 1,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8_000_000; // 1 terabyte = 8,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 1_000_000; // 1 terabyte = 1,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8_000; // 1 terabyte = 8,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 1_000; // 1 terabyte = 1,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 8; // 1 terabyte = 8 terabits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8_000_000_000_000; // 1 terabyte = 8,000,000,000,000 bits
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 125; // 1 terabyte = 1/125 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8; // 1 terabyte = 1/8 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 125_000; // 1 terabyte = 1/125,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000; // 1 terabyte = 1/8,000 exabytes
+                        break;
+                }
+                break;
+            case "PetabitsPb":
+                switch (toName)
+                {
+                    case "PetabitsPb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 125_000_000_000_000; // 1 petabit = 125,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 125_000_000_000; // 1 petabit = 125,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 125_000_000_000; // 1 petabit = 125,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 125_000_000; // 1 petabit = 125,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 125_000_000; // 1 petabit = 125,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 125_000; // 1 petabit = 125,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 125_000; // 1 petabit = 125,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 125; // 1 petabit = 125 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num * 125; // 1 petabit = 125 terabytes
+                        break;
+                    case "Bits":
+                        toNumber = num * 125_000_000_000_000; // 1 petabit = 125,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 8; // 1 petabit = 1/8 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 1_000; // 1 petabit = 1/1,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8_000; // 1 petabit = 1/8,000 exabytes
+                        break;
+                }
+                break;
+            case "PetabytesPB":
+                switch (toName)
+                {
+                    case "PetabytesPB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8_000_000_000_000; // 1 petabyte = 8,000,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 1_000_000_000_000; // 1 petabyte = 1,000,000,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8_000_000_000; // 1 petabyte = 8,000,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 1_000_000_000; // 1 petabyte = 1,000,000,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 8_000_000; // 1 petabyte = 8,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num * 1_000_000; // 1 petabyte = 1,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num * 8; // 1 petabyte = 8 petabits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 bits
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num / 125; // 1 petabyte = 1/125 exabits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 1_000; // 1 petabyte = 1/1,000 exabytes
+                        break;
+                }
+                break;
+            case "ExabitsEb":
+                switch (toName)
+                {
+                    case "ExabitsEb":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 125_000_000_000_000_000; // 1 exabit = 125,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 125_000_000_000_000; // 1 exabit = 125,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 125_000_000_000; // 1 exabit = 125,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 125_000_000_000; // 1 exabit = 125,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 125_000_000; // 1 exabit = 125,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 125_000_000; // 1 exabit = 125,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 125_000; // 1 exabit = 125,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 125_000; // 1 exabit = 125,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num * 125; // 1 exabit = 125 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num / 8; // 1 exabit = 1/8 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num / 1_000; // 1 exabit = 1/1,000 petabytes
+                        break;
+                    case "Bits":
+                        toNumber = num * 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        toNumber = num / 8; // 1 exabit = 1/8 exabytes
+                        break;
+                }
+                break;
+            case "ExabytesEB":
+                switch (toName)
+                {
+                    case "ExabytesEB":
+                        toNumber = fromNumber;
+                        break;
+                    case "Bytes":
+                        toNumber = num * 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        toNumber = num * 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        toNumber = num * 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        toNumber = num * 8_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        toNumber = num * 1_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        toNumber = num * 8_000_000_000_000; // 1 exabyte = 8,000,000,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        toNumber = num * 1_000_000_000_000; // 1 exabyte = 1,000,000,000,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        toNumber = num * 8_000_000_000; // 1 exabyte = 8,000,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        toNumber = num * 1_000_000_000; // 1 exabyte = 1,000,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        toNumber = num * 8_000_000; // 1 exabyte = 8,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        toNumber = num * 1_000_000; // 1 exabyte = 1,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        toNumber = num * 8; // 1 exabyte = 8 exabits
+                        break;
+                    case "Bits":
+                        toNumber = num * 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 bits
+                        break;
+                }
+                break;
+        }
+
+        //toNumber = Math.Round(toNumber, 6);
+    }
+
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Bits":
+                switch (fromName)
+                {
+                    case "Bits":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num / 8; // 1 byte = 8 bits
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num / 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num / 8000; // 1 kilobyte = 8000 bits
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num / 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num / 8_000_000; // 1 megabyte = 8,000,000 bits
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num / 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 8_000_000_000; // 1 gigabyte = 8,000,000,000 bits
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 8_000_000_000_000; // 1 terabyte = 8,000,000,000,000 bits
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_000_000_000_000_000; // 1 petabit = 1,000,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 bits
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 bits
+                        break;
+                }
+                break;
+            case "Bytes":
+                switch (fromName)
+                {
+                    case "Bytes":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8; // 1 byte = 8 bits
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8 / 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num / 1000; // 1 kilobyte = 1000 bytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8 / 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num / 1_000_000; // 1 megabyte = 1,000,000 bytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8 / 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 1_000_000_000; // 1 gigabyte = 1,000,000,000 bytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 8 / 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 1_000_000_000_000; // 1 terabyte = 1,000,000,000,000 bytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num * 8 / 1_000_000_000_000_000; // 1 petabit = 1,000,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 bytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num * 8 / 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 bytes
+                        break;
+                }
+                break;
+            case "KilobitsKb":
+                switch (fromName)
+                {
+                    case "KilobitsKb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1000 / 8; // 1 kilobit = 1000 bits, 1 byte = 8 bits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 1000; // 1 kilobit = 1000 bits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num / 8; // 1 kilobyte = 8 kilobits
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num / 1000; // 1 megabit = 1000 kilobits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 1000 / 8 / 1000; // 1 megabyte = 8 megabits, 1 megabit = 1000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num / 1_000_000; // 1 gigabit = 1,000,000 kilobits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 1000 / 8 / 1_000_000; // 1 gigabyte = 8 gigabits, 1 gigabit = 1,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 1_000_000_000; // 1 terabit = 1,000,000,000 kilobits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num * 1000 / 8 / 1_000_000_000; // 1 terabyte = 8 terabits, 1 terabit = 1,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_000_000_000_000; // 1 petabit = 1,000,000,000,000 kilobits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num * 1000 / 8 / 1_000_000_000_000; // 1 petabyte = 8 petabits, 1 petabit = 1,000,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000 kilobits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num * 1000 / 8 / 1_000_000_000_000_000; // 1 exabyte = 8 exabits, 1 exabit = 1,000,000,000,000,000 kilobits, 1 byte = 8 bits
+                        break;
+                }
+                break;
+            case "KilobytesKB":
+                switch (fromName)
+                {
+                    case "KilobytesKB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1024; // 1 kilobyte = 1024 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8; // 1 kilobyte = 8 kilobits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8 * 1024; // 1 kilobyte = 8 kilobits, 1 kilobit = 1024 bits
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8 / 1000; // 1 kilobyte = 8 kilobits, 1 megabit = 1000 kilobits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num / 1000; // 1 kilobyte = 1000 kilobytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8 / 1_000_000; // 1 kilobyte = 8 kilobits, 1 gigabit = 1,000,000 kilobits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 1_000_000; // 1 kilobyte = 1,000,000 kilobytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 8 / 1_000_000_000; // 1 kilobyte = 8 kilobits, 1 terabit = 1,000,000,000 kilobits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 1_000_000_000; // 1 kilobyte = 1,000,000,000 kilobytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num * 8 / 1_000_000_000_000; // 1 kilobyte = 8 kilobits, 1 petabit = 1,000,000,000,000 kilobits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 1_000_000_000_000; // 1 kilobyte = 1,000,000,000,000 kilobytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num * 8 / 1_000_000_000_000_000; // 1 kilobyte = 8 kilobits, 1 exabit = 1,000,000,000,000,000 kilobits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 1_000_000_000_000_000; // 1 kilobyte = 1,000,000,000,000,000 kilobytes
+                        break;
+                }
+                break;
+            case "MegabitsMb":
+                switch (fromName)
+                {
+                    case "MegabitsMb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 125000; // 1 megabit = 125,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 1000; // 1 megabit = 1000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 125; // 1 megabit = 125 kilobytes
+                        break;
+                    case "Bits":
+                        fromNumber = num * 1_000_000; // 1 megabit = 1,000,000 bits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num / 8; // 1 megabit = 1/8 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num / 1000; // 1 megabit = 1/1000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 8000; // 1 megabit = 1/8000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 1_000_000; // 1 megabit = 1/1,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 8_000_000; // 1 megabit = 1/8,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_000_000_000; // 1 megabit = 1/1,000,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8_000_000_000; // 1 megabit = 1/8,000,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000_000_000_000; // 1 megabit = 1/1,000,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000_000_000_000; // 1 megabit = 1/8,000,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "MegabytesMB":
+                switch (fromName)
+                {
+                    case "MegabytesMB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1_000_000; // 1 megabyte = 1,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8_000; // 1 megabyte = 8,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 1_000; // 1 megabyte = 1,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8; // 1 megabyte = 8 megabits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8_000_000; // 1 megabyte = 8,000,000 bits
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num / 125; // 1 megabyte = 1/125 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 1000; // 1 megabyte = 1/1000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 1_250_000; // 1 megabyte = 1/1,250,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 1_000_000; // 1 megabyte = 1/1,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_250_000_000; // 1 megabyte = 1/1,250,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 1_000_000_000; // 1 megabyte = 1/1,000,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_250_000_000_000; // 1 megabyte = 1/1,250,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 1_000_000_000_000; // 1 megabyte = 1/1,000,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "GigabitsGb":
+                switch (fromName)
+                {
+                    case "GigabitsGb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 125_000_000; // 1 gigabit = 125,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 1_000; // 1 gigabit = 1,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 125_000; // 1 gigabit = 125,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 1_000; // 1 gigabit = 1,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 125; // 1 gigabit = 125 megabytes
+                        break;
+                    case "Bits":
+                        fromNumber = num * 1_000_000_000; // 1 gigabit = 1,000,000,000 bits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num / 8; // 1 gigabit = 1/8 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 1_000; // 1 gigabit = 1/1,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 8_000; // 1 gigabit = 1/8,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_000_000; // 1 gigabit = 1/1,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8_000_000; // 1 gigabit = 1/8,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000_000_000; // 1 gigabit = 1/1,000,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000_000_000; // 1 gigabit = 1/8,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "GigabytesGB":
+                switch (fromName)
+                {
+                    case "GigabytesGB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1_000_000_000; // 1 gigabyte = 1,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8_000_000; // 1 gigabyte = 8,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 1_000_000; // 1 gigabyte = 1,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8_000; // 1 gigabyte = 8,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 1_000; // 1 gigabyte = 1,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8; // 1 gigabyte = 8 gigabits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8_000_000_000; // 1 gigabyte = 8,000,000,000 bits
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num / 125; // 1 gigabyte = 1/125 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 1_000; // 1 gigabyte = 1/1,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 125_000; // 1 gigabyte = 1/125,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 1_000_000; // 1 gigabyte = 1/1,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 125_000_000; // 1 gigabyte = 1/125,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 1_000_000_000; // 1 gigabyte = 1/1,000,000,000 exabytes
+                        break;
+                }
+                break;
+            case "TerabitsTb":
+                switch (fromName)
+                {
+                    case "TerabitsTb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 125_000_000_000; // 1 terabit = 125,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 1_000_000; // 1 terabit = 1,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 125_000_000; // 1 terabit = 125,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 1_000_000; // 1 terabit = 1,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 125_000; // 1 terabit = 125,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 1_000; // 1 terabit = 1,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 125; // 1 terabit = 125 gigabytes
+                        break;
+                    case "Bits":
+                        fromNumber = num * 1_000_000_000_000; // 1 terabit = 1,000,000,000,000 bits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num / 8; // 1 terabit = 1/8 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 1_000; // 1 terabit = 1/1,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8_000; // 1 terabit = 1/8,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000_000; // 1 terabit = 1/1,000,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000_000; // 1 terabit = 1/8,000,000 exabytes
+                        break;
+                }
+                break;
+            case "TerabytesTB":
+                switch (fromName)
+                {
+                    case "TerabytesTB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1_000_000_000_000; // 1 terabyte = 1,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8_000_000_000; // 1 terabyte = 8,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 1_000_000_000; // 1 terabyte = 1,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8_000_000; // 1 terabyte = 8,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 1_000_000; // 1 terabyte = 1,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8_000; // 1 terabyte = 8,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 1_000; // 1 terabyte = 1,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 8; // 1 terabyte = 8 terabits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8_000_000_000_000; // 1 terabyte = 8,000,000,000,000 bits
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 125; // 1 terabyte = 1/125 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8; // 1 terabyte = 1/8 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 125_000; // 1 terabyte = 1/125,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000; // 1 terabyte = 1/8,000 exabytes
+                        break;
+                }
+                break;
+            case "PetabitsPb":
+                switch (fromName)
+                {
+                    case "PetabitsPb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 125_000_000_000_000; // 1 petabit = 125,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 125_000_000_000; // 1 petabit = 125,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 125_000_000_000; // 1 petabit = 125,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 125_000_000; // 1 petabit = 125,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 125_000_000; // 1 petabit = 125,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 125_000; // 1 petabit = 125,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 125_000; // 1 petabit = 125,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 125; // 1 petabit = 125 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num * 125; // 1 petabit = 125 terabytes
+                        break;
+                    case "Bits":
+                        fromNumber = num * 125_000_000_000_000; // 1 petabit = 125,000,000,000,000 bits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 8; // 1 petabit = 1/8 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 1_000; // 1 petabit = 1/1,000 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8_000; // 1 petabit = 1/8,000 exabytes
+                        break;
+                }
+                break;
+            case "PetabytesPB":
+                switch (fromName)
+                {
+                    case "PetabytesPB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 1_000_000_000_000_000; // 1 petabyte = 1,000,000,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8_000_000_000_000; // 1 petabyte = 8,000,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 1_000_000_000_000; // 1 petabyte = 1,000,000,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8_000_000_000; // 1 petabyte = 8,000,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 1_000_000_000; // 1 petabyte = 1,000,000,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 8_000_000; // 1 petabyte = 8,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num * 1_000_000; // 1 petabyte = 1,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num * 8; // 1 petabyte = 8 petabits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8_000_000_000_000_000; // 1 petabyte = 8,000,000,000,000,000 bits
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num / 125; // 1 petabyte = 1/125 exabits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 1_000; // 1 petabyte = 1/1,000 exabytes
+                        break;
+                }
+                break;
+            case "ExabitsEb":
+                switch (fromName)
+                {
+                    case "ExabitsEb":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 125_000_000_000_000_000; // 1 exabit = 125,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 125_000_000_000_000; // 1 exabit = 125,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 125_000_000_000; // 1 exabit = 125,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 125_000_000_000; // 1 exabit = 125,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 125_000_000; // 1 exabit = 125,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 125_000_000; // 1 exabit = 125,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 125_000; // 1 exabit = 125,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 125_000; // 1 exabit = 125,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num * 125; // 1 exabit = 125 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num / 8; // 1 exabit = 1/8 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num / 1_000; // 1 exabit = 1/1,000 petabytes
+                        break;
+                    case "Bits":
+                        fromNumber = num * 1_000_000_000_000_000_000; // 1 exabit = 1,000,000,000,000,000,000 bits
+                        break;
+                    case "ExabytesEB":
+                        fromNumber = num / 8; // 1 exabit = 1/8 exabytes
+                        break;
+                }
+                break;
+            case "ExabytesEB":
+                switch (fromName)
+                {
+                    case "ExabytesEB":
+                        fromNumber = toNumber;
+                        break;
+                    case "Bytes":
+                        fromNumber = num * 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 bytes
+                        break;
+                    case "KilobitsKb":
+                        fromNumber = num * 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 kilobits
+                        break;
+                    case "KilobytesKB":
+                        fromNumber = num * 1_000_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000,000 kilobytes
+                        break;
+                    case "MegabitsMb":
+                        fromNumber = num * 8_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000 megabits
+                        break;
+                    case "MegabytesMB":
+                        fromNumber = num * 1_000_000_000_000_000; // 1 exabyte = 1,000,000,000,000,000 megabytes
+                        break;
+                    case "GigabitsGb":
+                        fromNumber = num * 8_000_000_000_000; // 1 exabyte = 8,000,000,000,000 gigabits
+                        break;
+                    case "GigabytesGB":
+                        fromNumber = num * 1_000_000_000_000; // 1 exabyte = 1,000,000,000,000 gigabytes
+                        break;
+                    case "TerabitsTb":
+                        fromNumber = num * 8_000_000_000; // 1 exabyte = 8,000,000,000 terabits
+                        break;
+                    case "TerabytesTB":
+                        fromNumber = num * 1_000_000_000; // 1 exabyte = 1,000,000,000 terabytes
+                        break;
+                    case "PetabitsPb":
+                        fromNumber = num * 8_000_000; // 1 exabyte = 8,000,000 petabits
+                        break;
+                    case "PetabytesPB":
+                        fromNumber = num * 1_000_000; // 1 exabyte = 1,000,000 petabytes
+                        break;
+                    case "ExabitsEb":
+                        fromNumber = num * 8; // 1 exabyte = 8 exabits
+                        break;
+                    case "Bits":
+                        fromNumber = num * 8_000_000_000_000_000_000; // 1 exabyte = 8,000,000,000,000,000,000 bits
+                        break;
+                }
+                break;
+        }
+
+        //fromNumber = Math.Round(fromNumber, 6);
+    }
+}

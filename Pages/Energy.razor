@@ -1,0 +1,2596 @@
+﻿@page "/energy"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Energy</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(EnergyModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(EnergyModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "ElectronVolts";
+    string toName = "Joules";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "ElectronVolts":
+                switch (toName)
+                {
+                    case "ElectronVolts":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1.60218e-29; // 1 Electron Volt = 1.60218e-29 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 1.18171e-19; // 1 Electron Volt = 1.18171e-19 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1.60218e-22; // 1 Electron Volt = 1.60218e-22 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1.18171e-22; // 1 Electron Volt = 1.18171e-22 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075e-18; // 1 Electron Volt = 8.85075e-18 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 3.82929e-23; // 1 Electron Volt = 3.82929e-23 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 1.6262e-20; // 1 Electron Volt = 1.6262e-20 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1.60218e-22; // 1 Electron Volt = 1.60218e-22 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1.60218e-25; // 1 Electron Volt = 1.60218e-25 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 4.45049e-26; // 1 Electron Volt = 4.45049e-26 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1.60218e-31; // 1 Electron Volt = 1.60218e-31 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1.60218e-28; // 1 Electron Volt = 1.60218e-28 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 4.45049e-29; // 1 Electron Volt = 4.45049e-29 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 Watt-Hours
+                        break;
+                }
+                break;
+            case "ExaJoules":
+                switch (toName)
+                {
+                    case "ExaJoules":
+                        toNumber = num;
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num / 1.60218e-29; // 1 ExaJoule = 1 / 1.60218e-29 Electron Volts
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 7.37562e+18; // 1 ExaJoule = 7.37562e+18 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e+6; // 1 ExaJoule = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e+5; // 1 ExaJoule = 2.77778e+5 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 7.37562e+5; // 1 ExaJoule = 7.37562e+5 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075e+21; // 1 ExaJoule = 8.85075e+21 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.38846e+17; // 1 ExaJoule = 2.38846e+17 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 1.01972e+19; // 1 ExaJoule = 1.01972e+19 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1e+15; // 1 ExaJoule = 1e+15 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 2.77778e+14; // 1 ExaJoule = 2.77778e+14 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e+12; // 1 ExaJoule = 1e+12 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e+11; // 1 ExaJoule = 2.77778e+11 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 0.001; // 1 ExaJoule = 0.001 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1000; // 1 ExaJoule = 1000 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 277.778; // 1 ExaJoule = 277.778 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2.77778e+14; // 1 ExaJoule = 2.77778e+14 Watt-Hours
+                        break;
+                }
+                break;
+            case "FootPoundForce":
+                switch (toName)
+                {
+                    case "FootPoundForce":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num / 7.37562e+18; // 1 Foot-Pound Force = 1 / 7.37562e+18 ExaJoules
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num / 8.46235e-15; // 1 Foot-Pound Force = 1 / 8.46235e-15 Electron Volts
+                        break;
+                    case "GigaJoules":
+                        toNumber = num / 1.35582e+9; // 1 Foot-Pound Force = 1 / 1.35582e+9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num / 3.72506e+8; // 1 Foot-Pound Force = 1 / 3.72506e+8 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num / 7.57688e-4; // 1 Foot-Pound Force = 1 / 7.57688e-4 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 12; // 1 Foot-Pound Force = 12 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num / 3.08603e+3; // 1 Foot-Pound Force = 1 / 3.08603e+3 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num / 2.20462; // 1 Foot-Pound Force = 1 / 2.20462 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num / 1.35582e-3; // 1 Foot-Pound Force = 1 / 1.35582e-3 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num / 3.72506e-4; // 1 Foot-Pound Force = 1 / 3.72506e-4 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num / 1.35582e-6; // 1 Foot-Pound Force = 1 / 1.35582e-6 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num / 3.72506e-7; // 1 Foot-Pound Force = 1 / 3.72506e-7 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num / 1.35582e-21; // 1 Foot-Pound Force = 1 / 1.35582e-21 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num / 1.35582e-12; // 1 Foot-Pound Force = 1 / 1.35582e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num / 3.72506e-13; // 1 Foot-Pound Force = 1 / 3.72506e-13 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 3.72506e-4; // 1 Foot-Pound Force = 3.72506e-4 Watt-Hours
+                        break;
+                }
+                break;
+            case "GigaJoules":
+                switch (toName)
+                {
+                    case "GigaJoules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num / 1e+9; // 1 GigaJoule = 1e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 737562; // 1 GigaJoule = 737,562 Foot-Pound Force
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+18; // 1 GigaJoule = 6.242e+18 Electron Volts
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 0.277778; // 1 GigaJoule = 0.277778 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 0.00134102; // 1 GigaJoule = 0.00134102 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075e+6; // 1 GigaJoule = 8.85075e+6 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 238.846; // 1 GigaJoule = 238.846 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 101971.6; // 1 GigaJoule = 101,971.6 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1e+6; // 1 GigaJoule = 1e+6 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 277.778; // 1 GigaJoule = 277.778 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1000; // 1 GigaJoule = 1000 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 0.277778; // 1 GigaJoule = 0.277778 MegaWatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num / 1e-6; // 1 GigaJoule = 1e-6 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num / 1e-3; // 1 GigaJoule = 1e-3 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 0.000277778; // 1 GigaJoule = 0.000277778 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2777778; // 1 GigaJoule = 2,777,778 Watt-Hours
+                        break;
+                }
+                break;
+            case "GigaWattHours":
+                switch (toName)
+                {
+                    case "GigaWattHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 3.6; // 1 GigaWattHour = 3.6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2.65522e+9; // 1 GigaWattHour = 2.65522e+9 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 3.6; // 1 GigaWattHour = 3.6 GigaJoules
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 2.24694e+25; // 1 GigaWattHour = 2.24694e+25 Electron Volts
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1341.02; // 1 GigaWattHour = 1341.02 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075e+11; // 1 GigaWattHour = 8.85075e+11 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 3.6e+12; // 1 GigaWattHour = 3.6e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 8.59887e+8; // 1 GigaWattHour = 8.59887e+8 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 3.8591e+11; // 1 GigaWattHour = 3.8591e+11 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 3.6e+9; // 1 GigaWattHour = 3.6e+9 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 3.6e+6; // 1 GigaWattHour = 3.6e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 1000; // 1 GigaWattHour = 1000 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 3.6e+12; // 1 GigaWattHour = 3.6e+12 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num / 1e-3; // 1 GigaWattHour = 1e-3 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num / 1e-6; // 1 GigaWattHour = 1e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num / 1e-3; // 1 GigaWattHour = 1e-3 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 3.6e+15; // 1 GigaWattHour = 3.6e+15 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 1e+9; // 1 GigaWattHour = 1e+9 Watt-Hours
+                        break;
+                }
+                break;
+            case "HorsePowerHours":
+                switch (toName)
+                {
+                    case "HorsePowerHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2.68452e+8; // 1 HorsePowerHour = 2.68452e+8 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num / 1341.02; // 1 HorsePowerHour = 1/1341.02 GigaWattHours
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 1.78081e+24; // 1 HorsePowerHour = 1.78081e+24 Electron Volts
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 2.356e+8; // 1 HorsePowerHour = 2.356e+8 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        toNumber = num * 2.68452e+6; // 1 HorsePowerHour = 2.68452e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 641.615; // 1 HorsePowerHour = 641.615 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 2.68523e+8; // 1 HorsePowerHour = 2.68523e+8 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 2684.52; // 1 HorsePowerHour = 2684.52 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num / 1341.02; // 1 HorsePowerHour = 1/1341.02 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 2.68452e+6; // 1 HorsePowerHour = 2.68452e+6 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num / 1e-3; // 1 HorsePowerHour = 1e-3 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num / 1e-6; // 1 HorsePowerHour = 1e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num / 1.34102; // 1 HorsePowerHour = 1/1.34102 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 9.656e+6; // 1 HorsePowerHour = 9.656e+6 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2684.52; // 1 HorsePowerHour = 2684.52 Watt-Hours
+                        break;
+                }
+                break;
+            case "InchPoundForce":
+                switch (toName)
+                {
+                    case "InchPoundForce":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1.35582e-18; // 1 InchPoundForce = 1.35582e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num / 12.0; // 1 InchPoundForce = 1/12 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1.35582e-15; // 1 InchPoundForce = 1.35582e-15 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 1.18806e-19; // 1 InchPoundForce = 1.18806e-19 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num / 2.65522e+7; // 1 InchPoundForce = 1/2.65522e+7 HorsePowerHours
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 8.46235e+17; // 1 InchPoundForce = 8.46235e+17 Electron Volts
+                        break;
+                    case "Joules":
+                        toNumber = num * 0.112984; // 1 InchPoundForce = 0.112984 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.61193e-5; // 1 InchPoundForce = 2.61193e-5 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 0.113; // 1 InchPoundForce = 0.113 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 0.000112984; // 1 InchPoundForce = 0.000112984 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1.12984e-7; // 1 InchPoundForce = 1.12984e-7 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 1.24739e-11; // 1 InchPoundForce = 1.24739e-11 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 0.112984; // 1 InchPoundForce = 0.112984 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1.35582e-22; // 1 InchPoundForce = 1.35582e-22 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1.35582e-10; // 1 InchPoundForce = 1.35582e-10 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 1.18806e-14; // 1 InchPoundForce = 1.18806e-14 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 112.984; // 1 InchPoundForce = 112.984 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 0.031384; // 1 InchPoundForce = 0.031384 Watt-Hours
+                        break;
+                }
+                break;
+            case "Joules":
+                switch (toName)
+                {
+                    case "Joules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1e-18; // 1 Joule = 1e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 0.737562; // 1 Joule = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e-9; // 1 Joule = 1e-9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e-13; // 1 Joule = 2.77778e-13 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 2.38846e-7; // 1 Joule = 2.38846e-7 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075; // 1 Joule = 8.85075 InchPoundForce
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+18; // 1 Joule = 6.242e+18 Electron Volts
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 0.000239006; // 1 Joule = 0.000239006 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 0.101972; // 1 Joule = 0.101972 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 0.001; // 1 Joule = 0.001 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e-6; // 1 Joule = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e-10; // 1 Joule = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num; // 1 Joule = 1 Newton-Meter
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1e-15; // 1 Joule = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1e-12; // 1 Joule = 1e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.77778e-16; // 1 Joule = 2.77778e-16 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num; // 1 Joule = 1 Watt-Second
+                        break;
+                    case "WattHours":
+                        toNumber = num * 0.000277778; // 1 Joule = 0.000277778 Watt-Hours
+                        break;
+                }
+                break;
+            case "KiloCalories":
+                switch (toName)
+                {
+                    case "KiloCalories":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 4.184e-15; // 1 KiloCalorie = 4.184e-15 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 3085.96; // 1 KiloCalorie = 3085.96 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 4.184; // 1 KiloCalorie = 4.184 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 1.163e-6; // 1 KiloCalorie = 1.163e-6 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1.58125e-3; // 1 KiloCalorie = 1.58125e-3 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 11307.5; // 1 KiloCalorie = 11307.5 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 4184; // 1 KiloCalorie = 4184 Joules
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 2.611e+22; // 1 KiloCalorie = 2.611e+22 Electron Volts
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 427.302; // 1 KiloCalorie = 427.302 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 4.184; // 1 KiloCalorie = 4.184 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 0.004184; // 1 KiloCalorie = 0.004184 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 1.163e-9; // 1 KiloCalorie = 1.163e-9 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 4184; // 1 KiloCalorie = 4184 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 4.184e-18; // 1 KiloCalorie = 4.184e-18 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 4.184e-9; // 1 KiloCalorie = 4.184e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 1.163e-12; // 1 KiloCalorie = 1.163e-12 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 4184; // 1 KiloCalorie = 4184 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 1.163; // 1 KiloCalorie = 1.163 Watt-Hours
+                        break;
+                }
+                break;
+            case "KilogramForceMeters":
+                switch (toName)
+                {
+                    case "KilogramForceMeters":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 9.80665e-9; // 1 Kilogram-Force Meter = 9.80665e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 7.23301; // 1 Kilogram-Force Meter = 7.23301 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 9.80665e-6; // 1 Kilogram-Force Meter = 9.80665e-6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.72413e-9; // 1 Kilogram-Force Meter = 2.72413e-9 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 3.72506e-6; // 1 Kilogram-Force Meter = 3.72506e-6 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 86.7962; // 1 Kilogram-Force Meter = 86.7962 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.34284e-3; // 1 Kilogram-Force Meter = 2.34284e-3 KiloCalories
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 5.60959e+21; // 1 Kilogram-Force Meter = 5.60959e+21 Electron Volts
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 9.80665e-3; // 1 Kilogram-Force Meter = 9.80665e-3 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 9.80665e-6; // 1 Kilogram-Force Meter = 9.80665e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.72413e-12; // 1 Kilogram-Force Meter = 2.72413e-12 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 9.80665e-15; // 1 Kilogram-Force Meter = 9.80665e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 9.80665e-12; // 1 Kilogram-Force Meter = 9.80665e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.72413e-15; // 1 Kilogram-Force Meter = 2.72413e-15 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2.72413e-3; // 1 Kilogram-Force Meter = 2.72413e-3 WattHours
+                        break;
+                }
+                break;
+            case "KiloJoules":
+                switch (toName)
+                {
+                    case "KiloJoules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1e-18; // 1 Kilojoule = 1e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 737.562; // 1 Kilojoule = 737.562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e-6; // 1 Kilojoule = 1e-6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e-7; // 1 Kilojoule = 2.77778e-7 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 3.72506e-4; // 1 Kilojoule = 3.72506e-4 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 885.013; // 1 Kilojoule = 885.013 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 1000; // 1 Kilojoule = 1000 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 0.239006; // 1 Kilojoule = 0.239006 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 101.972; // 1 Kilojoule = 101.972 KilogramForceMeters
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+21; // 1 Kilojoule = 6.242e+21 Electron Volts
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 0.001; // 1 Kilojoule = 0.001 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e-10; // 1 Kilojoule = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1000; // 1 Kilojoule = 1000 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1e-15; // 1 Kilojoule = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1e-9; // 1 Kilojoule = 1e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.77778e-13; // 1 Kilojoule = 2.77778e-13 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1000; // 1 Kilojoule = 1000 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 0.277778; // 1 Kilojoule = 0.277778 WattHours
+                        break;
+                }
+                break;
+            case "KilowattHours":
+                switch (toName)
+                {
+                    case "KilowattHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 3.6e-12; // 1 Kilowatt-hour = 3.6e-12 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2655223.73; // 1 Kilowatt-hour = 2,655,223.73 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 3.6; // 1 Kilowatt-hour = 3.6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 0.001; // 1 Kilowatt-hour = 0.001 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1.34102; // 1 Kilowatt-hour = 1.34102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 2655223.73 * 12; // 1 Kilowatt-hour = 31,866,684.76 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 859.845; // 1 Kilowatt-hour = 859.845 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 367097.836; // 1 Kilowatt-hour = 367,097.836 KilogramForceMeters
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 2.246e+25; // 1 Kilowatt-hour = 2.246e+25 Electron Volts
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 3.6; // 1 Kilowatt-hour = 3.6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 0.001; // 1 Kilowatt-hour = 0.001 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 3.6e-15; // 1 Kilowatt-hour = 3.6e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 3.6e-9; // 1 Kilowatt-hour = 3.6e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 1e-6; // 1 Kilowatt-hour = 1e-6 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 1000; // 1 Kilowatt-hour = 1000 WattHours
+                        break;
+                }
+                break;
+            case "MegaJoules":
+                switch (toName)
+                {
+                    case "MegaJoules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1e-6; // 1 MegaJoule = 1e-6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 737.562; // 1 MegaJoule = 737.562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 0.001; // 1 MegaJoule = 0.001 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 0.000277778; // 1 MegaJoule = 0.000277778 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 0.00134102; // 1 MegaJoule = 0.00134102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 737.562 * 12; // 1 MegaJoule = 8850.74 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 1e+6; // 1 MegaJoule = 1e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 239.006; // 1 MegaJoule = 239.006 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 101971.621; // 1 MegaJoule = 101,971.621 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1000; // 1 MegaJoule = 1000 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 0.277778; // 1 MegaJoule = 0.277778 KilowattHours
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 0.000277778; // 1 MegaJoule = 0.000277778 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1e+6; // 1 MegaJoule = 1e+6 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1e-9; // 1 MegaJoule = 1e-9 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1e-3; // 1 MegaJoule = 1e-3 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.77778e-7; // 1 MegaJoule = 2.77778e-7 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1e+6; // 1 MegaJoule = 1e+6 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 277.778; // 1 MegaJoule = 277.778 WattHours
+                        break;
+                }
+                break;
+            case "MegaWattHours":
+                switch (toName)
+                {
+                    case "MegaWattHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 3.6e-9; // 1 MegaWattHour = 3.6e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2.65522e+8; // 1 MegaWattHour = 2.65522e+8 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 3.6; // 1 MegaWattHour = 3.6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 0.001; // 1 MegaWattHour = 0.001 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1341.02; // 1 MegaWattHour = 1341.02 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 2.65522e+8 * 12; // 1 MegaWattHour = 3.18626e+9 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 3.6e+9; // 1 MegaWattHour = 3.6e+9 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 859845.227; // 1 MegaWattHour = 859,845.227 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 367097836.982; // 1 MegaWattHour = 367,097,836.982 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 3.6e+6; // 1 MegaWattHour = 3.6e+6 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 1000; // 1 MegaWattHour = 1000 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 3.6e+3; // 1 MegaWattHour = 3.6e+3 MegaJoules
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 3.6e+9; // 1 MegaWattHour = 3.6e+9 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 3.6e-12; // 1 MegaWattHour = 3.6e-12 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 3.6e-6; // 1 MegaWattHour = 3.6e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 1e-6; // 1 MegaWattHour = 1e-6 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 3.6e+9 * 3600; // 1 MegaWattHour = 1.296e+13 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 1e+6; // 1 MegaWattHour = 1e+6 WattHours
+                        break;
+                }
+                break;
+            case "NewtonMeters":
+                switch (toName)
+                {
+                    case "NewtonMeters":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1e-9; // 1 NewtonMeter = 1e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 0.737562; // 1 NewtonMeter = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e-3; // 1 NewtonMeter = 1e-3 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e-7; // 1 NewtonMeter = 2.77778e-7 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1.34102e-3; // 1 NewtonMeter = 1.34102e-3 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85074; // 1 NewtonMeter = 8.85074 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num; // 1 NewtonMeter = 1 Joule
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.39006e-4; // 1 NewtonMeter = 2.39006e-4 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 0.101972; // 1 NewtonMeter = 0.101972 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1e-3; // 1 NewtonMeter = 1e-3 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 2.77778e-7; // 1 NewtonMeter = 2.77778e-7 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e-6; // 1 NewtonMeter = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e-10; // 1 NewtonMeter = 2.77778e-10 MegaWattHours
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 1e-15; // 1 NewtonMeter = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1e-9; // 1 NewtonMeter = 1e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.77778e-13; // 1 NewtonMeter = 2.77778e-13 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num; // 1 NewtonMeter = 1 WattSecond
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2.77778e-4; // 1 NewtonMeter = 2.77778e-4 WattHours
+                        break;
+                }
+                break;
+            case "PetaJoules":
+                switch (toName)
+                {
+                    case "PetaJoules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 1000; // 1 PetaJoule = 1000 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 7.37562e+17; // 1 PetaJoule = 7.37562e+17 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e+6; // 1 PetaJoule = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e+5; // 1 PetaJoule = 2.77778e+5 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 1.34102e+6; // 1 PetaJoule = 1.34102e+6 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85074e+18; // 1 PetaJoule = 8.85074e+18 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 1e+15; // 1 PetaJoule = 1e+15 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.39006e+14; // 1 PetaJoule = 2.39006e+14 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 1.01972e+17; // 1 PetaJoule = 1.01972e+17 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1e+12; // 1 PetaJoule = 1e+12 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 2.77778e+8; // 1 PetaJoule = 2.77778e+8 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e+9; // 1 PetaJoule = 1e+9 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e+5; // 1 PetaJoule = 2.77778e+5 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1e+9; // 1 PetaJoule = 1e+9 NewtonMeters
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+30; // 1 PetaJoule = 6.242e+30 ElectronVolts
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1000; // 1 PetaJoule = 1000 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 277.778; // 1 PetaJoule = 277.778 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1e+15; // 1 PetaJoule = 1e+15 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2.77778e+11; // 1 PetaJoule = 2.77778e+11 WattHours
+                        break;
+                }
+                break;
+            case "TeraJoules":
+                switch (toName)
+                {
+                    case "TeraJoules":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 0.001; // 1 TeraJoule = 0.001 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 7.37562e+14; // 1 TeraJoule = 7.37562e+14 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1000; // 1 TeraJoule = 1000 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 277.778; // 1 TeraJoule = 277.778 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 134.102; // 1 TeraJoule = 134.102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85074e+17; // 1 TeraJoule = 8.85074e+17 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 1e+12; // 1 TeraJoule = 1e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 2.39006e+11; // 1 TeraJoule = 2.39006e+11 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 1.01972e+14; // 1 TeraJoule = 1.01972e+14 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 1e+9; // 1 TeraJoule = 1e+9 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        toNumber = num * 2.77778e+5; // 1 TeraJoule = 2.77778e+5 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e+6; // 1 TeraJoule = 1e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 277.778; // 1 TeraJoule = 277.778 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 1e+6; // 1 TeraJoule = 1e+6 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 0.001; // 1 TeraJoule = 0.001 PetaJoules
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+27; // 1 TeraJoule = 6.242e+27 ElectronVolts
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 277.778; // 1 TeraJoule = 277.778 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 1e+12; // 1 TeraJoule = 1e+12 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 2.77778e+8; // 1 TeraJoule = 2.77778e+8 WattHours
+                        break;
+                }
+                break;
+            case "TeraWattHours":
+                switch (toName)
+                {
+                    case "TeraWattHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 3.6; // 1 TeraWattHour = 3.6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2.65522e+15; // 1 TeraWattHour = 2.65522e+15 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e+6; // 1 TeraWattHour = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 1000; // 1 TeraWattHour = 1000 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 4800000; // 1 TeraWattHour = 4800000 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 3.72506e+18; // 1 TeraWattHour = 3.72506e+18 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 3.6e+12; // 1 TeraWattHour = 3.6e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 8.59849e+11; // 1 TeraWattHour = 8.59849e+11 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 3.66086e+15; // 1 TeraWattHour = 3.66086e+15 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 3.6e+9; // 1 TeraWattHour = 3.6e+9 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 3.6e+6; // 1 TeraWattHour = 3.6e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 1000; // 1 TeraWattHour = 1000 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 3.6e+9; // 1 TeraWattHour = 3.6e+9 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 0.001; // 1 TeraWattHour = 0.001 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 0.001; // 1 TeraWattHour = 0.001 TeraJoules
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 2.24694e+28; // 1 TeraWattHour = 2.24694e+28 ElectronVolts
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 3.6e+15; // 1 TeraWattHour = 3.6e+15 WattSeconds
+                        break;
+                    case "WattHours":
+                        toNumber = num * 1e+12; // 1 TeraWattHour = 1e+12 WattHours
+                        break;
+                }
+                break;
+            case "WattSeconds":
+                switch (toName)
+                {
+                    case "WattSeconds":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 2.77778e-19; // 1 WattSecond = 2.77778e-19 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 0.737562; // 1 WattSecond = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 1e-9; // 1 WattSecond = 1e-9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 2.77778e-13; // 1 WattSecond = 2.77778e-13 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 9.80665e-7; // 1 WattSecond = 9.80665e-7 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 8.85075; // 1 WattSecond = 8.85075 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num; // 1 WattSecond = 1 Joule
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 0.000238846; // 1 WattSecond = 0.000238846 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 0.101972; // 1 WattSecond = 0.101972 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 0.001; // 1 WattSecond = 0.001 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 1e-6; // 1 WattSecond = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 2.77778e-10; // 1 WattSecond = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num; // 1 WattSecond = 1 NewtonMeter
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 2.77778e-22; // 1 WattSecond = 2.77778e-22 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 1e-15; // 1 WattSecond = 1e-15 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 2.77778e-16; // 1 WattSecond = 2.77778e-16 TeraWattHours
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 6.242e+18; // 1 WattSecond = 6.242e+18 ElectronVolts
+                        break;
+                    case "WattHours":
+                        toNumber = num * 0.000277778; // 1 WattSecond = 0.000277778 WattHours
+                        break;
+                }
+                break;
+            case "WattHours":
+                switch (toName)
+                {
+                    case "WattHours":
+                        toNumber = num;
+                        break;
+                    case "ExaJoules":
+                        toNumber = num * 2.77778e-22; // 1 WattHour = 2.77778e-22 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        toNumber = num * 2655.22; // 1 WattHour = 2655.22 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        toNumber = num * 0.000001; // 1 WattHour = 0.000001 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        toNumber = num * 1e-9; // 1 WattHour = 1e-9 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        toNumber = num * 0.00134; // 1 WattHour = 0.00134 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        toNumber = num * 31761.3; // 1 WattHour = 31761.3 InchPoundForce
+                        break;
+                    case "Joules":
+                        toNumber = num * 3600; // 1 WattHour = 3600 Joules
+                        break;
+                    case "KiloCalories":
+                        toNumber = num * 0.859845; // 1 WattHour = 0.859845 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        toNumber = num * 367.095; // 1 WattHour = 367.095 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        toNumber = num * 3.6; // 1 WattHour = 3.6 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        toNumber = num * 0.0036; // 1 WattHour = 0.0036 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        toNumber = num * 1e-6; // 1 WattHour = 1e-6 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        toNumber = num * 2655.22; // 1 WattHour = 2655.22 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        toNumber = num * 2.77778e-25; // 1 WattHour = 2.77778e-25 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        toNumber = num * 3.6e-9; // 1 WattHour = 3.6e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        toNumber = num * 1e-12; // 1 WattHour = 1e-12 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        toNumber = num * 3600; // 1 WattHour = 3600 WattSeconds
+                        break;
+                    case "ElectronVolts":
+                        toNumber = num * 9.223e+18; // 1 WattHour = 9.223e+18 ElectronVolts
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "ElectronVolts":
+                switch (fromName)
+                {
+                    case "ElectronVolts":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1.60218e-29; // 1 Electron Volt = 1.60218e-29 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 1.18171e-19; // 1 Electron Volt = 1.18171e-19 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1.60218e-22; // 1 Electron Volt = 1.60218e-22 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1.18171e-22; // 1 Electron Volt = 1.18171e-22 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075e-18; // 1 Electron Volt = 8.85075e-18 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 3.82929e-23; // 1 Electron Volt = 3.82929e-23 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 1.6262e-20; // 1 Electron Volt = 1.6262e-20 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1.60218e-22; // 1 Electron Volt = 1.60218e-22 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1.60218e-25; // 1 Electron Volt = 1.60218e-25 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 4.45049e-26; // 1 Electron Volt = 4.45049e-26 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1.60218e-31; // 1 Electron Volt = 1.60218e-31 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1.60218e-28; // 1 Electron Volt = 1.60218e-28 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 4.45049e-29; // 1 Electron Volt = 4.45049e-29 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1.60218e-19; // 1 Electron Volt = 1.60218e-19 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 4.45049e-23; // 1 Electron Volt = 4.45049e-23 Watt-Hours
+                        break;
+                }
+                break;
+            case "ExaJoules":
+                switch (fromName)
+                {
+                    case "ExaJoules":
+                        fromNumber = num;
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num / 1.60218e-29; // 1 ExaJoule = 1 / 1.60218e-29 Electron Volts
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 7.37562e+18; // 1 ExaJoule = 7.37562e+18 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e+6; // 1 ExaJoule = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e+5; // 1 ExaJoule = 2.77778e+5 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 7.37562e+5; // 1 ExaJoule = 7.37562e+5 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075e+21; // 1 ExaJoule = 8.85075e+21 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.38846e+17; // 1 ExaJoule = 2.38846e+17 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 1.01972e+19; // 1 ExaJoule = 1.01972e+19 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1e+15; // 1 ExaJoule = 1e+15 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 2.77778e+14; // 1 ExaJoule = 2.77778e+14 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e+12; // 1 ExaJoule = 1e+12 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e+11; // 1 ExaJoule = 2.77778e+11 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 0.001; // 1 ExaJoule = 0.001 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1000; // 1 ExaJoule = 1000 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 277.778; // 1 ExaJoule = 277.778 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1e+18; // 1 ExaJoule = 1e+18 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2.77778e+14; // 1 ExaJoule = 2.77778e+14 Watt-Hours
+                        break;
+                }
+                break;
+            case "FootPoundForce":
+                switch (fromName)
+                {
+                    case "FootPoundForce":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num / 7.37562e+18; // 1 Foot-Pound Force = 1 / 7.37562e+18 ExaJoules
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num / 8.46235e-15; // 1 Foot-Pound Force = 1 / 8.46235e-15 Electron Volts
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num / 1.35582e+9; // 1 Foot-Pound Force = 1 / 1.35582e+9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num / 3.72506e+8; // 1 Foot-Pound Force = 1 / 3.72506e+8 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num / 7.57688e-4; // 1 Foot-Pound Force = 1 / 7.57688e-4 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 12; // 1 Foot-Pound Force = 12 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num / 3.08603e+3; // 1 Foot-Pound Force = 1 / 3.08603e+3 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num / 2.20462; // 1 Foot-Pound Force = 1 / 2.20462 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num / 1.35582e-3; // 1 Foot-Pound Force = 1 / 1.35582e-3 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num / 3.72506e-4; // 1 Foot-Pound Force = 1 / 3.72506e-4 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num / 1.35582e-6; // 1 Foot-Pound Force = 1 / 1.35582e-6 Megajoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num / 3.72506e-7; // 1 Foot-Pound Force = 1 / 3.72506e-7 Megawatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num / 1.35582e-21; // 1 Foot-Pound Force = 1 / 1.35582e-21 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num / 1.35582e-12; // 1 Foot-Pound Force = 1 / 1.35582e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num / 3.72506e-13; // 1 Foot-Pound Force = 1 / 3.72506e-13 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1.35582; // 1 Foot-Pound Force = 1.35582 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 3.72506e-4; // 1 Foot-Pound Force = 3.72506e-4 Watt-Hours
+                        break;
+                }
+                break;
+            case "GigaJoules":
+                switch (fromName)
+                {
+                    case "GigaJoules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num / 1e+9; // 1 GigaJoule = 1e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 737562; // 1 GigaJoule = 737,562 Foot-Pound Force
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+18; // 1 GigaJoule = 6.242e+18 Electron Volts
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 0.277778; // 1 GigaJoule = 0.277778 GigaWatt-Hours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 0.00134102; // 1 GigaJoule = 0.00134102 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075e+6; // 1 GigaJoule = 8.85075e+6 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 238.846; // 1 GigaJoule = 238.846 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 101971.6; // 1 GigaJoule = 101,971.6 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1e+6; // 1 GigaJoule = 1e+6 Kilojoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 277.778; // 1 GigaJoule = 277.778 Kilowatt-Hours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1000; // 1 GigaJoule = 1000 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 0.277778; // 1 GigaJoule = 0.277778 MegaWatt-Hours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num / 1e-6; // 1 GigaJoule = 1e-6 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num / 1e-3; // 1 GigaJoule = 1e-3 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 0.000277778; // 1 GigaJoule = 0.000277778 TeraWatt-Hours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1e+9; // 1 GigaJoule = 1e+9 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2777778; // 1 GigaJoule = 2,777,778 Watt-Hours
+                        break;
+                }
+                break;
+            case "GigaWattHours":
+                switch (fromName)
+                {
+                    case "GigaWattHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 3.6; // 1 GigaWattHour = 3.6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2.65522e+9; // 1 GigaWattHour = 2.65522e+9 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 3.6; // 1 GigaWattHour = 3.6 GigaJoules
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 2.24694e+25; // 1 GigaWattHour = 2.24694e+25 Electron Volts
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1341.02; // 1 GigaWattHour = 1341.02 Horsepower-Hours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075e+11; // 1 GigaWattHour = 8.85075e+11 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 3.6e+12; // 1 GigaWattHour = 3.6e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 8.59887e+8; // 1 GigaWattHour = 8.59887e+8 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 3.8591e+11; // 1 GigaWattHour = 3.8591e+11 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 3.6e+9; // 1 GigaWattHour = 3.6e+9 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 3.6e+6; // 1 GigaWattHour = 3.6e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 1000; // 1 GigaWattHour = 1000 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 3.6e+12; // 1 GigaWattHour = 3.6e+12 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num / 1e-3; // 1 GigaWattHour = 1e-3 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num / 1e-6; // 1 GigaWattHour = 1e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num / 1e-3; // 1 GigaWattHour = 1e-3 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 3.6e+15; // 1 GigaWattHour = 3.6e+15 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 1e+9; // 1 GigaWattHour = 1e+9 Watt-Hours
+                        break;
+                }
+                break;
+            case "HorsePowerHours":
+                switch (fromName)
+                {
+                    case "HorsePowerHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2.68452e+8; // 1 HorsePowerHour = 2.68452e+8 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num / 1341.02; // 1 HorsePowerHour = 1/1341.02 GigaWattHours
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 1.78081e+24; // 1 HorsePowerHour = 1.78081e+24 Electron Volts
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 2.356e+8; // 1 HorsePowerHour = 2.356e+8 Inch-Pound Force
+                        break;
+                    case "Joules":
+                        fromNumber = num * 2.68452e+6; // 1 HorsePowerHour = 2.68452e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 641.615; // 1 HorsePowerHour = 641.615 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 2.68523e+8; // 1 HorsePowerHour = 2.68523e+8 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 2684.52; // 1 HorsePowerHour = 2684.52 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 2.68452; // 1 HorsePowerHour = 2.68452 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num / 1341.02; // 1 HorsePowerHour = 1/1341.02 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 2.68452e+6; // 1 HorsePowerHour = 2.68452e+6 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num / 1e-3; // 1 HorsePowerHour = 1e-3 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num / 1e-6; // 1 HorsePowerHour = 1e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num / 1.34102; // 1 HorsePowerHour = 1/1.34102 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 9.656e+6; // 1 HorsePowerHour = 9.656e+6 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2684.52; // 1 HorsePowerHour = 2684.52 Watt-Hours
+                        break;
+                }
+                break;
+            case "InchPoundForce":
+                switch (fromName)
+                {
+                    case "InchPoundForce":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1.35582e-18; // 1 InchPoundForce = 1.35582e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num / 12.0; // 1 InchPoundForce = 1/12 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1.35582e-15; // 1 InchPoundForce = 1.35582e-15 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 1.18806e-19; // 1 InchPoundForce = 1.18806e-19 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num / 2.65522e+7; // 1 InchPoundForce = 1/2.65522e+7 HorsePowerHours
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 8.46235e+17; // 1 InchPoundForce = 8.46235e+17 Electron Volts
+                        break;
+                    case "Joules":
+                        fromNumber = num * 0.112984; // 1 InchPoundForce = 0.112984 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.61193e-5; // 1 InchPoundForce = 2.61193e-5 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 0.113; // 1 InchPoundForce = 0.113 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 0.000112984; // 1 InchPoundForce = 0.000112984 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1.12984e-7; // 1 InchPoundForce = 1.12984e-7 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 1.24739e-11; // 1 InchPoundForce = 1.24739e-11 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 0.112984; // 1 InchPoundForce = 0.112984 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1.35582e-22; // 1 InchPoundForce = 1.35582e-22 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1.35582e-10; // 1 InchPoundForce = 1.35582e-10 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 1.18806e-14; // 1 InchPoundForce = 1.18806e-14 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 112.984; // 1 InchPoundForce = 112.984 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 0.031384; // 1 InchPoundForce = 0.031384 Watt-Hours
+                        break;
+                }
+                break;
+            case "Joules":
+                switch (fromName)
+                {
+                    case "Joules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1e-18; // 1 Joule = 1e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 0.737562; // 1 Joule = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e-9; // 1 Joule = 1e-9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e-13; // 1 Joule = 2.77778e-13 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 2.38846e-7; // 1 Joule = 2.38846e-7 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075; // 1 Joule = 8.85075 InchPoundForce
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+18; // 1 Joule = 6.242e+18 Electron Volts
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 0.000239006; // 1 Joule = 0.000239006 Kilocalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 0.101972; // 1 Joule = 0.101972 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 0.001; // 1 Joule = 0.001 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e-6; // 1 Joule = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e-10; // 1 Joule = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num; // 1 Joule = 1 Newton-Meter
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1e-15; // 1 Joule = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1e-12; // 1 Joule = 1e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.77778e-16; // 1 Joule = 2.77778e-16 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num; // 1 Joule = 1 Watt-Second
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 0.000277778; // 1 Joule = 0.000277778 Watt-Hours
+                        break;
+                }
+                break;
+            case "KiloCalories":
+                switch (fromName)
+                {
+                    case "KiloCalories":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 4.184e-15; // 1 KiloCalorie = 4.184e-15 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 3085.96; // 1 KiloCalorie = 3085.96 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 4.184; // 1 KiloCalorie = 4.184 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 1.163e-6; // 1 KiloCalorie = 1.163e-6 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1.58125e-3; // 1 KiloCalorie = 1.58125e-3 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 11307.5; // 1 KiloCalorie = 11307.5 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 4184; // 1 KiloCalorie = 4184 Joules
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 2.611e+22; // 1 KiloCalorie = 2.611e+22 Electron Volts
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 427.302; // 1 KiloCalorie = 427.302 Kilogram-Force Meters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 4.184; // 1 KiloCalorie = 4.184 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 0.004184; // 1 KiloCalorie = 0.004184 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 1.163e-9; // 1 KiloCalorie = 1.163e-9 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 4184; // 1 KiloCalorie = 4184 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 4.184e-18; // 1 KiloCalorie = 4.184e-18 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 4.184e-9; // 1 KiloCalorie = 4.184e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 1.163e-12; // 1 KiloCalorie = 1.163e-12 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 4184; // 1 KiloCalorie = 4184 Watt-Seconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 1.163; // 1 KiloCalorie = 1.163 Watt-Hours
+                        break;
+                }
+                break;
+            case "KilogramForceMeters":
+                switch (fromName)
+                {
+                    case "KilogramForceMeters":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 9.80665e-9; // 1 Kilogram-Force Meter = 9.80665e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 7.23301; // 1 Kilogram-Force Meter = 7.23301 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 9.80665e-6; // 1 Kilogram-Force Meter = 9.80665e-6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.72413e-9; // 1 Kilogram-Force Meter = 2.72413e-9 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 3.72506e-6; // 1 Kilogram-Force Meter = 3.72506e-6 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 86.7962; // 1 Kilogram-Force Meter = 86.7962 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.34284e-3; // 1 Kilogram-Force Meter = 2.34284e-3 KiloCalories
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 5.60959e+21; // 1 Kilogram-Force Meter = 5.60959e+21 Electron Volts
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 9.80665e-3; // 1 Kilogram-Force Meter = 9.80665e-3 Kilojoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 9.80665e-6; // 1 Kilogram-Force Meter = 9.80665e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.72413e-12; // 1 Kilogram-Force Meter = 2.72413e-12 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 9.80665e-15; // 1 Kilogram-Force Meter = 9.80665e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 9.80665e-12; // 1 Kilogram-Force Meter = 9.80665e-12 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.72413e-15; // 1 Kilogram-Force Meter = 2.72413e-15 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 9.80665; // 1 Kilogram-Force Meter = 9.80665 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2.72413e-3; // 1 Kilogram-Force Meter = 2.72413e-3 WattHours
+                        break;
+                }
+                break;
+            case "KiloJoules":
+                switch (fromName)
+                {
+                    case "KiloJoules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1e-18; // 1 Kilojoule = 1e-18 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 737.562; // 1 Kilojoule = 737.562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e-6; // 1 Kilojoule = 1e-6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e-7; // 1 Kilojoule = 2.77778e-7 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 3.72506e-4; // 1 Kilojoule = 3.72506e-4 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 885.013; // 1 Kilojoule = 885.013 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1000; // 1 Kilojoule = 1000 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 0.239006; // 1 Kilojoule = 0.239006 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 101.972; // 1 Kilojoule = 101.972 KilogramForceMeters
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+21; // 1 Kilojoule = 6.242e+21 Electron Volts
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 0.001; // 1 Kilojoule = 0.001 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e-10; // 1 Kilojoule = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1000; // 1 Kilojoule = 1000 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1e-15; // 1 Kilojoule = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1e-9; // 1 Kilojoule = 1e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.77778e-13; // 1 Kilojoule = 2.77778e-13 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1000; // 1 Kilojoule = 1000 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 0.277778; // 1 Kilojoule = 0.277778 WattHours
+                        break;
+                }
+                break;
+            case "KilowattHours":
+                switch (fromName)
+                {
+                    case "KilowattHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 3.6e-12; // 1 Kilowatt-hour = 3.6e-12 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2655223.73; // 1 Kilowatt-hour = 2,655,223.73 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 3.6; // 1 Kilowatt-hour = 3.6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 0.001; // 1 Kilowatt-hour = 0.001 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1.34102; // 1 Kilowatt-hour = 1.34102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 2655223.73 * 12; // 1 Kilowatt-hour = 31,866,684.76 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 859.845; // 1 Kilowatt-hour = 859.845 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 367097.836; // 1 Kilowatt-hour = 367,097.836 KilogramForceMeters
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 2.246e+25; // 1 Kilowatt-hour = 2.246e+25 Electron Volts
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 3.6; // 1 Kilowatt-hour = 3.6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 0.001; // 1 Kilowatt-hour = 0.001 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 Newton-Meters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 3.6e-15; // 1 Kilowatt-hour = 3.6e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 3.6e-9; // 1 Kilowatt-hour = 3.6e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 1e-6; // 1 Kilowatt-hour = 1e-6 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 3.6e+6; // 1 Kilowatt-hour = 3.6e+6 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 1000; // 1 Kilowatt-hour = 1000 WattHours
+                        break;
+                }
+                break;
+            case "MegaJoules":
+                switch (fromName)
+                {
+                    case "MegaJoules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1e-6; // 1 MegaJoule = 1e-6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 737.562; // 1 MegaJoule = 737.562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 0.001; // 1 MegaJoule = 0.001 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 0.000277778; // 1 MegaJoule = 0.000277778 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 0.00134102; // 1 MegaJoule = 0.00134102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 737.562 * 12; // 1 MegaJoule = 8850.74 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1e+6; // 1 MegaJoule = 1e+6 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 239.006; // 1 MegaJoule = 239.006 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 101971.621; // 1 MegaJoule = 101,971.621 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1000; // 1 MegaJoule = 1000 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 0.277778; // 1 MegaJoule = 0.277778 KilowattHours
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 0.000277778; // 1 MegaJoule = 0.000277778 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1e+6; // 1 MegaJoule = 1e+6 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1e-9; // 1 MegaJoule = 1e-9 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1e-3; // 1 MegaJoule = 1e-3 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.77778e-7; // 1 MegaJoule = 2.77778e-7 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1e+6; // 1 MegaJoule = 1e+6 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 277.778; // 1 MegaJoule = 277.778 WattHours
+                        break;
+                }
+                break;
+            case "MegaWattHours":
+                switch (fromName)
+                {
+                    case "MegaWattHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 3.6e-9; // 1 MegaWattHour = 3.6e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2.65522e+8; // 1 MegaWattHour = 2.65522e+8 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 3.6; // 1 MegaWattHour = 3.6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 0.001; // 1 MegaWattHour = 0.001 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1341.02; // 1 MegaWattHour = 1341.02 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 2.65522e+8 * 12; // 1 MegaWattHour = 3.18626e+9 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 3.6e+9; // 1 MegaWattHour = 3.6e+9 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 859845.227; // 1 MegaWattHour = 859,845.227 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 367097836.982; // 1 MegaWattHour = 367,097,836.982 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 3.6e+6; // 1 MegaWattHour = 3.6e+6 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 1000; // 1 MegaWattHour = 1000 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 3.6e+3; // 1 MegaWattHour = 3.6e+3 MegaJoules
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 3.6e+9; // 1 MegaWattHour = 3.6e+9 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 3.6e-12; // 1 MegaWattHour = 3.6e-12 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 3.6e-6; // 1 MegaWattHour = 3.6e-6 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 1e-6; // 1 MegaWattHour = 1e-6 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 3.6e+9 * 3600; // 1 MegaWattHour = 1.296e+13 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 1e+6; // 1 MegaWattHour = 1e+6 WattHours
+                        break;
+                }
+                break;
+            case "NewtonMeters":
+                switch (fromName)
+                {
+                    case "NewtonMeters":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1e-9; // 1 NewtonMeter = 1e-9 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 0.737562; // 1 NewtonMeter = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e-3; // 1 NewtonMeter = 1e-3 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e-7; // 1 NewtonMeter = 2.77778e-7 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1.34102e-3; // 1 NewtonMeter = 1.34102e-3 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85074; // 1 NewtonMeter = 8.85074 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num; // 1 NewtonMeter = 1 Joule
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.39006e-4; // 1 NewtonMeter = 2.39006e-4 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 0.101972; // 1 NewtonMeter = 0.101972 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1e-3; // 1 NewtonMeter = 1e-3 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 2.77778e-7; // 1 NewtonMeter = 2.77778e-7 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e-6; // 1 NewtonMeter = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e-10; // 1 NewtonMeter = 2.77778e-10 MegaWattHours
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 1e-15; // 1 NewtonMeter = 1e-15 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1e-9; // 1 NewtonMeter = 1e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.77778e-13; // 1 NewtonMeter = 2.77778e-13 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num; // 1 NewtonMeter = 1 WattSecond
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2.77778e-4; // 1 NewtonMeter = 2.77778e-4 WattHours
+                        break;
+                }
+                break;
+            case "PetaJoules":
+                switch (fromName)
+                {
+                    case "PetaJoules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 1000; // 1 PetaJoule = 1000 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 7.37562e+17; // 1 PetaJoule = 7.37562e+17 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e+6; // 1 PetaJoule = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e+5; // 1 PetaJoule = 2.77778e+5 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 1.34102e+6; // 1 PetaJoule = 1.34102e+6 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85074e+18; // 1 PetaJoule = 8.85074e+18 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1e+15; // 1 PetaJoule = 1e+15 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.39006e+14; // 1 PetaJoule = 2.39006e+14 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 1.01972e+17; // 1 PetaJoule = 1.01972e+17 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1e+12; // 1 PetaJoule = 1e+12 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 2.77778e+8; // 1 PetaJoule = 2.77778e+8 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e+9; // 1 PetaJoule = 1e+9 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e+5; // 1 PetaJoule = 2.77778e+5 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1e+9; // 1 PetaJoule = 1e+9 NewtonMeters
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+30; // 1 PetaJoule = 6.242e+30 ElectronVolts
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1000; // 1 PetaJoule = 1000 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 277.778; // 1 PetaJoule = 277.778 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1e+15; // 1 PetaJoule = 1e+15 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2.77778e+11; // 1 PetaJoule = 2.77778e+11 WattHours
+                        break;
+                }
+                break;
+            case "TeraJoules":
+                switch (fromName)
+                {
+                    case "TeraJoules":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 0.001; // 1 TeraJoule = 0.001 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 7.37562e+14; // 1 TeraJoule = 7.37562e+14 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1000; // 1 TeraJoule = 1000 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 277.778; // 1 TeraJoule = 277.778 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 134.102; // 1 TeraJoule = 134.102 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85074e+17; // 1 TeraJoule = 8.85074e+17 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 1e+12; // 1 TeraJoule = 1e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 2.39006e+11; // 1 TeraJoule = 2.39006e+11 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 1.01972e+14; // 1 TeraJoule = 1.01972e+14 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 1e+9; // 1 TeraJoule = 1e+9 KiloJoules
+                        break;
+                    case "KilowattHours":
+                        fromNumber = num * 2.77778e+5; // 1 TeraJoule = 2.77778e+5 KilowattHours
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e+6; // 1 TeraJoule = 1e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 277.778; // 1 TeraJoule = 277.778 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 1e+6; // 1 TeraJoule = 1e+6 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 0.001; // 1 TeraJoule = 0.001 PetaJoules
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+27; // 1 TeraJoule = 6.242e+27 ElectronVolts
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 277.778; // 1 TeraJoule = 277.778 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 1e+12; // 1 TeraJoule = 1e+12 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 2.77778e+8; // 1 TeraJoule = 2.77778e+8 WattHours
+                        break;
+                }
+                break;
+            case "TeraWattHours":
+                switch (fromName)
+                {
+                    case "TeraWattHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 3.6; // 1 TeraWattHour = 3.6 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2.65522e+15; // 1 TeraWattHour = 2.65522e+15 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e+6; // 1 TeraWattHour = 1e+6 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 1000; // 1 TeraWattHour = 1000 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 4800000; // 1 TeraWattHour = 4800000 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 3.72506e+18; // 1 TeraWattHour = 3.72506e+18 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 3.6e+12; // 1 TeraWattHour = 3.6e+12 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 8.59849e+11; // 1 TeraWattHour = 8.59849e+11 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 3.66086e+15; // 1 TeraWattHour = 3.66086e+15 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 3.6e+9; // 1 TeraWattHour = 3.6e+9 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 3.6e+6; // 1 TeraWattHour = 3.6e+6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 1000; // 1 TeraWattHour = 1000 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 3.6e+9; // 1 TeraWattHour = 3.6e+9 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 0.001; // 1 TeraWattHour = 0.001 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 0.001; // 1 TeraWattHour = 0.001 TeraJoules
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 2.24694e+28; // 1 TeraWattHour = 2.24694e+28 ElectronVolts
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 3.6e+15; // 1 TeraWattHour = 3.6e+15 WattSeconds
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 1e+12; // 1 TeraWattHour = 1e+12 WattHours
+                        break;
+                }
+                break;
+            case "WattSeconds":
+                switch (fromName)
+                {
+                    case "WattSeconds":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 2.77778e-19; // 1 WattSecond = 2.77778e-19 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 0.737562; // 1 WattSecond = 0.737562 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 1e-9; // 1 WattSecond = 1e-9 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 2.77778e-13; // 1 WattSecond = 2.77778e-13 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 9.80665e-7; // 1 WattSecond = 9.80665e-7 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 8.85075; // 1 WattSecond = 8.85075 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num; // 1 WattSecond = 1 Joule
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 0.000238846; // 1 WattSecond = 0.000238846 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 0.101972; // 1 WattSecond = 0.101972 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 0.001; // 1 WattSecond = 0.001 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 1e-6; // 1 WattSecond = 1e-6 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 2.77778e-10; // 1 WattSecond = 2.77778e-10 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num; // 1 WattSecond = 1 NewtonMeter
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 2.77778e-22; // 1 WattSecond = 2.77778e-22 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 1e-15; // 1 WattSecond = 1e-15 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 2.77778e-16; // 1 WattSecond = 2.77778e-16 TeraWattHours
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 6.242e+18; // 1 WattSecond = 6.242e+18 ElectronVolts
+                        break;
+                    case "WattHours":
+                        fromNumber = num * 0.000277778; // 1 WattSecond = 0.000277778 WattHours
+                        break;
+                }
+                break;
+            case "WattHours":
+                switch (fromName)
+                {
+                    case "WattHours":
+                        fromNumber = num;
+                        break;
+                    case "ExaJoules":
+                        fromNumber = num * 2.77778e-22; // 1 WattHour = 2.77778e-22 ExaJoules
+                        break;
+                    case "FootPoundForce":
+                        fromNumber = num * 2655.22; // 1 WattHour = 2655.22 Foot-Pound Force
+                        break;
+                    case "GigaJoules":
+                        fromNumber = num * 0.000001; // 1 WattHour = 0.000001 GigaJoules
+                        break;
+                    case "GigaWattHours":
+                        fromNumber = num * 1e-9; // 1 WattHour = 1e-9 GigaWattHours
+                        break;
+                    case "HorsePowerHours":
+                        fromNumber = num * 0.00134; // 1 WattHour = 0.00134 HorsePowerHours
+                        break;
+                    case "InchPoundForce":
+                        fromNumber = num * 31761.3; // 1 WattHour = 31761.3 InchPoundForce
+                        break;
+                    case "Joules":
+                        fromNumber = num * 3600; // 1 WattHour = 3600 Joules
+                        break;
+                    case "KiloCalories":
+                        fromNumber = num * 0.859845; // 1 WattHour = 0.859845 KiloCalories
+                        break;
+                    case "KilogramForceMeters":
+                        fromNumber = num * 367.095; // 1 WattHour = 367.095 KilogramForceMeters
+                        break;
+                    case "KiloJoules":
+                        fromNumber = num * 3.6; // 1 WattHour = 3.6 KiloJoules
+                        break;
+                    case "MegaJoules":
+                        fromNumber = num * 0.0036; // 1 WattHour = 0.0036 MegaJoules
+                        break;
+                    case "MegaWattHours":
+                        fromNumber = num * 1e-6; // 1 WattHour = 1e-6 MegaWattHours
+                        break;
+                    case "NewtonMeters":
+                        fromNumber = num * 2655.22; // 1 WattHour = 2655.22 NewtonMeters
+                        break;
+                    case "PetaJoules":
+                        fromNumber = num * 2.77778e-25; // 1 WattHour = 2.77778e-25 PetaJoules
+                        break;
+                    case "TeraJoules":
+                        fromNumber = num * 3.6e-9; // 1 WattHour = 3.6e-9 TeraJoules
+                        break;
+                    case "TeraWattHours":
+                        fromNumber = num * 1e-12; // 1 WattHour = 1e-12 TeraWattHours
+                        break;
+                    case "WattSeconds":
+                        fromNumber = num * 3600; // 1 WattHour = 3600 WattSeconds
+                        break;
+                    case "ElectronVolts":
+                        fromNumber = num * 9.223e+18; // 1 WattHour = 9.223e+18 ElectronVolts
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

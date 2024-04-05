@@ -1,0 +1,1984 @@
+﻿@page "/density"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Density</h3>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(DensityModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(DensityModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "GramsPerLiter";
+    string toName = "KilogramsPerLiter";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "GrainsPerGallonUS":
+                switch (toName)
+                {
+                    case "GrainsPerGallonUS":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 0.00229097; // 1 grain/gallon (US) = 0.00229097 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 17.118; // 1 grain/gallon (US) = 17.118 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.000017118; // 1 grain/gallon (US) = 0.000017118 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 17.118; // 1 grain/gallon (US) = 17.118 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 17118; // 1 grain/gallon (US) = 17118 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.000315195; // 1 grain/gallon (US) = 0.000315195 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 0.137857; // 1 grain/gallon (US) = 0.137857 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0000180113; // 1 grain/gallon (US) = 0.0000180113 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.000002551; // 1 grain/gallon (US) = 0.000002551 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.000114438; // 1 grain/gallon (US) = 0.000114438 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 6.79224e-8; // 1 grain/gallon (US) = 6.79224e-8 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 1.7118e-8; // 1 grain/gallon (US) = 1.7118e-8 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 2.31053e-8; // 1 grain/gallon (US) = 2.31053e-8 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerCubicCentimeter":
+                switch (toName)
+                {
+                    case "GramsPerCubicCentimeter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 437.5; // 1 g/cm³ = 437.5 grains/gallon (US)
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000; // 1 g/cm³ = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num; // 1 g/cm³ = 1 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1000; // 1 g/cm³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num; // 1 g/cm³ = 1 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.001; // 1 g/cm³ = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000; // 1 g/cm³ = 1000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000000; // 1 g/cm³ = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.578036; // 1 g/cm³ = 0.578036 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 7.48915; // 1 g/cm³ = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 g/cm³ = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 62.4279; // 1 g/cm³ = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 8.3454; // 1 g/cm³ = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00255102; // 1 g/cm³ = 0.00255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.001; // 1 g/cm³ = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00130795; // 1 g/cm³ = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerLiter":
+                switch (toName)
+                {
+                    case "GramsPerLiter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 0.001; // 1 g/L = 0.001 g/cm³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 58.417831; // 1 g/L = 58.417831 grains/gallon (US)
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 0.001; // 1 g/L = 0.001 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num; // 1 g/L = 1 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 0.001; // 1 g/L = 0.001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.000001; // 1 g/L = 0.000001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num; // 1 g/L = 1 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000; // 1 g/L = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 g/L = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 0.133526; // 1 g/L = 0.133526 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0000361273; // 1 g/L = 0.0000361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.0624279; // 1 g/L = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.0083454; // 1 g/L = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00000255102; // 1 g/L = 0.00000255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.000001; // 1 g/L = 0.000001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00000130795; // 1 g/L = 0.00000130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerMilliliters":
+                switch (toName)
+                {
+                    case "GramsPerMilliliters":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num; // 1 g/mL = 1 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000; // 1 g/mL = 1000 g/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 58.417831; // 1 g/mL = 58.417831 grains/gallon (US)
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1000; // 1 g/mL = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num; // 1 g/mL = 1 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 1; // 1 g/mL = 1 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000; // 1 g/mL = 1000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000000; // 1 g/mL = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 g/mL = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 133.526; // 1 g/mL = 133.526 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0000361273; // 1 g/mL = 0.0000361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 62.4279; // 1 g/mL = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 8.3454; // 1 g/mL = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00255102; // 1 g/mL = 0.00255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num; // 1 g/mL = 1 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00130795; // 1 g/mL = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "KilogramsPerCubicMeters":
+                switch (toName)
+                {
+                    case "KilogramsPerCubicMeters":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1000; // 1 kg/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num; // 1 kg/m³ = 1 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 1000000; // 1 kg/m³ = 1000000 g/mL
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 58.417831; // 1 kg/m³ = 58.417831 grains/gallon (US)
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 0.001; // 1 kg/m³ = 0.001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.001; // 1 kg/m³ = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000000; // 1 kg/m³ = 1000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000; // 1 kg/m³ = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.5780367; // 1 kg/m³ = 0.5780367 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 7.48915; // 1 kg/m³ = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 kg/m³ = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.0624279; // 1 kg/m³ = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.0083454; // 1 kg/m³ = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00020482; // 1 kg/m³ = 0.00020482 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.001; // 1 kg/m³ = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00130795; // 1 kg/m³ = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "KilogramsPerLiter":
+                switch (toName)
+                {
+                    case "KilogramsPerLiter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1000; // 1 kg/L = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000; // 1 kg/L = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 1000000; // 1 kg/L = 1000000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num; // 1 kg/L = 1 kg/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 58.417831; // 1 kg/L = 58.417831 grains/gallon (US)
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.001; // 1 kg/L = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000000; // 1 kg/L = 1000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000000; // 1 kg/L = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.5780367; // 1 kg/L = 0.5780367 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 7.48915; // 1 kg/L = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 kg/L = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.0624279; // 1 kg/L = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.0083454; // 1 kg/L = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00020482; // 1 kg/L = 0.00020482 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.001; // 1 kg/L = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00130795; // 1 kg/L = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MegagramsPerCubicMeter":
+                switch (toName)
+                {
+                    case "MegagramsPerCubicMeter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1000; // 1 Mg/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000; // 1 Mg/m³ = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 1000000; // 1 Mg/m³ = 1000000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1000; // 1 Mg/m³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num; // 1 Mg/m³ = 1 kg/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 14582.6; // 1 Mg/m³ = 14582.6 grains/gallon (US)
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000000000; // 1 Mg/m³ = 1000000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000000; // 1 Mg/m³ = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 61023.7; // 1 Mg/m³ = 61023.7 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 7936.64; // 1 Mg/m³ = 7936.64 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 36127.3; // 1 Mg/m³ = 36127.3 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 62.4279; // 1 Mg/m³ = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 8.3454; // 1 Mg/m³ = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 2.20462; // 1 Mg/m³ = 2.20462 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num; // 1 Mg/m³ = 1 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 1.30795; // 1 Mg/m³ = 1.30795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MilligramsPerMilliliter":
+                switch (toName)
+                {
+                    case "MilligramsPerMilliliter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num; // 1 mg/mL = 1 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000; // 1 mg/mL = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num; // 1 mg/mL = 1 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1000000; // 1 mg/mL = 1000000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 1000; // 1 mg/mL = 1000 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 1000000000; // 1 mg/mL = 1000000000 Mg/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 6950.68; // 1 mg/mL = 6950.68 grains/gallon (US)
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000; // 1 mg/mL = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 57623.7; // 1 mg/mL = 57623.7 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 7478.69; // 1 mg/mL = 7478.69 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 35840; // 1 mg/mL = 35840 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 62.4275; // 1 mg/mL = 62.4275 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 8.34541; // 1 mg/mL = 8.34541 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.00220462; // 1 mg/mL = 0.00220462 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.001; // 1 mg/mL = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.00130795; // 1 mg/mL = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MilligramsPerLiter":
+                switch (toName)
+                {
+                    case "MilligramsPerLiter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num / 1000; // 1 mg/L = 0.001 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num / 1000; // 1 mg/L = 0.001 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num / 1000; // 1 mg/L = 0.001 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num / 1000000; // 1 mg/L = 0.000001 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num / 1000000; // 1 mg/L = 0.000001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num / 1000000000; // 1 mg/L = 0.000000001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num / 1000; // 1 mg/L = 0.001 mg/mL
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 0.0171181; // 1 mg/L = 0.0171181 grains/gallon (US)
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.0361273; // 1 mg/L = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 0.00834541; // 1 mg/L = 0.00834541 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.000578036; // 1 mg/L = 0.000578036 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.0000624275; // 1 mg/L = 0.0000624275 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.00000834541; // 1 mg/L = 0.00000834541 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 5.78704e-9; // 1 mg/L = 5.78704e-9 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num / 1000000000; // 1 mg/L = 0.000000001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 1.30795e-9; // 1 mg/L = 1.30795e-9 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "OuncesPerCubicInch":
+                switch (toName)
+                {
+                    case "OuncesPerCubicInch":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1.72999404; // 1 oz/in³ = 1.72999404 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 0.0276799047; // 1 oz/in³ = 0.0276799047 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1729.99404; // 1 oz/in³ = 1729.99404 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.00172999404; // 1 oz/in³ = 0.00172999404 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 27679.9047; // 1 oz/in³ = 27679.9047 mg/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 192.000015; // 1 oz/in³ = 192.000015 grains/gallon (US)
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 16.0000013; // 1 oz/in³ = 16.0000013 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0625; // 1 oz/in³ = 0.0625 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 1.00115396; // 1 oz/in³ = 1.00115396 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.133680554; // 1 oz/in³ = 0.133680554 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.0640887313; // 1 oz/in³ = 0.0640887313 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.00172999404; // 1 oz/in³ = 0.00172999404 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.0007452589; // 1 oz/in³ = 0.0007452589 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "OuncesPerGallonUS":
+                switch (toName)
+                {
+                    case "OuncesPerGallonUS":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 119.8264273; // 1 oz/gal (US) = 119.8264273 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 119826.4273; // 1 oz/gal (US) = 119826.4273 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 119.8264273; // 1 oz/gal (US) = 119.8264273 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 119826.4273; // 1 oz/gal (US) = 119826.4273 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 119826427.3; // 1 oz/gal (US) = 119826427.3 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.0036046501; // 1 oz/gal (US) = 0.0036046501 oz/in³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 7000; // 1 oz/gal (US) = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0002264174; // 1 oz/gal (US) = 0.0002264174 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.036065178; // 1 oz/gal (US) = 0.036065178 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.0083454045; // 1 oz/gal (US) = 0.0083454045 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.0019575726; // 1 oz/gal (US) = 0.0019575726 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.1605447302; // 1 oz/gal (US) = 0.1605447302 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerCubicInch":
+                switch (toName)
+                {
+                    case "PoundsPerCubicInch":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 27679.904689; // 1 lb/in³ = 27679.904689 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 27679.904689; // 1 lb/in³ = 27679.904689 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 16; // 1 lb/in³ = 16 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 256; // 1 lb/in³ = 256 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 7000; // 1 lb/in³ = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 1728; // 1 lb/in³ = 1728 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 231; // 1 lb/in³ = 231 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.0598808886; // 1 lb/in³ = 0.0598808886 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 37.037037037; // 1 lb/in³ = 37.037037037 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerCubicFoot":
+                switch (toName)
+                {
+                    case "PoundsPerCubicFoot":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.01601846337396; // 1 lb/ft³ = 0.01601846337396 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.00057803667239; // 1 lb/ft³ = 0.00057803667239 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 8.345404452; // 1 lb/ft³ = 8.345404452 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 7000; // 1 lb/ft³ = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0361272922; // 1 lb/ft³ = 0.0361272922 lb/in³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 0.1198264273; // 1 lb/ft³ = 0.1198264273 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.0310809505; // 1 lb/ft³ = 0.0310809505 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.01601846337396; // 1 lb/ft³ = 0.01601846337396 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.013165726; // 1 lb/ft³ = 0.013165726 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerGallonUS":
+                switch (toName)
+                {
+                    case "PoundsPerGallonUS":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.0001198264273; // 1 lb/gal (US) = 0.0001198264273 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 119826.4273; // 1 lb/gal (US) = 119826.4273 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 0.00432900433; // 1 lb/gal (US) = 0.00432900433 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 8; // 1 lb/gal (US) = 8 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 5833.3333333333; // 1 lb/gal (US) = 5833.3333333333 grains/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.0361272922; // 1 lb/gal (US) = 0.0361272922 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 0.008345404452; // 1 lb/gal (US) = 0.008345404452 lb/ft³
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 0.0021667375; // 1 lb/gal (US) = 0.0021667375 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.003356380764; // 1 lb/gal (US) = 0.003356380764 US ton/yd³
+                        break;
+                }
+                break;
+            case "SlugsPerCubicFoot":
+                switch (toName)
+                {
+                    case "SlugsPerCubicFoot":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 0.5153788184; // 1 sl/ft³ = 0.5153788184 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 515378818.4; // 1 sl/ft³ = 515378818.4 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 29.922077922; // 1 sl/ft³ = 29.922077922 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 467.8310173; // 1 sl/ft³ = 467.8310173 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 1.9426048557; // 1 sl/ft³ = 1.9426048557 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 32.174048556; // 1 sl/ft³ = 32.174048556 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 7.4805194805; // 1 sl/ft³ = 7.4805194805 lb/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 5840.156038; // 1 sl/ft³ = 5840.156038 grains/gal (US)
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.5153788184; // 1 sl/ft³ = 0.5153788184 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 0.02150209194; // 1 sl/ft³ = 0.02150209194 US ton/yd³
+                        break;
+                }
+                break;
+            case "TonnesPerCubicMeter":
+                switch (toName)
+                {
+                    case "TonnesPerCubicMeter":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1000; // 1 t/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1000000; // 1 t/m³ = 1000000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 1000; // 1 t/m³ = 1000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1000; // 1 t/m³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 1000000; // 1 t/m³ = 1000000 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num; // 1 t/m³ = 1 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1000000000; // 1 t/m³ = 1000000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1000000000; // 1 t/m³ = 1000000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 1.7299940444; // 1 t/m³ = 1.7299940444 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 264.17205236; // 1 t/m³ = 264.17205236 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.03612729297; // 1 t/m³ = 0.03612729297 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 62.427960576; // 1 t/m³ = 62.427960576 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 15.748430888; // 1 t/m³ = 15.748430888 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 1.9403203313; // 1 t/m³ = 1.9403203313 sl/ft³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 15432358.353; // 1 t/m³ = 15432358.353 grains/gal (US)
+                        break;
+                    case "TonsUSPerCubicYard":
+                        toNumber = num * 1.3079506193; // 1 t/m³ = 1.3079506193 US ton/yd³
+                        break;
+                }
+                break;
+            case "TonsUSPerCubicYard":
+                switch (toName)
+                {
+                    case "TonsUSPerCubicYard":
+                        toNumber = fromNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        toNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        toNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        toNumber = num * 1.1865528; // 1 ton/yd³ = 1.1865528 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        toNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        toNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        toNumber = num * 1.1865528; // 1 ton/yd³ = 1.1865528 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        toNumber = num * 1186552.8; // 1 ton/yd³ = 1186552.8 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        toNumber = num * 1186552.8; // 1 ton/yd³ = 1186552.8 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        toNumber = num * 2.2427524138; // 1 ton/yd³ = 2.2427524138 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        toNumber = num * 341.21610033; // 1 ton/yd³ = 341.21610033 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        toNumber = num * 0.058851754; // 1 ton/yd³ = 0.058851754 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        toNumber = num * 100; // 1 ton/yd³ = 100 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        toNumber = num * 12.093955243; // 1 ton/yd³ = 12.093955243 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        toNumber = num * 1.4881639413; // 1 ton/yd³ = 1.4881639413 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        toNumber = num * 0.842777784; // 1 ton/yd³ = 0.842777784 t/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        toNumber = num * 6858579.472; // 1 ton/yd³ = 6858579.472 grains/gal (US)
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "GrainsPerGallonUS":
+                switch (fromName)
+                {
+                    case "GrainsPerGallonUS":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 0.00229097; // 1 grain/gallon (US) = 0.00229097 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 17.118; // 1 grain/gallon (US) = 17.118 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 0.017118; // 1 grain/gallon (US) = 0.017118 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.000017118; // 1 grain/gallon (US) = 0.000017118 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 17.118; // 1 grain/gallon (US) = 17.118 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 17118; // 1 grain/gallon (US) = 17118 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.000315195; // 1 grain/gallon (US) = 0.000315195 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 0.137857; // 1 grain/gallon (US) = 0.137857 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0000180113; // 1 grain/gallon (US) = 0.0000180113 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.000002551; // 1 grain/gallon (US) = 0.000002551 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.000114438; // 1 grain/gallon (US) = 0.000114438 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 6.79224e-8; // 1 grain/gallon (US) = 6.79224e-8 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 1.7118e-8; // 1 grain/gallon (US) = 1.7118e-8 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 2.31053e-8; // 1 grain/gallon (US) = 2.31053e-8 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerCubicCentimeter":
+                switch (fromName)
+                {
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 437.5; // 1 g/cm³ = 437.5 grains/gallon (US)
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000; // 1 g/cm³ = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num; // 1 g/cm³ = 1 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1000; // 1 g/cm³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num; // 1 g/cm³ = 1 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 g/cm³ = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000; // 1 g/cm³ = 1000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000000; // 1 g/cm³ = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.578036; // 1 g/cm³ = 0.578036 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 7.48915; // 1 g/cm³ = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 g/cm³ = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 62.4279; // 1 g/cm³ = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 8.3454; // 1 g/cm³ = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00255102; // 1 g/cm³ = 0.00255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 g/cm³ = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00130795; // 1 g/cm³ = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerLiter":
+                switch (fromName)
+                {
+                    case "GramsPerLiter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 0.001; // 1 g/L = 0.001 g/cm³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 58.417831; // 1 g/L = 58.417831 grains/gallon (US)
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 0.001; // 1 g/L = 0.001 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num; // 1 g/L = 1 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 0.001; // 1 g/L = 0.001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.000001; // 1 g/L = 0.000001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num; // 1 g/L = 1 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000; // 1 g/L = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 g/L = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 0.133526; // 1 g/L = 0.133526 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0000361273; // 1 g/L = 0.0000361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.0624279; // 1 g/L = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.0083454; // 1 g/L = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00000255102; // 1 g/L = 0.00000255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.000001; // 1 g/L = 0.000001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00000130795; // 1 g/L = 0.00000130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "GramsPerMilliliters":
+                switch (fromName)
+                {
+                    case "GramsPerMilliliters":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num; // 1 g/mL = 1 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000; // 1 g/mL = 1000 g/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 58.417831; // 1 g/mL = 58.417831 grains/gallon (US)
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1000; // 1 g/mL = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num; // 1 g/mL = 1 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 1000000; // 1 g/mL = 1000000 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000; // 1 g/mL = 1000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000000; // 1 g/mL = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 g/mL = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 133.526; // 1 g/mL = 133.526 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0000361273; // 1 g/mL = 0.0000361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 62.4279; // 1 g/mL = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 8.3454; // 1 g/mL = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00255102; // 1 g/mL = 0.00255102 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num; // 1 g/mL = 1 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00130795; // 1 g/mL = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "KilogramsPerCubicMeters":
+                switch (fromName)
+                {
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1000; // 1 kg/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num; // 1 kg/m³ = 1 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 1000000; // 1 kg/m³ = 1000000 g/mL
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 58.417831; // 1 kg/m³ = 58.417831 grains/gallon (US)
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 0.001; // 1 kg/m³ = 0.001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 kg/m³ = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000000; // 1 kg/m³ = 1000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000; // 1 kg/m³ = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.5780367; // 1 kg/m³ = 0.5780367 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 7.48915; // 1 kg/m³ = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 kg/m³ = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.0624279; // 1 kg/m³ = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.0083454; // 1 kg/m³ = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00020482; // 1 kg/m³ = 0.00020482 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 kg/m³ = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00130795; // 1 kg/m³ = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "KilogramsPerLiter":
+                switch (fromName)
+                {
+                    case "KilogramsPerLiter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1000; // 1 kg/L = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000; // 1 kg/L = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 1000000; // 1 kg/L = 1000000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num; // 1 kg/L = 1 kg/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 58.417831; // 1 kg/L = 58.417831 grains/gallon (US)
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 kg/L = 0.001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000000; // 1 kg/L = 1000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000000; // 1 kg/L = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.5780367; // 1 kg/L = 0.5780367 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 7.48915; // 1 kg/L = 7.48915 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 kg/L = 0.0361273 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.0624279; // 1 kg/L = 0.0624279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.0083454; // 1 kg/L = 0.0083454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00020482; // 1 kg/L = 0.00020482 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 kg/L = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00130795; // 1 kg/L = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MegagramsPerCubicMeter":
+                switch (fromName)
+                {
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1000; // 1 Mg/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000; // 1 Mg/m³ = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 1000000; // 1 Mg/m³ = 1000000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1000; // 1 Mg/m³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num; // 1 Mg/m³ = 1 kg/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 14582.6; // 1 Mg/m³ = 14582.6 grains/gallon (US)
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000000000; // 1 Mg/m³ = 1000000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000000; // 1 Mg/m³ = 1000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 61023.7; // 1 Mg/m³ = 61023.7 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 7936.64; // 1 Mg/m³ = 7936.64 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 36127.3; // 1 Mg/m³ = 36127.3 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 62.4279; // 1 Mg/m³ = 62.4279 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 8.3454; // 1 Mg/m³ = 8.3454 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 2.20462; // 1 Mg/m³ = 2.20462 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num; // 1 Mg/m³ = 1 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 1.30795; // 1 Mg/m³ = 1.30795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MilligramsPerMilliliter":
+                switch (fromName)
+                {
+                    case "MilligramsPerMilliliter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num; // 1 mg/mL = 1 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000; // 1 mg/mL = 1000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num; // 1 mg/mL = 1 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1000000; // 1 mg/mL = 1000000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 1000; // 1 mg/mL = 1000 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 1000000000; // 1 mg/mL = 1000000000 Mg/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 6950.68; // 1 mg/mL = 6950.68 grains/gallon (US)
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000; // 1 mg/mL = 1000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 57623.7; // 1 mg/mL = 57623.7 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 7478.69; // 1 mg/mL = 7478.69 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 35840; // 1 mg/mL = 35840 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 62.4275; // 1 mg/mL = 62.4275 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 8.34541; // 1 mg/mL = 8.34541 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.00220462; // 1 mg/mL = 0.00220462 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.001; // 1 mg/mL = 0.001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.00130795; // 1 mg/mL = 0.00130795 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "MilligramsPerLiter":
+                switch (fromName)
+                {
+                    case "MilligramsPerLiter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num / 1000; // 1 mg/L = 0.001 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num / 1000; // 1 mg/L = 0.001 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num / 1000; // 1 mg/L = 0.001 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num / 1000000; // 1 mg/L = 0.000001 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num / 1000000; // 1 mg/L = 0.000001 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num / 1000000000; // 1 mg/L = 0.000000001 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num / 1000; // 1 mg/L = 0.001 mg/mL
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 0.0171181; // 1 mg/L = 0.0171181 grains/gallon (US)
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.0361273; // 1 mg/L = 0.0361273 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 0.00834541; // 1 mg/L = 0.00834541 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.000578036; // 1 mg/L = 0.000578036 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.0000624275; // 1 mg/L = 0.0000624275 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.00000834541; // 1 mg/L = 0.00000834541 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 5.78704e-9; // 1 mg/L = 5.78704e-9 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num / 1000000000; // 1 mg/L = 0.000000001 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 1.30795e-9; // 1 mg/L = 1.30795e-9 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "OuncesPerCubicInch":
+                switch (fromName)
+                {
+                    case "OuncesPerCubicInch":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1.72999404; // 1 oz/in³ = 1.72999404 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 0.0276799047; // 1 oz/in³ = 0.0276799047 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1729.99404; // 1 oz/in³ = 1729.99404 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.00172999404; // 1 oz/in³ = 0.00172999404 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 27.6799047; // 1 oz/in³ = 27.6799047 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 27679.9047; // 1 oz/in³ = 27679.9047 mg/L
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 192.000015; // 1 oz/in³ = 192.000015 grains/gallon (US)
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 16.0000013; // 1 oz/in³ = 16.0000013 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0625; // 1 oz/in³ = 0.0625 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 1.00115396; // 1 oz/in³ = 1.00115396 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.133680554; // 1 oz/in³ = 0.133680554 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.0640887313; // 1 oz/in³ = 0.0640887313 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.00172999404; // 1 oz/in³ = 0.00172999404 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.0007452589; // 1 oz/in³ = 0.0007452589 ton/yd³ (US)
+                        break;
+                }
+                break;
+            case "OuncesPerGallonUS":
+                switch (fromName)
+                {
+                    case "OuncesPerGallonUS":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 119.8264273; // 1 oz/gal (US) = 119.8264273 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 119826.4273; // 1 oz/gal (US) = 119826.4273 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 119.8264273; // 1 oz/gal (US) = 119.8264273 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 119826.4273; // 1 oz/gal (US) = 119826.4273 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 119826427.3; // 1 oz/gal (US) = 119826427.3 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.0036046501; // 1 oz/gal (US) = 0.0036046501 oz/in³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 7000; // 1 oz/gal (US) = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0002264174; // 1 oz/gal (US) = 0.0002264174 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.036065178; // 1 oz/gal (US) = 0.036065178 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.0083454045; // 1 oz/gal (US) = 0.0083454045 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.0019575726; // 1 oz/gal (US) = 0.0019575726 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.1198264273; // 1 oz/gal (US) = 0.1198264273 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.1605447302; // 1 oz/gal (US) = 0.1605447302 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerCubicInch":
+                switch (fromName)
+                {
+                    case "PoundsPerCubicInch":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 27679.904689; // 1 lb/in³ = 27679.904689 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 27679.904689; // 1 lb/in³ = 27679.904689 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 27679904.689; // 1 lb/in³ = 27679904.689 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 16; // 1 lb/in³ = 16 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 256; // 1 lb/in³ = 256 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 7000; // 1 lb/in³ = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 1728; // 1 lb/in³ = 1728 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 231; // 1 lb/in³ = 231 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.0598808886; // 1 lb/in³ = 0.0598808886 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 27.679904689; // 1 lb/in³ = 27.679904689 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 37.037037037; // 1 lb/in³ = 37.037037037 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerCubicFoot":
+                switch (fromName)
+                {
+                    case "PoundsPerCubicFoot":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 16.01846337396; // 1 lb/ft³ = 16.01846337396 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.01601846337396; // 1 lb/ft³ = 0.01601846337396 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 16018.46337396; // 1 lb/ft³ = 16018.46337396 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.00057803667239; // 1 lb/ft³ = 0.00057803667239 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 8.345404452; // 1 lb/ft³ = 8.345404452 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 7000; // 1 lb/ft³ = 7000 grains/gallon (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0361272922; // 1 lb/ft³ = 0.0361272922 lb/in³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 0.1198264273; // 1 lb/ft³ = 0.1198264273 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.0310809505; // 1 lb/ft³ = 0.0310809505 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.01601846337396; // 1 lb/ft³ = 0.01601846337396 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.013165726; // 1 lb/ft³ = 0.013165726 US ton/yd³
+                        break;
+                }
+                break;
+            case "PoundsPerGallonUS":
+                switch (fromName)
+                {
+                    case "PoundsPerGallonUS":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.0001198264273; // 1 lb/gal (US) = 0.0001198264273 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 119.8264273; // 1 lb/gal (US) = 119.8264273 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 119826.4273; // 1 lb/gal (US) = 119826.4273 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 0.00432900433; // 1 lb/gal (US) = 0.00432900433 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 8; // 1 lb/gal (US) = 8 oz/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 5833.3333333333; // 1 lb/gal (US) = 5833.3333333333 grains/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.0361272922; // 1 lb/gal (US) = 0.0361272922 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 0.008345404452; // 1 lb/gal (US) = 0.008345404452 lb/ft³
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 0.0021667375; // 1 lb/gal (US) = 0.0021667375 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.1198264273; // 1 lb/gal (US) = 0.1198264273 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.003356380764; // 1 lb/gal (US) = 0.003356380764 US ton/yd³
+                        break;
+                }
+                break;
+            case "SlugsPerCubicFoot":
+                switch (fromName)
+                {
+                    case "SlugsPerCubicFoot":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 515.3788184; // 1 sl/ft³ = 515.3788184 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 0.5153788184; // 1 sl/ft³ = 0.5153788184 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 515378.8184; // 1 sl/ft³ = 515378.8184 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 515378818.4; // 1 sl/ft³ = 515378818.4 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 29.922077922; // 1 sl/ft³ = 29.922077922 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 467.8310173; // 1 sl/ft³ = 467.8310173 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 1.9426048557; // 1 sl/ft³ = 1.9426048557 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 32.174048556; // 1 sl/ft³ = 32.174048556 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 7.4805194805; // 1 sl/ft³ = 7.4805194805 lb/gal (US)
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 5840.156038; // 1 sl/ft³ = 5840.156038 grains/gal (US)
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.5153788184; // 1 sl/ft³ = 0.5153788184 t/m³
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 0.02150209194; // 1 sl/ft³ = 0.02150209194 US ton/yd³
+                        break;
+                }
+                break;
+            case "TonnesPerCubicMeter":
+                switch (fromName)
+                {
+                    case "TonnesPerCubicMeter":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1000; // 1 t/m³ = 1000 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1000000; // 1 t/m³ = 1000000 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 1000; // 1 t/m³ = 1000 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1000; // 1 t/m³ = 1000 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 1000000; // 1 t/m³ = 1000000 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num; // 1 t/m³ = 1 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1000000000; // 1 t/m³ = 1000000000 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1000000000; // 1 t/m³ = 1000000000 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 1.7299940444; // 1 t/m³ = 1.7299940444 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 264.17205236; // 1 t/m³ = 264.17205236 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.03612729297; // 1 t/m³ = 0.03612729297 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 62.427960576; // 1 t/m³ = 62.427960576 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 15.748430888; // 1 t/m³ = 15.748430888 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 1.9403203313; // 1 t/m³ = 1.9403203313 sl/ft³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 15432358.353; // 1 t/m³ = 15432358.353 grains/gal (US)
+                        break;
+                    case "TonsUSPerCubicYard":
+                        fromNumber = num * 1.3079506193; // 1 t/m³ = 1.3079506193 US ton/yd³
+                        break;
+                }
+                break;
+            case "TonsUSPerCubicYard":
+                switch (fromName)
+                {
+                    case "TonsUSPerCubicYard":
+                        fromNumber = toNumber;
+                        break;
+                    case "GramsPerCubicCentimeter":
+                        fromNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 g/cm³
+                        break;
+                    case "GramsPerLiter":
+                        fromNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 g/L
+                        break;
+                    case "GramsPerMilliliters":
+                        fromNumber = num * 1.1865528; // 1 ton/yd³ = 1.1865528 g/mL
+                        break;
+                    case "KilogramsPerCubicMeters":
+                        fromNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 kg/m³
+                        break;
+                    case "KilogramsPerLiter":
+                        fromNumber = num * 1186.5528; // 1 ton/yd³ = 1186.5528 kg/L
+                        break;
+                    case "MegagramsPerCubicMeter":
+                        fromNumber = num * 1.1865528; // 1 ton/yd³ = 1.1865528 Mg/m³
+                        break;
+                    case "MilligramsPerMilliliter":
+                        fromNumber = num * 1186552.8; // 1 ton/yd³ = 1186552.8 mg/mL
+                        break;
+                    case "MilligramsPerLiter":
+                        fromNumber = num * 1186552.8; // 1 ton/yd³ = 1186552.8 mg/L
+                        break;
+                    case "OuncesPerCubicInch":
+                        fromNumber = num * 2.2427524138; // 1 ton/yd³ = 2.2427524138 oz/in³
+                        break;
+                    case "OuncesPerGallonUS":
+                        fromNumber = num * 341.21610033; // 1 ton/yd³ = 341.21610033 oz/gal (US)
+                        break;
+                    case "PoundsPerCubicInch":
+                        fromNumber = num * 0.058851754; // 1 ton/yd³ = 0.058851754 lb/in³
+                        break;
+                    case "PoundsPerCubicFoot":
+                        fromNumber = num * 100; // 1 ton/yd³ = 100 lb/ft³
+                        break;
+                    case "PoundsPerGallonUS":
+                        fromNumber = num * 12.093955243; // 1 ton/yd³ = 12.093955243 lb/gal (US)
+                        break;
+                    case "SlugsPerCubicFoot":
+                        fromNumber = num * 1.4881639413; // 1 ton/yd³ = 1.4881639413 sl/ft³
+                        break;
+                    case "TonnesPerCubicMeter":
+                        fromNumber = num * 0.842777784; // 1 ton/yd³ = 0.842777784 t/m³
+                        break;
+                    case "GrainsPerGallonUS":
+                        fromNumber = num * 6858579.472; // 1 ton/yd³ = 6858579.472 grains/gal (US)
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

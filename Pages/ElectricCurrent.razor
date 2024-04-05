@@ -1,0 +1,3484 @@
+﻿@page "/electriccurrent"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Electric Current</h3>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(ElectricCurrentModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(ElectricCurrentModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Ampere";
+    string toName = "GigaAmpere";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Abampere":
+                switch (toName)
+                {
+                    case "Abampere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 10; // 1 Abampere = 10 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 0.1; // 1 Abampere = 0.1 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1000; // 1 Abampere = 1000 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 10; // 1 Abampere = 10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num; // 1 Abampere = 1 EMU of Current (same unit)
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 299.792458; // 1 Abampere = 299.792458 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 0.1; // 1 Abampere = 0.1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 3.335641e-10; // 1 Abampere = 3.335641e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Abampere = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 0.01256637; // 1 Abampere = 0.01256637 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.01; // 1 Abampere = 0.01 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 0.00001; // 1 Abampere = 0.00001 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 10000; // 1 Abampere = 10000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 100000; // 1 Abampere = 100000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 100000000; // 1 Abampere = 100000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 100000000000; // 1 Abampere = 100000000000 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 10; // 1 Abampere = 10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 0.0001; // 1 Abampere = 0.0001 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Abampere = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 10; // 1 Abampere = 10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 10; // 1 Abampere = 10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 10; // 1 Abampere = 10 Weber/Henry
+                        break;
+                }
+                break;
+            case "Ampere":
+                switch (toName)
+                {
+                    case "Ampere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Abampere":
+                        toNumber = num * 0.1; // 1 Ampere = 0.1 Abampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 0.01; // 1 Ampere = 0.01 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 100; // 1 Ampere = 100 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num; // 1 Ampere = 1 Coulomb/Second (same unit)
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 10; // 1 Ampere = 10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-10; // 1 Ampere = 3.335641e-10 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 0.01; // 1 Ampere = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 1e+9; // 1 Ampere = 1e+9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Ampere = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 0.79577472; // 1 Ampere = 0.79577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.001; // 1 Ampere = 0.001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-6; // 1 Ampere = 1e-6 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000000; // 1 Ampere = 1000000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000; // 1 Ampere = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e+9; // 1 Ampere = 1e+9 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e+12; // 1 Ampere = 1e+12 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num; // 1 Ampere = 1 Siemens/Volt (same unit)
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 10000; // 1 Ampere = 10000 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Ampere = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = fromNumber; // 1 Ampere = 1 Volt/Ohm (same unit)
+                        break;
+                    case "WattPerVolt":
+                        toNumber = fromNumber; // 1 Ampere = 1 Watt/Volt (same unit)
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = fromNumber; // 1 Ampere = 1 Weber/Henry (same unit)
+                        break;
+                }
+                break;
+            case "Biot":
+                switch (toName)
+                {
+                    case "Biot":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 10; // 1 Biot = 10 Ampere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 10; // 1 Biot = 10 Abampere
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1000; // 1 Biot = 1000 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 10; // 1 Biot = 10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 100; // 1 Biot = 100 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-9; // 1 Biot = 3.335641e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 10; // 1 Biot = 10 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 1e+8; // 1 Biot = 1e+8 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-8; // 1 Biot = 1e-8 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 7.9577472; // 1 Biot = 7.9577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.01; // 1 Biot = 0.01 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-5; // 1 Biot = 1e-5 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 10000; // 1 Biot = 10000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000; // 1 Biot = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e+7; // 1 Biot = 1e+7 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e+10; // 1 Biot = 1e+10 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 10; // 1 Biot = 10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 100; // 1 Biot = 100 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-11; // 1 Biot = 1e-11 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 10; // 1 Biot = 10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 10; // 1 Biot = 10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 10; // 1 Biot = 10 Weber/Henry
+                        break;
+                }
+                break;
+            case "CentiAmpere":
+                switch (toName)
+                {
+                    case "CentiAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Biot
+                        break;
+                    case "Abampere":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Abampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 CentiAmpere = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 100000000; // 1 CentiAmpere = 100000000 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-10; // 1 CentiAmpere = 1e-10 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 0.079577472; // 1 CentiAmpere = 0.079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.00001; // 1 CentiAmpere = 0.00001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-8; // 1 CentiAmpere = 1e-8 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 10; // 1 CentiAmpere = 10 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 100; // 1 CentiAmpere = 100 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 10000000; // 1 CentiAmpere = 10000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e+10; // 1 CentiAmpere = 1e+10 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-11; // 1 CentiAmpere = 1e-11 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 0.01; // 1 CentiAmpere = 0.01 Weber/Henry
+                        break;
+                }
+                break;
+            case "CoulombPerSecond":
+                switch (toName)
+                {
+                    case "CoulombPerSecond":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num; // 1 Coulomb/Second = 1 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 0.1; // 1 Coulomb/Second = 0.1 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 100; // 1 Coulomb/Second = 100 CentiAmpere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 10; // 1 Coulomb/Second = 10 Abampere
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 3.335641; // 1 Coulomb/Second = 3.335641 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Coulomb/Second = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 0.079577472; // 1 Coulomb/Second = 0.079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.001; // 1 Coulomb/Second = 0.001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-6; // 1 Coulomb/Second = 1e-6 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000000; // 1 Coulomb/Second = 1000000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000; // 1 Coulomb/Second = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000000000; // 1 Coulomb/Second = 1000000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e+12; // 1 Coulomb/Second = 1e+12 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num; // 1 Coulomb/Second = 1 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 0.1; // 1 Coulomb/Second = 0.1 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Coulomb/Second = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = fromNumber; // 1 Coulomb/Second = 1 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = fromNumber; // 1 Coulomb/Second = 1 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = fromNumber; // 1 Coulomb/Second = 1 Weber/Henry
+                        break;
+                }
+                break;
+            case "EMUOfCurrent":
+                switch (toName)
+                {
+                    case "EMUOfCurrent":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num / 29979245368.4; // 1 EMU of Current = 1/29979245368.4 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 0.01 / 2997924536.84; // 1 EMU of Current = 0.01/2997924536.84 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Coulomb/Second
+                        break;
+                    case "Abampere":
+                        toNumber = num / 299792453.684; // 1 EMU of Current = 1/299792453.684 Abampere
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = fromNumber; // 1 EMU of Current = 1 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 0.1; // 1 EMU of Current = 0.1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 2.99792453684e+18; // 1 EMU of Current = 1/2.99792453684e+18 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 0.0079577472; // 1 EMU of Current = 0.0079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 2.99792453684e+15; // 1 EMU of Current = 1/2.99792453684e+15 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 2.99792453684e+12; // 1 EMU of Current = 1/2.99792453684e+12 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num / 2.99792453684e+18; // 1 EMU of Current = 1/2.99792453684e+18 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num / 2.99792453684e+15; // 1 EMU of Current = 1/2.99792453684e+15 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num / 2.99792453684e+21; // 1 EMU of Current = 1/2.99792453684e+21 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num / 2.99792453684e+24; // 1 EMU of Current = 1/2.99792453684e+24 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num / 299792453.684; // 1 EMU of Current = 1/299792453.684 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 2.99792453684e+9; // 1 EMU of Current = 1/2.99792453684e+9 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Weber/Henry
+                        break;
+                }
+                break;
+            case "ESUOfCurrent":
+                switch (toName)
+                {
+                    case "ESUOfCurrent":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 3.335641e-11; // 1 ESU of Current = 3.335641e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 3.335641e-8; // 1 ESU of Current = 3.335641e-8 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num; // 1 ESU of Current = 1 EMU of Current
+                        break;
+                    case "Abampere":
+                        toNumber = num * 3.335641e-9; // 1 ESU of Current = 3.335641e-9 Abampere
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 0.01; // 1 ESU of Current = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 1.1130588e-9; // 1 ESU of Current = 1.1130588e-9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 3.335641e-19; // 1 ESU of Current = 3.335641e-19 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 8.8055052e-12; // 1 ESU of Current = 8.8055052e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 3.335641e-16; // 1 ESU of Current = 3.335641e-16 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 3.335641e-13; // 1 ESU of Current = 3.335641e-13 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 3.335641e-13; // 1 ESU of Current = 3.335641e-13 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 3.335641e-16; // 1 ESU of Current = 3.335641e-16 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 3.335641e-8; // 1 ESU of Current = 3.335641e-8 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 3.335641e-22; // 1 ESU of Current = 3.335641e-22 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Weber/Henry
+                        break;
+                }
+                break;
+            case "FranklinPerSecond":
+                switch (toName)
+                {
+                    case "FranklinPerSecond":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 3.335641e-12; // 1 Franklin/Second = 3.335641e-12 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 3.335641e-9; // 1 Franklin/Second = 3.335641e-9 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 100; // 1 Franklin/Second = 100 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 0.01; // 1 Franklin/Second = 0.01 ESU of Current
+                        break;
+                    case "Abampere":
+                        toNumber = num * 3.335641e-10; // 1 Franklin/Second = 3.335641e-10 Abampere
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 1.1130588e-10; // 1 Franklin/Second = 1.1130588e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 3.335641e-20; // 1 Franklin/Second = 3.335641e-20 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 8.8055052e-13; // 1 Franklin/Second = 8.8055052e-13 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 3.335641e-17; // 1 Franklin/Second = 3.335641e-17 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 3.335641e-14; // 1 Franklin/Second = 3.335641e-14 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 3.335641e-8; // 1 Franklin/Second = 3.335641e-8 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 3.335641e-14; // 1 Franklin/Second = 3.335641e-14 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 3.335641e-17; // 1 Franklin/Second = 3.335641e-17 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 3.335641e-12; // 1 Franklin/Second = 3.335641e-12 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 3.335641e-23; // 1 Franklin/Second = 3.335641e-23 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Weber/Henry
+                        break;
+                }
+                break;
+            case "GaussianElectricCurrent":
+                switch (toName)
+                {
+                    case "GaussianElectricCurrent":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 3.335641e-11; // 1 Gaussian Electric Current = 3.335641e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 3.335641e-7; // 1 Gaussian Electric Current = 3.335641e-7 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 10; // 1 Gaussian Electric Current = 10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 0.1; // 1 Gaussian Electric Current = 0.1 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 8.987552e9; // 1 Gaussian Electric Current = 8.987552e9 Franklin/Second
+                        break;
+                    case "Abampere":
+                        toNumber = num * 3.335641e-9; // 1 Gaussian Electric Current = 3.335641e-9 Abampere
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 3.335641e-19; // 1 Gaussian Electric Current = 3.335641e-19 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 8.8055052e-12; // 1 Gaussian Electric Current = 8.8055052e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 3.335641e-16; // 1 Gaussian Electric Current = 3.335641e-16 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 3.335641e-13; // 1 Gaussian Electric Current = 3.335641e-13 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 3.335641e-7; // 1 Gaussian Electric Current = 3.335641e-7 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 3.335641e-13; // 1 Gaussian Electric Current = 3.335641e-13 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 3.335641e-16; // 1 Gaussian Electric Current = 3.335641e-16 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 3.335641e-11; // 1 Gaussian Electric Current = 3.335641e-11 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 3.335641e-22; // 1 Gaussian Electric Current = 3.335641e-22 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Weber/Henry
+                        break;
+                }
+                break;
+            case "GigaAmpere":
+                switch (toName)
+                {
+                    case "GigaAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 1e8; // 1 GigaAmpere = 1e8 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1e11; // 1 GigaAmpere = 1e11 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 3e10; // 1 GigaAmpere = 3e10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 1e10; // 1 GigaAmpere = 1e10 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 8.987552e17; // 1 GigaAmpere = 8.987552e17 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 3e19; // 1 GigaAmpere = 3e19 Gaussian Electric Current
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1e18; // 1 GigaAmpere = 1e18 Abampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 2.637388e17; // 1 GigaAmpere = 2.637388e17 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1e6; // 1 GigaAmpere = 1e6 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1000; // 1 GigaAmpere = 1000 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1e12; // 1 GigaAmpere = 1e12 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e15; // 1 GigaAmpere = 1e15 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e18; // 1 GigaAmpere = 1e18 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 1e8; // 1 GigaAmpere = 1e8 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 0.001; // 1 GigaAmpere = 0.001 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 1e9; // 1 GigaAmpere = 1e9 Weber/Henry
+                        break;
+                }
+                break;
+            case "Gilbert":
+                switch (toName)
+                {
+                    case "Gilbert":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 0.795775; // 1 Gilbert = 0.795775 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 0.0795775; // 1 Gilbert = 0.0795775 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 79.5775; // 1 Gilbert = 79.5775 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 0.795775; // 1 Gilbert = 0.795775 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 23.9294; // 1 Gilbert = 23.9294 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 7.95775; // 1 Gilbert = 7.95775 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 7.95775; // 1 Gilbert = 7.95775 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 23.9294; // 1 Gilbert = 23.9294 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Gilbert = 1e-9 GigaAmpere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1000000000; // 1 Gilbert = 1e9 Abampere
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 0.000795775; // 1 Gilbert = 0.000795775 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 7.95775e-7; // 1 Gilbert = 7.95775e-7 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 795.775; // 1 Gilbert = 795.775 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 795.775; // 1 Gilbert = 795.775 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 795775; // 1 Gilbert = 795775 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 795775000; // 1 Gilbert = 795775000 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 0.795775; // 1 Gilbert = 0.795775 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 7.95775; // 1 Gilbert = 7.95775 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 7.95775e-10; // 1 Gilbert = 7.95775e-10 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 795775; // 1 Gilbert = 795775 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 795775; // 1 Gilbert = 795775 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 795775; // 1 Gilbert = 795775 Weber/Henry
+                        break;
+                }
+                break;
+            case "KiloAmpere":
+                switch (toName)
+                {
+                    case "KiloAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 100; // 1 Kiloampere = 100 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 100000; // 1 Kiloampere = 100000 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 29979.2458; // 1 Kiloampere = 29979.2458 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 29979.2458; // 1 Kiloampere = 29979.2458 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 0.001; // 1 Kiloampere = 0.001 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 126.314; // 1 Kiloampere = 126.314 Gilbert
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1000000000; // 1 Kiloampere = 1e9 Abampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 0.001; // 1 Kiloampere = 0.001 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000000; // 1 Kiloampere = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000000; // 1 Kiloampere = 1e6 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000000000; // 1 Kiloampere = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000000000000; // 1 Kiloampere = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 0.000001; // 1 Kiloampere = 1e-6 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 1000; // 1 Kiloampere = 1000 Weber/Henry
+                        break;
+                }
+                break;
+            case "MegaAmpere":
+                switch (toName)
+                {
+                    case "MegaAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 100000; // 1 Megaampere = 1e5 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 100000000; // 1 Megaampere = 1e8 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 299792458; // 1 Megaampere = 2.99792458e8 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 299792458; // 1 Megaampere = 2.99792458e8 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 0.001; // 1 Megaampere = 0.001 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 12631.4; // 1 Megaampere = 12631.4 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1000; // 1 Megaampere = 1000 Kiloampere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1000000000; // 1 Megaampere = 1e9 Abampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000000000; // 1 Megaampere = 1e9 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000000000; // 1 Megaampere = 1e9 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000000000000; // 1 Megaampere = 1e12 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000000000000000; // 1 Megaampere = 1e15 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 0.001; // 1 Megaampere = 0.001 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 1000000; // 1 Megaampere = 1e6 Weber/Henry
+                        break;
+                }
+                break;
+            case "MicroAmpere":
+                switch (toName)
+                {
+                    case "MicroAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num / 1000000; // 1 Microampere = 1e-6 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num / 10000000; // 1 Microampere = 1e-7 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num / 10000; // 1 Microampere = 1e-4 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num / 1000000; // 1 Microampere = 1e-6 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num / 3335640956.39; // 1 Microampere = 3.33564095639e-10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num / 1000000000; // 1 Microampere = 1e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num / 1000000000; // 1 Microampere = 1e-9 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num / 3335640956.39; // 1 Microampere = 3.33564095639e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 1000000000000; // 1 Microampere = 1e-12 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num / 79577471545.8; // 1 Microampere = 7.95774715458e-14 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 1000000000; // 1 Microampere = 1e-9 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 1000000000000; // 1 Microampere = 1e-12 Megaampere
+                        break;
+                    case "Abampere":
+                        toNumber = num / 1000000000; // 1 Microampere = 1e-9 Abampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num / 1000; // 1 Microampere = 1e-3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000; // 1 Microampere = 1e3 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000000; // 1 Microampere = 1e6 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num / 1000000; // 1 Microampere = 1e-6 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num / 1000000000; // 1 Microampere = 1e-9 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 1000000000000000; // 1 Microampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num / 1000; // 1 Microampere = 1e-3 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num / 1000; // 1 Microampere = 1e-3 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num / 1000; // 1 Microampere = 1e-3 Weber/Henry
+                        break;
+                }
+                break;
+            case "MilliAmpere":
+                switch (toName)
+                {
+                    case "MilliAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num / 10000; // 1 Milliampere = 1e-4 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num / 10; // 1 Milliampere = 1e-1 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num / 3335640.95639; // 1 Milliampere = 3.33564095639e-7 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num / 1000000; // 1 Milliampere = 1e-6 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num / 1000000; // 1 Milliampere = 1e-6 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num / 3335640.95639; // 1 Milliampere = 3.33564095639e-7 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 1000000000000; // 1 Milliampere = 1e-12 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num / 795774715457.8; // 1 Milliampere = 7.957747154578e-13 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 1000000; // 1 Milliampere = 1e-6 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 1000000000; // 1 Milliampere = 1e-9 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000; // 1 Milliampere = 1e3 Microampere
+                        break;
+                    case "Abampere":
+                        toNumber = num / 1000000; // 1 Milliampere = 1e-6 Abampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000000; // 1 Milliampere = 1e6 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000000000; // 1 Milliampere = 1e9 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num / 1000000; // 1 Milliampere = 1e-6 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 1000000000000000; // 1 Milliampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num / 1000; // 1 Milliampere = 1e-3 Weber/Henry
+                        break;
+                }
+                break;
+            case "NanoAmpere":
+                switch (toName)
+                {
+                    case "NanoAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num / 10000000000; // 1 Nanoampere = 1e-10 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num / 10000000; // 1 Nanoampere = 1e-8 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num / 333564095.639; // 1 Nanoampere = 3.33564095639e-10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num / 333564095.639; // 1 Nanoampere = 3.33564095639e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 1000000000000000; // 1 Nanoampere = 1e-15 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num / 795774715457.8; // 1 Nanoampere = 7.957747154578e-16 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 1000000000000; // 1 Nanoampere = 1e-12 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 1000000000000000; // 1 Nanoampere = 1e-15 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num / 1000; // 1 Nanoampere = 1e-3 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num / 1000000; // 1 Nanoampere = 1e-6 Milliampere
+                        break;
+                    case "Abampere":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Abampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000; // 1 Nanoampere = 1e3 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num / 1000000000000; // 1 Nanoampere = 1e-12 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 1000000000000000000; // 1 Nanoampere = 1e-18 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Weber/Henry
+                        break;
+                }
+                break;
+            case "PicoAmpere":
+                switch (toName)
+                {
+                    case "PicoAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num / 10000000000000; // 1 Picoampere = 1e-13 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num / 10000000000; // 1 Picoampere = 1e-10 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 1000000000000000000; // 1 Picoampere = 1e-21 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num / 795774715457844; // 1 Picoampere = 7.95774715457844e-22 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 1000000000000000; // 1 Picoampere = 1e-18 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 1000000000000000000; // 1 Picoampere = 1e-21 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num / 1000000; // 1 Picoampere = 1e-6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num / 1000; // 1 Picoampere = 1e-3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num / 1000; // 1 Picoampere = 1e-3 Nanoampere
+                        break;
+                    case "Abampere":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Abampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 1000000000000000; // 1 Picoampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Weber/Henry
+                        break;
+                }
+                break;
+            case "SiemensVolt":
+                switch (toName)
+                {
+                    case "SiemensVolt":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num; // 1 Siemens/Volt = 1 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 10; // 1 Siemens/Volt = 10 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 100; // 1 Siemens/Volt = 100 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num; // 1 Siemens/Volt = 1 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num; // 1 Siemens/Volt = 1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num / 1000000000; // 1 Siemens/Volt = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num / 0.795774715459; // 1 Siemens/Volt = 1.25700256449 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num / 1000; // 1 Siemens/Volt = 0.001 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num / 1000000; // 1 Siemens/Volt = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1000000; // 1 Siemens/Volt = 1e+6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1000; // 1 Siemens/Volt = 1000 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1000000000; // 1 Siemens/Volt = 1e+9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1000000000000; // 1 Siemens/Volt = 1e+12 Picoampere
+                        break;
+                    case "Abampere":
+                        toNumber = fromNumber; // 1 Siemens/Volt = 1 Abampere
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num / 1000000000000; // 1 Siemens/Volt = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = fromNumber; // 1 Siemens/Volt = 1 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = fromNumber; // 1 Siemens/Volt = 1 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = fromNumber; // 1 Siemens/Volt = 1 Weber/Henry
+                        break;
+                }
+                break;
+            case "StataAmpere":
+                switch (toName)
+                {
+                    case "StataAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 1.11265005605362e-11; // 1 Stataampere = 1.11265005605362e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1.11265005605362e-10; // 1 Stataampere = 1.11265005605362e-10 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1.11265005605362e-21; // 1 Stataampere = 1.11265005605362e-21 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 1.40360679774998e-12; // 1 Stataampere = 1.40360679774998e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1.11265005605362e-15; // 1 Stataampere = 1.11265005605362e-15 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1.11265005605362e-18; // 1 Stataampere = 1.11265005605362e-18 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1.11265005605362e-6; // 1 Stataampere = 1.11265005605362e-6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1.11265005605362e-9; // 1 Stataampere = 1.11265005605362e-9 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1.11265005605362e-15; // 1 Stataampere = 1.11265005605362e-15 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Siemens/Volt
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1.11265005605362e-11; // 1 Stataampere = 1.11265005605362e-11 Abampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1.11265005605362e-24; // 1 Stataampere = 1.11265005605362e-24 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Weber/Henry
+                        break;
+                }
+                break;
+            case "TeraAmpere":
+                switch (toName)
+                {
+                    case "TeraAmpere":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num * 1e12; // 1 Teraampere = 1e12 Ampere
+                        break;
+                    case "Biot":
+                        toNumber = num * 1e13; // 1 Teraampere = 1e13 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1e14; // 1 Teraampere = 1e14 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num * 1e12; // 1 Teraampere = 1e12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num * 1e12; // 1 Teraampere = 1e12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e3; // 1 Teraampere = 1e3 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 1.25992104989487e12; // 1 Teraampere = 1.25992104989487e12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1e6; // 1 Teraampere = 1e6 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e9; // 1 Teraampere = 1e9 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1e15; // 1 Teraampere = 1e15 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1e12; // 1 Teraampere = 1e12 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e18; // 1 Teraampere = 1e18 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e21; // 1 Teraampere = 1e21 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 8.96145981150135; // 1 Teraampere = 8.96145981150135 Stataampere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1e13; // 1 Teraampere = 1e13 Abampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Weber/Henry
+                        break;
+                }
+                break;
+            case "VoltPerOhm":
+                switch (toName)
+                {
+                    case "VoltPerOhm":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num; // 1 Volt/Ohm = 1 Ampere (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "Biot":
+                        toNumber = num * 1e-1; // 1 Volt/Ohm = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1e2; // 1 Volt/Ohm = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num; // 1 Volt/Ohm = 1 Coulomb/Second (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num; // 1 Volt/Ohm = 1 Franklin/Second (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Volt/Ohm = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 1.256637e-9; // 1 Volt/Ohm = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1e-3; // 1 Volt/Ohm = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-6; // 1 Volt/Ohm = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1e6; // 1 Volt/Ohm = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1e3; // 1 Volt/Ohm = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e9; // 1 Volt/Ohm = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e12; // 1 Volt/Ohm = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num; // 1 Volt/Ohm = 1 Siemens/Volt (since Volt/Ohm is the same as Siemens/Volt)
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Volt/Ohm = 1e-12 Teraampere
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1e12; // 1 Volt/Ohm = 1e12 Abampere
+                        break;
+                    case "WattPerVolt":
+                        toNumber = fromNumber; // 1 Volt/Ohm = 1 Watt/Volt (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = fromNumber; // 1 Volt/Ohm = 1 Weber/Henry (since Volt/Ohm is the same as Ampere)
+                        break;
+                }
+                break;
+            case "WattPerVolt":
+                switch (toName)
+                {
+                    case "WattPerVolt":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = num; // 1 Watt/Volt = 1 Ampere (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "Biot":
+                        toNumber = num * 1e-1; // 1 Watt/Volt = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1e2; // 1 Watt/Volt = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num; // 1 Watt/Volt = 1 Coulomb/Second (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num; // 1 Watt/Volt = 1 Franklin/Second (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Watt/Volt = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 1.256637e-9; // 1 Watt/Volt = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1e-3; // 1 Watt/Volt = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-6; // 1 Watt/Volt = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1e6; // 1 Watt/Volt = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1e3; // 1 Watt/Volt = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e9; // 1 Watt/Volt = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e12; // 1 Watt/Volt = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num; // 1 Watt/Volt = 1 Siemens/Volt (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Watt/Volt = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = num; // 1 Watt/Volt = 1 Volt/Ohm (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1e12; // 1 Watt/Volt = 1e12 Abampere
+                        break;
+                    case "WeberPerHenry":
+                        toNumber = num * 1; // 1 Watt/Volt = 1 Weber/Henry (since Watt/Volt is the same as Ampere)
+                        break;
+                }
+                break;
+            case "WeberPerHenry":
+                switch (toName)
+                {
+                    case "WeberPerHenry":
+                        toNumber = fromNumber;
+                        break;
+                    case "Ampere":
+                        toNumber = fromNumber; // 1 Weber/Henry = 1 Ampere (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "Biot":
+                        toNumber = num * 1e-1; // 1 Weber/Henry = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        toNumber = num * 1e2; // 1 Weber/Henry = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        toNumber = num; // 1 Weber/Henry = 1 Coulomb/Second (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        toNumber = num; // 1 Weber/Henry = 1 Franklin/Second (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        toNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        toNumber = num * 1e-9; // 1 Weber/Henry = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        toNumber = num * 1.256637e-9; // 1 Weber/Henry = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        toNumber = num * 1e-3; // 1 Weber/Henry = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        toNumber = num * 1e-6; // 1 Weber/Henry = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        toNumber = num * 1e6; // 1 Weber/Henry = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        toNumber = num * 1e3; // 1 Weber/Henry = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        toNumber = num * 1e9; // 1 Weber/Henry = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        toNumber = num * 1e12; // 1 Weber/Henry = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        toNumber = num; // 1 Weber/Henry = 1 Siemens/Volt (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "StataAmpere":
+                        toNumber = num * 1; // 1 Weber/Henry = 1 Stataampere (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "TeraAmpere":
+                        toNumber = num * 1e-12; // 1 Weber/Henry = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        toNumber = fromNumber; // 1 Weber/Henry = 1 Volt/Ohm (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "WattPerVolt":
+                        toNumber = num * 1; // 1 Weber/Henry = 1 Watt/Volt (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "Abampere":
+                        toNumber = num * 1e12; // 1 Weber/Henry = 1e12 Abampere
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Abampere":
+                switch (fromName)
+                {
+                    case "Abampere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 10; // 1 Abampere = 10 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 0.1; // 1 Abampere = 0.1 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1000; // 1 Abampere = 1000 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 10; // 1 Abampere = 10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = toNumber; // 1 Abampere = 1 EMU of Current (same unit)
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 299.792458; // 1 Abampere = 299.792458 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 0.1; // 1 Abampere = 0.1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 3.335641e-10; // 1 Abampere = 3.335641e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Abampere = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 0.01256637; // 1 Abampere = 0.01256637 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.01; // 1 Abampere = 0.01 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 0.00001; // 1 Abampere = 0.00001 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 10000; // 1 Abampere = 10000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 100000; // 1 Abampere = 100000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 100000000; // 1 Abampere = 100000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 100000000000; // 1 Abampere = 100000000000 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 10; // 1 Abampere = 10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 0.0001; // 1 Abampere = 0.0001 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Abampere = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 10; // 1 Abampere = 10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 10; // 1 Abampere = 10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 10; // 1 Abampere = 10 Weber/Henry
+                        break;
+                }
+                break;
+            case "Ampere":
+                switch (fromName)
+                {
+                    case "Ampere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 0.1; // 1 Ampere = 0.1 Abampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 0.01; // 1 Ampere = 0.01 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 100; // 1 Ampere = 100 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = toNumber; // 1 Ampere = 1 Coulomb/Second (same unit)
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 10; // 1 Ampere = 10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-10; // 1 Ampere = 3.335641e-10 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 0.01; // 1 Ampere = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 1e+9; // 1 Ampere = 1e+9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Ampere = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 0.79577472; // 1 Ampere = 0.79577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.001; // 1 Ampere = 0.001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-6; // 1 Ampere = 1e-6 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000000; // 1 Ampere = 1000000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000; // 1 Ampere = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e+9; // 1 Ampere = 1e+9 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e+12; // 1 Ampere = 1e+12 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num; // 1 Ampere = 1 Siemens/Volt (same unit)
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 10000; // 1 Ampere = 10000 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Ampere = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = toNumber; // 1 Ampere = 1 Volt/Ohm (same unit)
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = toNumber; // 1 Ampere = 1 Watt/Volt (same unit)
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = toNumber; // 1 Ampere = 1 Weber/Henry (same unit)
+                        break;
+                }
+                break;
+            case "Biot":
+                switch (fromName)
+                {
+                    case "Biot":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 10; // 1 Biot = 10 Ampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 10; // 1 Biot = 10 Abampere
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1000; // 1 Biot = 1000 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 10; // 1 Biot = 10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 100; // 1 Biot = 100 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-9; // 1 Biot = 3.335641e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 10; // 1 Biot = 10 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 1e+8; // 1 Biot = 1e+8 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-8; // 1 Biot = 1e-8 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 7.9577472; // 1 Biot = 7.9577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.01; // 1 Biot = 0.01 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-5; // 1 Biot = 1e-5 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 10000; // 1 Biot = 10000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000; // 1 Biot = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e+7; // 1 Biot = 1e+7 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e+10; // 1 Biot = 1e+10 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 10; // 1 Biot = 10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 100; // 1 Biot = 100 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-11; // 1 Biot = 1e-11 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 10; // 1 Biot = 10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 10; // 1 Biot = 10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 10; // 1 Biot = 10 Weber/Henry
+                        break;
+                }
+                break;
+            case "CentiAmpere":
+                switch (fromName)
+                {
+                    case "CentiAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Biot
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Abampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 CentiAmpere = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 100000000; // 1 CentiAmpere = 100000000 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-10; // 1 CentiAmpere = 1e-10 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 0.079577472; // 1 CentiAmpere = 0.079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.00001; // 1 CentiAmpere = 0.00001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-8; // 1 CentiAmpere = 1e-8 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 10; // 1 CentiAmpere = 10 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 100; // 1 CentiAmpere = 100 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 10000000; // 1 CentiAmpere = 10000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e+10; // 1 CentiAmpere = 1e+10 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-11; // 1 CentiAmpere = 1e-11 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 0.01; // 1 CentiAmpere = 0.01 Weber/Henry
+                        break;
+                }
+                break;
+            case "CoulombPerSecond":
+                switch (fromName)
+                {
+                    case "CoulombPerSecond":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num; // 1 Coulomb/Second = 1 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 0.1; // 1 Coulomb/Second = 0.1 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 100; // 1 Coulomb/Second = 100 CentiAmpere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 10; // 1 Coulomb/Second = 10 Abampere
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 3.335641; // 1 Coulomb/Second = 3.335641 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 2997924536.84; // 1 Coulomb/Second = 2997924536.84 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Coulomb/Second = 1e-9 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 0.079577472; // 1 Coulomb/Second = 0.079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.001; // 1 Coulomb/Second = 0.001 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-6; // 1 Coulomb/Second = 1e-6 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000000; // 1 Coulomb/Second = 1000000 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000; // 1 Coulomb/Second = 1000 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000000000; // 1 Coulomb/Second = 1000000000 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e+12; // 1 Coulomb/Second = 1e+12 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num; // 1 Coulomb/Second = 1 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 0.1; // 1 Coulomb/Second = 0.1 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Coulomb/Second = 1e-12 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = toNumber; // 1 Coulomb/Second = 1 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = toNumber; // 1 Coulomb/Second = 1 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = toNumber; // 1 Coulomb/Second = 1 Weber/Henry
+                        break;
+                }
+                break;
+            case "EMUOfCurrent":
+                switch (fromName)
+                {
+                    case "EMUOfCurrent":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num / 29979245368.4; // 1 EMU of Current = 1/29979245368.4 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 0.01 / 2997924536.84; // 1 EMU of Current = 0.01/2997924536.84 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Coulomb/Second
+                        break;
+                    case "Abampere":
+                        fromNumber = num / 299792453.684; // 1 EMU of Current = 1/299792453.684 Abampere
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = toNumber; // 1 EMU of Current = 1 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 0.1; // 1 EMU of Current = 0.1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 2.99792453684e+18; // 1 EMU of Current = 1/2.99792453684e+18 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 0.0079577472; // 1 EMU of Current = 0.0079577472 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 2.99792453684e+15; // 1 EMU of Current = 1/2.99792453684e+15 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 2.99792453684e+12; // 1 EMU of Current = 1/2.99792453684e+12 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num / 2.99792453684e+18; // 1 EMU of Current = 1/2.99792453684e+18 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num / 2.99792453684e+15; // 1 EMU of Current = 1/2.99792453684e+15 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num / 2.99792453684e+21; // 1 EMU of Current = 1/2.99792453684e+21 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num / 2.99792453684e+24; // 1 EMU of Current = 1/2.99792453684e+24 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num / 299792453.684; // 1 EMU of Current = 1/299792453.684 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 2.99792453684e+9; // 1 EMU of Current = 1/2.99792453684e+9 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num / 2997924536.84; // 1 EMU of Current = 1/2997924536.84 Weber/Henry
+                        break;
+                }
+                break;
+            case "ESUOfCurrent":
+                switch (fromName)
+                {
+                    case "ESUOfCurrent":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 3.335641e-11; // 1 ESU of Current = 3.335641e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 3.335641e-8; // 1 ESU of Current = 3.335641e-8 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = toNumber; // 1 ESU of Current = 1 EMU of Current
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 3.335641e-9; // 1 ESU of Current = 3.335641e-9 Abampere
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 0.01; // 1 ESU of Current = 0.01 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 1.1130588e-9; // 1 ESU of Current = 1.1130588e-9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 3.335641e-19; // 1 ESU of Current = 3.335641e-19 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 8.8055052e-12; // 1 ESU of Current = 8.8055052e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 3.335641e-16; // 1 ESU of Current = 3.335641e-16 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 3.335641e-13; // 1 ESU of Current = 3.335641e-13 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 3.335641e-10; // 1 ESU of Current = 3.335641e-10 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 3.335641e-13; // 1 ESU of Current = 3.335641e-13 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 3.335641e-16; // 1 ESU of Current = 3.335641e-16 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 3.335641e-8; // 1 ESU of Current = 3.335641e-8 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 3.335641e-22; // 1 ESU of Current = 3.335641e-22 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 3.335641e-7; // 1 ESU of Current = 3.335641e-7 Weber/Henry
+                        break;
+                }
+                break;
+            case "FranklinPerSecond":
+                switch (fromName)
+                {
+                    case "FranklinPerSecond":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 3.335641e-12; // 1 Franklin/Second = 3.335641e-12 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 3.335641e-9; // 1 Franklin/Second = 3.335641e-9 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 100; // 1 Franklin/Second = 100 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 0.01; // 1 Franklin/Second = 0.01 ESU of Current
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 3.335641e-10; // 1 Franklin/Second = 3.335641e-10 Abampere
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 1.1130588e-10; // 1 Franklin/Second = 1.1130588e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 3.335641e-20; // 1 Franklin/Second = 3.335641e-20 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 8.8055052e-13; // 1 Franklin/Second = 8.8055052e-13 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 3.335641e-17; // 1 Franklin/Second = 3.335641e-17 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 3.335641e-14; // 1 Franklin/Second = 3.335641e-14 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 3.335641e-8; // 1 Franklin/Second = 3.335641e-8 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 3.335641e-14; // 1 Franklin/Second = 3.335641e-14 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 3.335641e-17; // 1 Franklin/Second = 3.335641e-17 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 3.335641e-12; // 1 Franklin/Second = 3.335641e-12 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 3.335641e-23; // 1 Franklin/Second = 3.335641e-23 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 3.335641e-11; // 1 Franklin/Second = 3.335641e-11 Weber/Henry
+                        break;
+                }
+                break;
+            case "GaussianElectricCurrent":
+                switch (fromName)
+                {
+                    case "GaussianElectricCurrent":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 3.335641e-11; // 1 Gaussian Electric Current = 3.335641e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 3.335641e-7; // 1 Gaussian Electric Current = 3.335641e-7 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 10; // 1 Gaussian Electric Current = 10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 0.1; // 1 Gaussian Electric Current = 0.1 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 8.987552e9; // 1 Gaussian Electric Current = 8.987552e9 Franklin/Second
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 3.335641e-9; // 1 Gaussian Electric Current = 3.335641e-9 Abampere
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 3.335641e-19; // 1 Gaussian Electric Current = 3.335641e-19 GigaAmpere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 8.8055052e-12; // 1 Gaussian Electric Current = 8.8055052e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 3.335641e-16; // 1 Gaussian Electric Current = 3.335641e-16 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 3.335641e-13; // 1 Gaussian Electric Current = 3.335641e-13 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 3.335641e-7; // 1 Gaussian Electric Current = 3.335641e-7 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 3.335641e-13; // 1 Gaussian Electric Current = 3.335641e-13 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 3.335641e-16; // 1 Gaussian Electric Current = 3.335641e-16 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 3.335641e-11; // 1 Gaussian Electric Current = 3.335641e-11 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 3.335641e-22; // 1 Gaussian Electric Current = 3.335641e-22 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 3.335641e-10; // 1 Gaussian Electric Current = 3.335641e-10 Weber/Henry
+                        break;
+                }
+                break;
+            case "GigaAmpere":
+                switch (fromName)
+                {
+                    case "GigaAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1e8; // 1 GigaAmpere = 1e8 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1e11; // 1 GigaAmpere = 1e11 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 3e10; // 1 GigaAmpere = 3e10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 1e10; // 1 GigaAmpere = 1e10 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 8.987552e17; // 1 GigaAmpere = 8.987552e17 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 3e19; // 1 GigaAmpere = 3e19 Gaussian Electric Current
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1e18; // 1 GigaAmpere = 1e18 Abampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 2.637388e17; // 1 GigaAmpere = 2.637388e17 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1e6; // 1 GigaAmpere = 1e6 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1000; // 1 GigaAmpere = 1000 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1e12; // 1 GigaAmpere = 1e12 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e15; // 1 GigaAmpere = 1e15 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e18; // 1 GigaAmpere = 1e18 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 1e8; // 1 GigaAmpere = 1e8 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 0.001; // 1 GigaAmpere = 0.001 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 1e9; // 1 GigaAmpere = 1e9 Weber/Henry
+                        break;
+                }
+                break;
+            case "Gilbert":
+                switch (fromName)
+                {
+                    case "Gilbert":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 0.795775; // 1 Gilbert = 0.795775 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 0.0795775; // 1 Gilbert = 0.0795775 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 79.5775; // 1 Gilbert = 79.5775 CentiAmpere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 0.795775; // 1 Gilbert = 0.795775 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 23.9294; // 1 Gilbert = 23.9294 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 7.95775; // 1 Gilbert = 7.95775 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 7.95775; // 1 Gilbert = 7.95775 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 23.9294; // 1 Gilbert = 23.9294 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Gilbert = 1e-9 GigaAmpere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1000000000; // 1 Gilbert = 1e9 Abampere
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 0.000795775; // 1 Gilbert = 0.000795775 KiloAmpere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 7.95775e-7; // 1 Gilbert = 7.95775e-7 MegaAmpere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 795.775; // 1 Gilbert = 795.775 MicroAmpere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 795.775; // 1 Gilbert = 795.775 MilliAmpere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 795775; // 1 Gilbert = 795775 NanoAmpere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 795775000; // 1 Gilbert = 795775000 PicoAmpere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 0.795775; // 1 Gilbert = 0.795775 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 7.95775; // 1 Gilbert = 7.95775 StataAmpere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 7.95775e-10; // 1 Gilbert = 7.95775e-10 TeraAmpere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 795775; // 1 Gilbert = 795775 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 795775; // 1 Gilbert = 795775 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 795775; // 1 Gilbert = 795775 Weber/Henry
+                        break;
+                }
+                break;
+            case "KiloAmpere":
+                switch (fromName)
+                {
+                    case "KiloAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 100; // 1 Kiloampere = 100 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 100000; // 1 Kiloampere = 100000 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 29979.2458; // 1 Kiloampere = 29979.2458 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 29979.2458; // 1 Kiloampere = 29979.2458 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 0.001; // 1 Kiloampere = 0.001 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 126.314; // 1 Kiloampere = 126.314 Gilbert
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1000000000; // 1 Kiloampere = 1e9 Abampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 0.001; // 1 Kiloampere = 0.001 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000000; // 1 Kiloampere = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000000; // 1 Kiloampere = 1e6 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000000000; // 1 Kiloampere = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000000000000; // 1 Kiloampere = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 9957.74715; // 1 Kiloampere = 9957.74715 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 0.000001; // 1 Kiloampere = 1e-6 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 1000; // 1 Kiloampere = 1000 Weber/Henry
+                        break;
+                }
+                break;
+            case "MegaAmpere":
+                switch (fromName)
+                {
+                    case "MegaAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 100000; // 1 Megaampere = 1e5 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 100000000; // 1 Megaampere = 1e8 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 299792458; // 1 Megaampere = 2.99792458e8 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 299792458; // 1 Megaampere = 2.99792458e8 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 0.001; // 1 Megaampere = 0.001 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 12631.4; // 1 Megaampere = 12631.4 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1000; // 1 Megaampere = 1000 Kiloampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1000000000; // 1 Megaampere = 1e9 Abampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000000000; // 1 Megaampere = 1e9 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000000000; // 1 Megaampere = 1e9 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000000000000; // 1 Megaampere = 1e12 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000000000000000; // 1 Megaampere = 1e15 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 99577471.5; // 1 Megaampere = 9.95774715e7 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 0.001; // 1 Megaampere = 0.001 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 1000000; // 1 Megaampere = 1e6 Weber/Henry
+                        break;
+                }
+                break;
+            case "MicroAmpere":
+                switch (fromName)
+                {
+                    case "MicroAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num / 1000000; // 1 Microampere = 1e-6 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num / 10000000; // 1 Microampere = 1e-7 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num / 10000; // 1 Microampere = 1e-4 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num / 1000000; // 1 Microampere = 1e-6 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num / 3335640956.39; // 1 Microampere = 3.33564095639e-10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num / 1000000000; // 1 Microampere = 1e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num / 1000000000; // 1 Microampere = 1e-9 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num / 3335640956.39; // 1 Microampere = 3.33564095639e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 1000000000000; // 1 Microampere = 1e-12 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num / 79577471545.8; // 1 Microampere = 7.95774715458e-14 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 1000000000; // 1 Microampere = 1e-9 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 1000000000000; // 1 Microampere = 1e-12 Megaampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num / 1000000000; // 1 Microampere = 1e-9 Abampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num / 1000; // 1 Microampere = 1e-3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000; // 1 Microampere = 1e3 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000000; // 1 Microampere = 1e6 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num / 1000000; // 1 Microampere = 1e-6 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num / 1000000000; // 1 Microampere = 1e-9 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Microampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num / 1000; // 1 Microampere = 1e-3 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num / 1000; // 1 Microampere = 1e-3 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num / 1000; // 1 Microampere = 1e-3 Weber/Henry
+                        break;
+                }
+                break;
+            case "MilliAmpere":
+                switch (fromName)
+                {
+                    case "MilliAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num / 10000; // 1 Milliampere = 1e-4 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num / 10; // 1 Milliampere = 1e-1 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num / 3335640.95639; // 1 Milliampere = 3.33564095639e-7 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num / 1000000; // 1 Milliampere = 1e-6 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num / 1000000; // 1 Milliampere = 1e-6 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num / 3335640.95639; // 1 Milliampere = 3.33564095639e-7 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 1000000000000; // 1 Milliampere = 1e-12 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num / 795774715457.8; // 1 Milliampere = 7.957747154578e-13 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 1000000; // 1 Milliampere = 1e-6 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 1000000000; // 1 Milliampere = 1e-9 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000; // 1 Milliampere = 1e3 Microampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num / 1000000; // 1 Milliampere = 1e-6 Abampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000000; // 1 Milliampere = 1e6 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000000000; // 1 Milliampere = 1e9 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num / 1000000; // 1 Milliampere = 1e-6 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Milliampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num / 1000; // 1 Milliampere = 1e-3 Weber/Henry
+                        break;
+                }
+                break;
+            case "NanoAmpere":
+                switch (fromName)
+                {
+                    case "NanoAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num / 10000000000; // 1 Nanoampere = 1e-10 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num / 10000000; // 1 Nanoampere = 1e-8 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num / 333564095.639; // 1 Nanoampere = 3.33564095639e-10 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num / 333564095.639; // 1 Nanoampere = 3.33564095639e-10 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Nanoampere = 1e-15 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num / 795774715457.8; // 1 Nanoampere = 7.957747154578e-16 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 1000000000000; // 1 Nanoampere = 1e-12 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Nanoampere = 1e-15 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num / 1000; // 1 Nanoampere = 1e-3 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num / 1000000; // 1 Nanoampere = 1e-6 Milliampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Abampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000; // 1 Nanoampere = 1e3 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num / 1000000000000; // 1 Nanoampere = 1e-12 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 1000000000000000000; // 1 Nanoampere = 1e-18 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num / 1000000000; // 1 Nanoampere = 1e-9 Weber/Henry
+                        break;
+                }
+                break;
+            case "PicoAmpere":
+                switch (fromName)
+                {
+                    case "PicoAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num / 10000000000000; // 1 Picoampere = 1e-13 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num / 10000000000; // 1 Picoampere = 1e-10 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 1000000000000000000; // 1 Picoampere = 1e-21 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num / 795774715457844; // 1 Picoampere = 7.95774715457844e-22 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Picoampere = 1e-18 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 1000000000000000000; // 1 Picoampere = 1e-21 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num / 1000000; // 1 Picoampere = 1e-6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num / 1000; // 1 Picoampere = 1e-3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num / 1000; // 1 Picoampere = 1e-3 Nanoampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Abampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num / 3335640956387; // 1 Picoampere = 3.335640956387e-13 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 1000000000000000; // 1 Picoampere = 1e-15 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num / 1000000000000; // 1 Picoampere = 1e-12 Weber/Henry
+                        break;
+                }
+                break;
+            case "SiemensVolt":
+                switch (fromName)
+                {
+                    case "SiemensVolt":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num; // 1 Siemens/Volt = 1 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 10; // 1 Siemens/Volt = 10 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 100; // 1 Siemens/Volt = 100 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num; // 1 Siemens/Volt = 1 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num; // 1 Siemens/Volt = 1 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num / 1000000000; // 1 Siemens/Volt = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num / 0.795774715459; // 1 Siemens/Volt = 1.25700256449 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num / 1000; // 1 Siemens/Volt = 0.001 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num / 1000000; // 1 Siemens/Volt = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1000000; // 1 Siemens/Volt = 1e+6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1000; // 1 Siemens/Volt = 1000 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1000000000; // 1 Siemens/Volt = 1e+9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1000000000000; // 1 Siemens/Volt = 1e+12 Picoampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num; // 1 Siemens/Volt = 1 Abampere
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 2997924580; // 1 Siemens/Volt = 2.99792458e+9 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num / 1000000000000; // 1 Siemens/Volt = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = toNumber; // 1 Siemens/Volt = 1 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = toNumber; // 1 Siemens/Volt = 1 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = toNumber; // 1 Siemens/Volt = 1 Weber/Henry
+                        break;
+                }
+                break;
+            case "StataAmpere":
+                switch (fromName)
+                {
+                    case "StataAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1.11265005605362e-11; // 1 Stataampere = 1.11265005605362e-11 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1.11265005605362e-10; // 1 Stataampere = 1.11265005605362e-10 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1.11265005605362e-21; // 1 Stataampere = 1.11265005605362e-21 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 1.40360679774998e-12; // 1 Stataampere = 1.40360679774998e-12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1.11265005605362e-15; // 1 Stataampere = 1.11265005605362e-15 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1.11265005605362e-18; // 1 Stataampere = 1.11265005605362e-18 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1.11265005605362e-6; // 1 Stataampere = 1.11265005605362e-6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1.11265005605362e-9; // 1 Stataampere = 1.11265005605362e-9 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1.11265005605362e-12; // 1 Stataampere = 1.11265005605362e-12 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1.11265005605362e-15; // 1 Stataampere = 1.11265005605362e-15 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Siemens/Volt
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1.11265005605362e-11; // 1 Stataampere = 1.11265005605362e-11 Abampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1.11265005605362e-24; // 1 Stataampere = 1.11265005605362e-24 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 2.99792458; // 1 Stataampere = 2.99792458 Weber/Henry
+                        break;
+                }
+                break;
+            case "TeraAmpere":
+                switch (fromName)
+                {
+                    case "TeraAmpere":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num * 1e12; // 1 Teraampere = 1e12 Ampere
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1e13; // 1 Teraampere = 1e13 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1e14; // 1 Teraampere = 1e14 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num * 1e12; // 1 Teraampere = 1e12 Coulomb/Second
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num * 1e12; // 1 Teraampere = 1e12 Franklin/Second
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e3; // 1 Teraampere = 1e3 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 1.25992104989487e12; // 1 Teraampere = 1.25992104989487e12 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1e6; // 1 Teraampere = 1e6 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e9; // 1 Teraampere = 1e9 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1e15; // 1 Teraampere = 1e15 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1e12; // 1 Teraampere = 1e12 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e18; // 1 Teraampere = 1e18 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e21; // 1 Teraampere = 1e21 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Siemens/Volt
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 8.96145981150135; // 1 Teraampere = 8.96145981150135 Stataampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1e13; // 1 Teraampere = 1e13 Abampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Volt/Ohm
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Watt/Volt
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 2.99792458e21; // 1 Teraampere = 2.99792458e21 Weber/Henry
+                        break;
+                }
+                break;
+            case "VoltPerOhm":
+                switch (fromName)
+                {
+                    case "VoltPerOhm":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num; // 1 Volt/Ohm = 1 Ampere (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1e-1; // 1 Volt/Ohm = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1e2; // 1 Volt/Ohm = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num; // 1 Volt/Ohm = 1 Coulomb/Second (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num; // 1 Volt/Ohm = 1 Franklin/Second (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Volt/Ohm = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 1.256637e-9; // 1 Volt/Ohm = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1e-3; // 1 Volt/Ohm = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-6; // 1 Volt/Ohm = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1e6; // 1 Volt/Ohm = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1e3; // 1 Volt/Ohm = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e9; // 1 Volt/Ohm = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e12; // 1 Volt/Ohm = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num; // 1 Volt/Ohm = 1 Siemens/Volt (since Volt/Ohm is the same as Siemens/Volt)
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 3.335641e-11; // 1 Volt/Ohm = 3.335641e-11 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Volt/Ohm = 1e-12 Teraampere
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1e12; // 1 Volt/Ohm = 1e12 Abampere
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = toNumber; // 1 Volt/Ohm = 1 Watt/Volt (since Volt/Ohm is the same as Ampere)
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = toNumber; // 1 Volt/Ohm = 1 Weber/Henry (since Volt/Ohm is the same as Ampere)
+                        break;
+                }
+                break;
+            case "WattPerVolt":
+                switch (fromName)
+                {
+                    case "WattPerVolt":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num; // 1 Watt/Volt = 1 Ampere (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1e-1; // 1 Watt/Volt = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1e2; // 1 Watt/Volt = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num; // 1 Watt/Volt = 1 Coulomb/Second (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num; // 1 Watt/Volt = 1 Franklin/Second (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Watt/Volt = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 1.256637e-9; // 1 Watt/Volt = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1e-3; // 1 Watt/Volt = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-6; // 1 Watt/Volt = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1e6; // 1 Watt/Volt = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1e3; // 1 Watt/Volt = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e9; // 1 Watt/Volt = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e12; // 1 Watt/Volt = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num; // 1 Watt/Volt = 1 Siemens/Volt (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 3.335641e-11; // 1 Watt/Volt = 3.335641e-11 Stataampere
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Watt/Volt = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = toNumber; // 1 Watt/Volt = 1 Volt/Ohm (since Watt/Volt is the same as Ampere)
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1e12; // 1 Watt/Volt = 1e12 Abampere
+                        break;
+                    case "WeberPerHenry":
+                        fromNumber = num * 1; // 1 Watt/Volt = 1 Weber/Henry (since Watt/Volt is the same as Ampere)
+                        break;
+                }
+                break;
+            case "WeberPerHenry":
+                switch (fromName)
+                {
+                    case "WeberPerHenry":
+                        fromNumber = toNumber;
+                        break;
+                    case "Ampere":
+                        fromNumber = num; // 1 Weber/Henry = 1 Ampere (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "Biot":
+                        fromNumber = num * 1e-1; // 1 Weber/Henry = 1e-1 Biot
+                        break;
+                    case "CentiAmpere":
+                        fromNumber = num * 1e2; // 1 Weber/Henry = 1e2 Centiampere
+                        break;
+                    case "CoulombPerSecond":
+                        fromNumber = num; // 1 Weber/Henry = 1 Coulomb/Second (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "EMUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 EMU of Current
+                        break;
+                    case "ESUOfCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 ESU of Current
+                        break;
+                    case "FranklinPerSecond":
+                        fromNumber = num; // 1 Weber/Henry = 1 Franklin/Second (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "GaussianElectricCurrent":
+                        fromNumber = num * 3.335641e-11; // 1 Weber/Henry = 3.335641e-11 Gaussian Electric Current
+                        break;
+                    case "GigaAmpere":
+                        fromNumber = num * 1e-9; // 1 Weber/Henry = 1e-9 Gigaampere
+                        break;
+                    case "Gilbert":
+                        fromNumber = num * 1.256637e-9; // 1 Weber/Henry = 1.256637e-9 Gilbert
+                        break;
+                    case "KiloAmpere":
+                        fromNumber = num * 1e-3; // 1 Weber/Henry = 1e-3 Kiloampere
+                        break;
+                    case "MegaAmpere":
+                        fromNumber = num * 1e-6; // 1 Weber/Henry = 1e-6 Megaampere
+                        break;
+                    case "MicroAmpere":
+                        fromNumber = num * 1e6; // 1 Weber/Henry = 1e6 Microampere
+                        break;
+                    case "MilliAmpere":
+                        fromNumber = num * 1e3; // 1 Weber/Henry = 1e3 Milliampere
+                        break;
+                    case "NanoAmpere":
+                        fromNumber = num * 1e9; // 1 Weber/Henry = 1e9 Nanoampere
+                        break;
+                    case "PicoAmpere":
+                        fromNumber = num * 1e12; // 1 Weber/Henry = 1e12 Picoampere
+                        break;
+                    case "SiemensVolt":
+                        fromNumber = num; // 1 Weber/Henry = 1 Siemens/Volt (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "StataAmpere":
+                        fromNumber = num * 1; // 1 Weber/Henry = 1 Stataampere (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "TeraAmpere":
+                        fromNumber = num * 1e-12; // 1 Weber/Henry = 1e-12 Teraampere
+                        break;
+                    case "VoltPerOhm":
+                        fromNumber = toNumber; // 1 Weber/Henry = 1 Volt/Ohm (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "WattPerVolt":
+                        fromNumber = num * 1; // 1 Weber/Henry = 1 Watt/Volt (since Weber/Henry is the same as Ampere)
+                        break;
+                    case "Abampere":
+                        fromNumber = num * 1e12; // 1 Weber/Henry = 1e12 Abampere
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

@@ -1,0 +1,2680 @@
+﻿@page "/time"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Time</h3>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(TimeModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 600px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(TimeModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "Hours";
+    string toName = "Minutes";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "Centuries":
+                switch (toName)
+                {
+                    case "Centuries":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 36525;
+                        break;
+                    case "Decades":
+                        toNumber = num * 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+20;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 5214.29;
+                        break;
+                    case "Hours":
+                        toNumber = num * 876000;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+14;
+                        break;
+                    case "Millenia":
+                        toNumber = num * 0.01;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 5.256e+6;
+                        break;
+                    case "Months":
+                        toNumber = num * 1200;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+17;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+23;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 400;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 3.1536e+8;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 5214.29;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num * 100;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num * 99.975;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num * 99.942;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 99.96;
+                        break;
+                }
+                break;
+            case "Days":
+                switch (toName)
+                {
+                    case "Days":
+                        toNumber = num;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 36525;
+                        break;
+                    case "Decades":
+                        toNumber = num / 3650;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 8.64e+16;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 14;
+                        break;
+                    case "Hours":
+                        toNumber = num * 24;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 8.64e+10;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 365250;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 8.64e+7;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 1440;
+                        break;
+                    case "Months":
+                        toNumber = num / 30.4375;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 8.64e+13;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 8.64e+19;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 91.25;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 86400;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 7;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 365;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 365.25;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 365.25;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 365.2425;
+                        break;
+                }
+                break;
+            case "Decades":
+                switch (toName)
+                {
+                    case "Decades":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 3652.5;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+18;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 521.429;
+                        break;
+                    case "Hours":
+                        toNumber = num * 87600;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 525600;
+                        break;
+                    case "Months":
+                        toNumber = num * 120;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+16;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 40;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 521.429;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num * 10;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num * 10;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num * 10;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 10;
+                        break;
+                }
+                break;
+            case "FemtoSeconds":
+                switch (toName)
+                {
+                    case "FemtoSeconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 8.64e+17;
+                        break;
+                    case "Decades":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 3.1536e+29;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1.2096e+17;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3.6e+15;
+                        break;
+                    case "Microseconds":
+                        toNumber = num / 1e+6;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 3.1536e+31;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num / 1e+9;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 6e+13;
+                        break;
+                    case "Months":
+                        toNumber = num / 2.628e+25;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num / 1e+3;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num / 1e+6;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.884e+26;
+                        break;
+                    case "Seconds":
+                        toNumber = num / 1e+15;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 6.048e+16;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                }
+                break;
+            case "Fortnights":
+                switch (toName)
+                {
+                    case "Fortnights":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 14;
+                        break;
+                    case "Decades":
+                        toNumber = num / 521.42857;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1.2096e+17;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 5214.28571;
+                        break;
+                    case "Hours":
+                        toNumber = num * 336;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 1.2096e+14;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 52142.85714;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 1.2096e+11;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 20160;
+                        break;
+                    case "Months":
+                        toNumber = num / 1.207;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 1.2096e+20;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 1.2096e+23;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 4.03;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 1.2096e+15;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 2;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 52.142857;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 52.142857;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 52.142857;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 52.142857;
+                        break;
+                }
+                break;
+            case "Hours":
+                switch (toName)
+                {
+                    case "Hours":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 24;
+                        break;
+                    case "Decades":
+                        toNumber = num / 87600;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.6e+18;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 336;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 876000;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.6e+9;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 8760000;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.6e+6;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 60;
+                        break;
+                    case "Months":
+                        toNumber = num / 730;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.6e+12;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.6e+15;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 2190;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 3600;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 168;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 8760;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 8760;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 8760;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 8784;
+                        break;
+                }
+                break;
+            case "Microseconds":
+                switch (toName)
+                {
+                    case "Microseconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 8.64e+10;
+                        break;
+                    case "Decades":
+                        toNumber = num / 8.64e+13;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1.21e+12;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3.6e+9;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 8.64e+15;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 8.64e+16;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num / 1e+3;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 6e+7;
+                        break;
+                    case "Months":
+                        toNumber = num / 2.628e+12;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 1e+3;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.884e+11;
+                        break;
+                    case "Seconds":
+                        toNumber = num / 1e+6;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 6.048e+11;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 3.169e+13;
+                        break;
+                }
+                break;
+            case "Millenia":
+                switch (toName)
+                {
+                    case "Millenia":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 365250;
+                        break;
+                    case "Decades":
+                        toNumber = num * 100;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+25;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 182625;
+                        break;
+                    case "Hours":
+                        toNumber = num * 8766000;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+16;
+                        break;
+                    case "Centuries":
+                        toNumber = num * 10;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 5.256e+8;
+                        break;
+                    case "Months":
+                        toNumber = num * 12000;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 4000;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 3.1536e+10;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 52150;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num * 1000;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num * 1000;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num * 1000;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 996;
+                        break;
+                }
+                break;
+            case "Milliseconds":
+                switch (toName)
+                {
+                    case "Milliseconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 86400000;
+                        break;
+                    case "Decades":
+                        toNumber = num / 315360000000;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1e+12;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1.2096e+9;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3600000;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 1000;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 3.1536e+13;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 3.1536e+11;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 60000;
+                        break;
+                    case "Months":
+                        toNumber = num / 2.628e+9;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 1e+9;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.884e+8;
+                        break;
+                    case "Seconds":
+                        toNumber = num / 1000;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 6.048e+8;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 3.15576e+10;
+                        break;
+                }
+                break;
+            case "Minutes":
+                switch (toName)
+                {
+                    case "Minutes":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 1440;
+                        break;
+                    case "Decades":
+                        toNumber = num / 5256000;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 6e+13;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 10080;
+                        break;
+                    case "Hours":
+                        toNumber = num * 60;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 60000000;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 525600;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 60000;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 525600;
+                        break;
+                    case "Months":
+                        toNumber = num / 43800;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 6e+10;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 6e+13;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 13140;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 60;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 10080;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 525600;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 525600;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 525600;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 527040;
+                        break;
+                }
+                break;
+            case "Months":
+                switch (toName)
+                {
+                    case "Months":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 30.4375;
+                        break;
+                    case "Decades":
+                        toNumber = num / 120;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 2.628e+18;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 2.14286;
+                        break;
+                    case "Hours":
+                        toNumber = num * 730.001;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 2.628e+12;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 1200;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 2.628e+9;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 43800;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 1200;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 2.628e+15;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 2.628e+18;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 3;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 2.628e+6;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 4.34812;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 12;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 12;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 12;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 12.0176;
+                        break;
+                }
+                break;
+            case "Nanoseconds":
+                switch (toName)
+                {
+                    case "Nanoseconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 8.64e+13;
+                        break;
+                    case "Decades":
+                        toNumber = num / 3.1536e+22;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1.2096e+15;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3.6e+12;
+                        break;
+                    case "Microseconds":
+                        toNumber = num / 1e+3;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 3.1536e+25;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num / 1e+6;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 6e+10;
+                        break;
+                    case "Months":
+                        toNumber = num / 2.628e+18;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 3.1536e+24;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 1e+3;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.884e+18;
+                        break;
+                    case "Seconds":
+                        toNumber = num / 1e+9;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 6.048e+14;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 3.15576e+16;
+                        break;
+                }
+                break;
+            case "Picoseconds":
+                switch (toName)
+                {
+                    case "Picoseconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 8.64e+16;
+                        break;
+                    case "Decades":
+                        toNumber = num / 3.1536e+25;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1e+3;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1.2096e+19;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3.6e+15;
+                        break;
+                    case "Microseconds":
+                        toNumber = num / 1e+6;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 3.1536e+28;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num / 1e+9;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 6e+13;
+                        break;
+                    case "Months":
+                        toNumber = num / 2.628e+22;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num / 1e+3;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 3.1536e+27;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.884e+22;
+                        break;
+                    case "Seconds":
+                        toNumber = num / 1e+12;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 6.048e+17;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 3.15576e+19;
+                        break;
+                }
+                break;
+            case "QuartersCommon":
+                switch (toName)
+                {
+                    case "QuartersCommon":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 91;
+                        break;
+                    case "Decades":
+                        toNumber = num / 40;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 7.7758e+21;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 6.5;
+                        break;
+                    case "Hours":
+                        toNumber = num * 2190;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 9.46e+11;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 400;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 7.776e+8;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 131400;
+                        break;
+                    case "Months":
+                        toNumber = num * 3;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 7.776e+17;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 7.776e+20;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 4000;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 7.776e+9;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 13;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 4;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 4;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 4;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 4;
+                        break;
+                }
+                break;
+            case "Seconds":
+                switch (toName)
+                {
+                    case "Seconds":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num / 86400;
+                        break;
+                    case "Decades":
+                        toNumber = num / 315360000;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 1e+15;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 1209600;
+                        break;
+                    case "Hours":
+                        toNumber = num / 3600;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 1e+6;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 31536000000;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 1000;
+                        break;
+                    case "Minutes":
+                        toNumber = num / 60;
+                        break;
+                    case "Months":
+                        toNumber = num / 2592000;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 1e+9;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 1e+12;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 7.776e+9;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 3.1536e+9;
+                        break;
+                    case "Weeks":
+                        toNumber = num / 604800;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 31.536e+6;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 31.536e+6;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 31.556e+6;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 31.6224e+6;
+                        break;
+                }
+                break;
+            case "Weeks":
+                switch (toName)
+                {
+                    case "Weeks":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 7;
+                        break;
+                    case "Decades":
+                        toNumber = num / 521.4286;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 6.048e+17;
+                        break;
+                    case "Fortnights":
+                        toNumber = num / 2;
+                        break;
+                    case "Hours":
+                        toNumber = num * 168;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 6.048e+11;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 5214.286;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 6.048e+8;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 10080;
+                        break;
+                    case "Months":
+                        toNumber = num * 4.34524;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 6.048e+14;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 6.048e+17;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num / 13;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 604800;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 52.14286;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num / 52.14286;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 52.14286;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 52.17746;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num / 52.00855;
+                        break;
+                }
+                break;
+            case "YearsCommon":
+                switch (toName)
+                {
+                    case "YearsCommon":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 365;
+                        break;
+                    case "Decades":
+                        toNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 26.0714;
+                        break;
+                    case "Hours":
+                        toNumber = num * 8760;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 525600;
+                        break;
+                    case "Months":
+                        toNumber = num * 12;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 4;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 52.1429;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 100;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num * 0.99932;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 0.99726;
+                        break;
+                }
+                break;
+            case "YearsAverageGregorian":
+                switch (toName)
+                {
+                    case "YearsAverageGregorian":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 365.2425;
+                        break;
+                    case "Decades":
+                        toNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 26.0893;
+                        break;
+                    case "Hours":
+                        toNumber = num * 8765.82;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 525949.2;
+                        break;
+                    case "Months":
+                        toNumber = num * 12.1773;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 4.07293;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 31556926;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 52.1775;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 100;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num * 0.99974;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 0.9973;
+                        break;
+                }
+                break;
+            case "YearsJulian":
+                switch (toName)
+                {
+                    case "YearsJulian":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 365.25;
+                        break;
+                    case "Decades":
+                        toNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.15576e+16;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 26.0714;
+                        break;
+                    case "Hours":
+                        toNumber = num * 8766;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.15576e+13;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.15576e+10;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 525960;
+                        break;
+                    case "Months":
+                        toNumber = num * 12.1667;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.15576e+19;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.15576e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 4.05982;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 31557600;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 52.1429;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num * 1.00026;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num / 0.99974;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 100;
+                        break;
+                    case "YearsLeap":
+                        toNumber = num * 0.9973;
+                        break;
+                }
+                break;
+            case "YearsLeap":
+                switch (toName)
+                {
+                    case "YearsLeap":
+                        toNumber = num;
+                        break;
+                    case "Days":
+                        toNumber = num * 366;
+                        break;
+                    case "Decades":
+                        toNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        toNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        toNumber = num * 26.1786;
+                        break;
+                    case "Hours":
+                        toNumber = num * 8784;
+                        break;
+                    case "Microseconds":
+                        toNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        toNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        toNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        toNumber = num * 525600;
+                        break;
+                    case "Months":
+                        toNumber = num * 12;
+                        break;
+                    case "Nanoseconds":
+                        toNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        toNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        toNumber = num * 4.09589;
+                        break;
+                    case "Seconds":
+                        toNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        toNumber = num * 52.2857;
+                        break;
+                    case "YearsCommon":
+                        toNumber = num * 0.9973;
+                        break;
+                    case "YearsAverageGregorian":
+                        toNumber = num * 0.9973 / 0.99974;
+                        break;
+                    case "YearsJulian":
+                        toNumber = num / 0.9973;
+                        break;
+                    case "Centuries":
+                        toNumber = num / 100;
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "Centuries":
+                switch (fromName)
+                {
+                    case "Centuries":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 36525;
+                        break;
+                    case "Decades":
+                        fromNumber = num * 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+20;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 5214.29;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 876000;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+14;
+                        break;
+                    case "Millenia":
+                        fromNumber = num * 0.01;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 5.256e+6;
+                        break;
+                    case "Months":
+                        fromNumber = num * 1200;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+17;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+23;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 400;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 3.1536e+8;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 5214.29;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num * 100;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num * 99.975;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num * 99.942;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 99.96;
+                        break;
+                }
+                break;
+            case "Days":
+                switch (fromName)
+                {
+                    case "Days":
+                        fromNumber = num;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 36525;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 3650;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 8.64e+16;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 14;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 24;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 8.64e+10;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 365250;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 8.64e+7;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 1440;
+                        break;
+                    case "Months":
+                        fromNumber = num / 30.4375;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 8.64e+13;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 8.64e+19;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 91.25;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 86400;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 7;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 365;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 365.25;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 365.25;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 365.2425;
+                        break;
+                }
+                break;
+            case "Decades":
+                switch (fromName)
+                {
+                    case "Decades":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 3652.5;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+18;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 521.429;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 87600;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 525600;
+                        break;
+                    case "Months":
+                        fromNumber = num * 120;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+16;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 40;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 521.429;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num * 10;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num * 10;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num * 10;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 10;
+                        break;
+                }
+                break;
+            case "FemtoSeconds":
+                switch (fromName)
+                {
+                    case "FemtoSeconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 8.64e+17;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 3.1536e+29;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1.2096e+17;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3.6e+15;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num / 1e+6;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 3.1536e+31;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num / 1e+9;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 6e+13;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2.628e+25;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num / 1e+3;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num / 1e+6;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.884e+26;
+                        break;
+                    case "Seconds":
+                        fromNumber = num / 1e+15;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 6.048e+16;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                }
+                break;
+            case "Fortnights":
+                switch (fromName)
+                {
+                    case "Fortnights":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 14;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 521.42857;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1.2096e+17;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 5214.28571;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 336;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 1.2096e+14;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 52142.85714;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 1.2096e+11;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 20160;
+                        break;
+                    case "Months":
+                        fromNumber = num / 1.207;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 1.2096e+20;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 1.2096e+23;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 4.03;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 1.2096e+15;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 2;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 52.142857;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 52.142857;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 52.142857;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 52.142857;
+                        break;
+                }
+                break;
+            case "Hours":
+                switch (fromName)
+                {
+                    case "Hours":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 24;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 87600;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.6e+18;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 336;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 876000;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.6e+9;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 8760000;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.6e+6;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 60;
+                        break;
+                    case "Months":
+                        fromNumber = num / 730;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.6e+12;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.6e+15;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 2190;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 3600;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 168;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 8760;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 8760;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 8760;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 8784;
+                        break;
+                }
+                break;
+            case "Microseconds":
+                switch (fromName)
+                {
+                    case "Microseconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 8.64e+10;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 8.64e+13;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1.21e+12;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3.6e+9;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 8.64e+15;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 8.64e+16;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num / 1e+3;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 6e+7;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2.628e+12;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 1e+3;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.884e+11;
+                        break;
+                    case "Seconds":
+                        fromNumber = num / 1e+6;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 6.048e+11;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 3.1536e+13;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 3.169e+13;
+                        break;
+                }
+                break;
+            case "Millenia":
+                switch (fromName)
+                {
+                    case "Millenia":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 365250;
+                        break;
+                    case "Decades":
+                        fromNumber = num * 100;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+25;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 182625;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 8766000;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+16;
+                        break;
+                    case "Centuries":
+                        fromNumber = num * 10;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 5.256e+8;
+                        break;
+                    case "Months":
+                        fromNumber = num * 12000;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 4000;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 3.1536e+10;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 52150;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num * 1000;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num * 1000;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num * 1000;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 996;
+                        break;
+                }
+                break;
+            case "Milliseconds":
+                switch (fromName)
+                {
+                    case "Milliseconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 86400000;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 315360000000;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1e+12;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1.2096e+9;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3600000;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 1000;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 3.1536e+13;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 3.1536e+11;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 60000;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2.628e+9;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 1e+9;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.884e+8;
+                        break;
+                    case "Seconds":
+                        fromNumber = num / 1000;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 6.048e+8;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 3.1536e+10;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 3.15576e+10;
+                        break;
+                }
+                break;
+            case "Minutes":
+                switch (fromName)
+                {
+                    case "Minutes":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 1440;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 5256000;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 6e+13;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 10080;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 60;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 60000000;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 525600;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 60000;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 525600;
+                        break;
+                    case "Months":
+                        fromNumber = num / 43800;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 6e+10;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 6e+13;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 13140;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 60;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 10080;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 525600;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 525600;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 525600;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 527040;
+                        break;
+                }
+                break;
+            case "Months":
+                switch (fromName)
+                {
+                    case "Months":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 30.4375;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 120;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 2.628e+18;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 2.14286;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 730.001;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 2.628e+12;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 1200;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 2.628e+9;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 43800;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 1200;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 2.628e+15;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 2.628e+18;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 3;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 2.628e+6;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 4.34812;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 12;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 12;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 12;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 12.0176;
+                        break;
+                }
+                break;
+            case "Nanoseconds":
+                switch (fromName)
+                {
+                    case "Nanoseconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 8.64e+13;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 3.1536e+22;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1.2096e+15;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3.6e+12;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num / 1e+3;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 3.1536e+25;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num / 1e+6;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 6e+10;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2.628e+18;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 3.1536e+24;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 1e+3;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.884e+18;
+                        break;
+                    case "Seconds":
+                        fromNumber = num / 1e+9;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 6.048e+14;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 3.1536e+16;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 3.15576e+16;
+                        break;
+                }
+                break;
+            case "Picoseconds":
+                switch (fromName)
+                {
+                    case "Picoseconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 8.64e+16;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 3.1536e+25;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1e+3;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1.2096e+19;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3.6e+15;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num / 1e+6;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 3.1536e+28;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num / 1e+9;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 6e+13;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2.628e+22;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num / 1e+3;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 3.1536e+27;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.884e+22;
+                        break;
+                    case "Seconds":
+                        fromNumber = num / 1e+12;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 6.048e+17;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 3.1536e+19;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 3.15576e+19;
+                        break;
+                }
+                break;
+            case "QuartersCommon":
+                switch (fromName)
+                {
+                    case "QuartersCommon":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 91;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 40;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 7.7758e+21;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 6.5;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 2190;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 9.46e+11;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 400;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 7.776e+8;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 131400;
+                        break;
+                    case "Months":
+                        fromNumber = num * 3;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 7.776e+17;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 7.776e+20;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 4000;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 7.776e+9;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 13;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 4;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 4;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 4;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 4;
+                        break;
+                }
+                break;
+            case "Seconds":
+                switch (fromName)
+                {
+                    case "Seconds":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num / 86400;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 315360000;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 1e+15;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 1209600;
+                        break;
+                    case "Hours":
+                        fromNumber = num / 3600;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 1e+6;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 31536000000;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 1000;
+                        break;
+                    case "Minutes":
+                        fromNumber = num / 60;
+                        break;
+                    case "Months":
+                        fromNumber = num / 2592000;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 1e+9;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 1e+12;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 7.776e+9;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 3.1536e+9;
+                        break;
+                    case "Weeks":
+                        fromNumber = num / 604800;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 31.536e+6;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 31.536e+6;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 31.556e+6;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 31.6224e+6;
+                        break;
+                }
+                break;
+            case "Weeks":
+                switch (fromName)
+                {
+                    case "Weeks":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 7;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 521.4286;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 6.048e+17;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num / 2;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 168;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 6.048e+11;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 5214.286;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 6.048e+8;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 10080;
+                        break;
+                    case "Months":
+                        fromNumber = num * 4.34524;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 6.048e+14;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 6.048e+17;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num / 13;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 604800;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 52.14286;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num / 52.14286;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 52.14286;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 52.17746;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num / 52.00855;
+                        break;
+                }
+                break;
+            case "YearsCommon":
+                switch (fromName)
+                {
+                    case "YearsCommon":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 365;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 26.0714;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 8760;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 525600;
+                        break;
+                    case "Months":
+                        fromNumber = num * 12;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 4;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 52.1429;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 100;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num * 0.99932;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 0.99726;
+                        break;
+                }
+                break;
+            case "YearsAverageGregorian":
+                switch (fromName)
+                {
+                    case "YearsAverageGregorian":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 365.2425;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 26.0893;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 8765.82;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 525949.2;
+                        break;
+                    case "Months":
+                        fromNumber = num * 12.1773;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 4.07293;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 31556926;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 52.1775;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 100;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num * 0.99974;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 0.9973;
+                        break;
+                }
+                break;
+            case "YearsJulian":
+                switch (fromName)
+                {
+                    case "YearsJulian":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 365.25;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.15576e+16;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 26.0714;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 8766;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.15576e+13;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.15576e+10;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 525960;
+                        break;
+                    case "Months":
+                        fromNumber = num * 12.1667;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.15576e+19;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.15576e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 4.05982;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 31557600;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 52.1429;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num * 1.00026;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num / 0.99974;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 100;
+                        break;
+                    case "YearsLeap":
+                        fromNumber = num * 0.9973;
+                        break;
+                }
+                break;
+            case "YearsLeap":
+                switch (fromName)
+                {
+                    case "YearsLeap":
+                        fromNumber = num;
+                        break;
+                    case "Days":
+                        fromNumber = num * 366;
+                        break;
+                    case "Decades":
+                        fromNumber = num / 10;
+                        break;
+                    case "FemtoSeconds":
+                        fromNumber = num * 3.1536e+16;
+                        break;
+                    case "Fortnights":
+                        fromNumber = num * 26.1786;
+                        break;
+                    case "Hours":
+                        fromNumber = num * 8784;
+                        break;
+                    case "Microseconds":
+                        fromNumber = num * 3.1536e+13;
+                        break;
+                    case "Millenia":
+                        fromNumber = num / 100;
+                        break;
+                    case "Milliseconds":
+                        fromNumber = num * 3.1536e+10;
+                        break;
+                    case "Minutes":
+                        fromNumber = num * 525600;
+                        break;
+                    case "Months":
+                        fromNumber = num * 12;
+                        break;
+                    case "Nanoseconds":
+                        fromNumber = num * 3.1536e+19;
+                        break;
+                    case "Picoseconds":
+                        fromNumber = num * 3.1536e+22;
+                        break;
+                    case "QuartersCommon":
+                        fromNumber = num * 4.09589;
+                        break;
+                    case "Seconds":
+                        fromNumber = num * 31536000;
+                        break;
+                    case "Weeks":
+                        fromNumber = num * 52.2857;
+                        break;
+                    case "YearsCommon":
+                        fromNumber = num * 0.9973;
+                        break;
+                    case "YearsAverageGregorian":
+                        fromNumber = num * 0.9973 / 0.99974;
+                        break;
+                    case "YearsJulian":
+                        fromNumber = num / 0.9973;
+                        break;
+                    case "Centuries":
+                        fromNumber = num / 100;
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}

@@ -1,0 +1,3484 @@
+﻿@page "/speed"
+@using System.Reflection
+@using UnitConverter.Models;
+
+<h3>Convert Speed</h3>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">From</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertFrom(fromNumber)"></i>
+
+        <i class="bi bi-arrow-down-up float-end btn" @onclick="Reverse"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="fromNumber" @bind-Value="fromNumber"
+        @onfocusout="()=>ConvertFrom(fromNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@fromName">
+            @foreach (var temp in typeof(SpeedModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+<div class="flex-column" style="max-width: 400px; margin:0 auto;">
+    <div class="flex-row">
+        <span class="">To</span>
+        <i class="bi bi-arrow-right-circle text-black btn" @onclick="()=>ConvertTo(toNumber)"></i>
+    </div>
+    <div class="flex-row">
+
+        <InputNumber DisplayName="toNumber" @bind-Value="@toNumber"
+        @onfocusout="()=>ConvertTo(toNumber)"></InputNumber>
+        <select style="height: 30px;" @bind="@toName">
+            @foreach (var temp in typeof(SpeedModel).GetProperties())
+            {
+                <option>@temp.Name</option>
+            }
+        </select>
+
+    </div>
+</div>
+
+@code {
+    double fromNumber;
+    double toNumber;
+    string fromName = "MilesPerHour";
+    string toName = "KilometersPerHour";
+
+    void Reverse()
+    {
+        var tempName = fromName;
+        fromName = toName;
+        toName = tempName;
+
+        var tempNum = fromNumber;
+        fromNumber = toNumber;
+        toNumber = tempNum;
+    }
+
+    public async Task ConvertFrom(double num)
+    {
+        switch (fromName)
+        {
+            case "CentimeterPerMinute":
+                switch (toName)
+                {
+                    case "CentimeterPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 0.0328084;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 0.0328084 / 60;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.0328084 / 3600;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 0.393701 / 60;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 0.393701 / 3600;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num / 100000;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num / 6000000;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.00000539956803;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0000294935;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num / 100;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num / 6000;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num / 60000;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.00000621371192;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.00000621371192 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.00000621371192 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.00000539956803 / 1.852;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 1.80309e-14;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.00000220472441;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 0.0109361;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.0109361 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.0109361 / 3600;
+                        break;
+                }
+                break;
+            case "CentimeterPerSecond":
+                switch (toName)
+                {
+                    case "CentimeterPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 0.0328084 * 3600;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 0.0328084 * 60;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.0328084;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 0.393701 * 60;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 0.393701;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.036;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.00001;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0194384;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.000030581;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.01 * 3600;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.01 * 60;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.01;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0223694;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0223694 * 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0223694 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0194384 / 1.852;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 3.33564e-11;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0000328084;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 0.0109361 * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.0109361 * 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.0109361;
+                        break;
+                }
+                break;
+            case "FeetPerHour":
+                switch (toName)
+                {
+                    case "FeetPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 0.0000846666666667;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 0.0508;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num / 3600;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 12 / 60;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 12 / 3600;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.0000846666666667 / 1000;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0000846666666667 / 3600;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0000459278350515;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 8.2519577347235e-8;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.0000254;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.0001524;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.0003048 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0000157828282828;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0000157828282828 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0000157828282828 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0000137149028078;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 9.87986276e-16;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0000876524034296;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 0.000277777777778;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.000277777777778 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.000277777777778 / 3600;
+                        break;
+                }
+                break;
+            case "FeetPerMinute":
+                switch (toName)
+                {
+                    case "FeetPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 30.48 / 60;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 30.48;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 12;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 12 / 60;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.018288;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.018288 / 3600;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0113636363636;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.000020507373;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 18.288;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 18.288 / 60;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 18.288 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0113636363636;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0113636363636 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0113636363636 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0098747300216;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 7.093342018e-10;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.000621503073196;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 20;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 20 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 20 / 3600;
+                        break;
+                }
+                break;
+            case "FeetPerSecond":
+                switch (toName)
+                {
+                    case "FeetPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 30.48;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 1828.8;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 720;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 12;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1.09728;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0003048;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.5924838013;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0008877729258;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1097.28;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 18.288;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.3048;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.6818181818;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0113636363636 * 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0113636363636;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.5924838013 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 9.1120709863e-9;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.00018939393939;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1181.8181818;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 19.696969697;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 3.280839895;
+                        break;
+                }
+                break;
+            case "InchesPerMinute":
+                switch (toName)
+                {
+                    case "InchesPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 0.4233333333;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 0.04166666667;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 0.006944444444;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.0001157407407;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 25.4;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 0.01666666667;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.001016;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 2.681666667e-6;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0005399568035;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 8.072837755e-7;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.0254;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.0004233333333;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 7.055555556e-6;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0006306306306;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.00001051051051;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 1.751751752e-7;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0005399568035 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 3.335640951e-10;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 6.932628798e-7;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 0.02777777778;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.000462962963;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 7.716049383e-6;
+                        break;
+                }
+                break;
+            case "InchesPerSecond":
+                switch (toName)
+                {
+                    case "InchesPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 2.54;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 88;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 1.466666667;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.08333333333;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 152.4;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.0254;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0000254;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.01371490281;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.00002039904019;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.0254 * 100;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.0254 * 100 / 60;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.0254 * 100 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.01578282828;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.000263047138;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.000004384119;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.01371490281 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 8.225916457e-9;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.00001711584342;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 0.02777777778 * 3;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.000462962963 * 3;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 7.716049383e-6 * 3;
+                        break;
+                }
+                break;
+            case "KilometersPerHour":
+                switch (toName)
+                {
+                    case "KilometersPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 27.77777778;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 3280.839895;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 54.68066492;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.9113444154;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 653.5418547;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 10.89236425;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 1666.666667;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0002777777778;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.5399568035;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0008166820978;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1000;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 16.66666667;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.2777777778;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.6213711922;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.01035618654;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0001726027757;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.5399568035 / 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.0000009265664165;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0003402713689;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1093.613298;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 18.2268883;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.3037814717;
+                        break;
+                }
+                break;
+            case "KilometersPerSecond":
+                switch (toName)
+                {
+                    case "KilometersPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 100000;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 1181102.3622047;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 19685.03937008;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 328.0839895013;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 236220.47244094;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 3937.0078740157;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 6000000;
+                        break;
+                    case "Knots":
+                        toNumber = num * 1943.8444924406;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 2958.0037038766;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1000000;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 16666.666666667;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 1000;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 2236.9362920544;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 37.2822715342;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.6213711922;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 1943.8444924406 / 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.00000299792458;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0011253281253;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1093610.2362205;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 18226.837270342;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 1093.6132983377;
+                        break;
+                }
+                break;
+            case "Knots":
+                switch (toName)
+                {
+                    case "Knots":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 51.4444444444;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 6076.1154855643;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 101.2685914261;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 1.6878098571;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 1215.2239921962;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 20.2537332033;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1.852;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0005144444444;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 3086.6666666667;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0015118727683;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1852;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 30.8666666667;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.5144444444;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 1.150779448;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0191796575;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.000319661;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 1.827494519e-9;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0006878098571;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 2025.3718285214;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 33.756197142;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.5626032857;
+                        break;
+                }
+                break;
+            case "MachNumber":
+                switch (toName)
+                {
+                    case "MachNumber":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 34300;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 111600000;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 1860000;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 30800;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 22320000;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 372000;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1235.523613;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.3428722404;
+                        break;
+                    case "Knots":
+                        toNumber = num * 666.7399999835;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 2058333.3333333333;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1235523.613;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 20592.0602169;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 342.8722404;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 767.2691482726;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 12.7878191379;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.2131303189;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 666.7399999835;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 1.1289728895e-6;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1351443.4056204806;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 22524.0567603413;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 375.4009460057;
+                        break;
+                }
+                break;
+            case "MetersPerHour":
+                switch (toName)
+                {
+                    case "MetersPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num / 360;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 3.280839895;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 0.0546806649;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.0009113444;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 2.072869159;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 0.0345478193;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num / 1000;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num / 3600000;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0005399568;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0000000029;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num / 0.06;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num / 3600;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0006213712;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0000103562;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0000001726;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0005399568;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.0000000010792528488;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0000896860986;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1.0936132983;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.0182268883;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.0003037815;
+                        break;
+                }
+                break;
+            case "MetersPerMinute":
+                switch (toName)
+                {
+                    case "MetersPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 196.850394;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 3.280839895;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.0546806649;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 78.74015748;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 1.312335958;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num / 16.666666667;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num / 60000;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.0323974082;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0000001749;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num / 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 100;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num / 60;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.0372822715;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0006213712;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0000103562;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.0323974082;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.0000000647989;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0000054681;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 2.1872265967;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 0.0364537766;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.0006075629;
+                        break;
+                }
+                break;
+            case "MetersPerSecond":
+                switch (toName)
+                {
+                    case "MetersPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 100;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 11811.023622;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 196.8503937;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 3.280839895;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 3937.007874;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 39.37007874;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 3.6;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num / 1000;
+                        break;
+                    case "Knots":
+                        toNumber = num * 1.943844492;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.002938669;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 6000;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 2.236936292;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0372822715;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0006213712;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 1.943844492;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.0000000033356;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0029154519;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 3937.007874;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 65.6167979;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 1.0936132983;
+                        break;
+                }
+                break;
+            case "MilesPerHour":
+                switch (toName)
+                {
+                    case "MilesPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 44.704;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 5280;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 88;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 1.4666666667;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 1056;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 17.6;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1.609344;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.00044704;
+                        break;
+                    case "Knots":
+                        toNumber = num * 0.8689762419;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0013033208;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1609.344;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 26.8224;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 160934.4;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.44704;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0166666667;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0002777778;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.8689762419;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.000000091437376;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.0793039704;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1760;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 29.3333333333;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.4888888889;
+                        break;
+                }
+                break;
+            case "MilesPerMinute":
+                switch (toName)
+                {
+                    case "MilesPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 746.6666666667;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 88000;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 1466.6666666667;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 24.4444444444;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 105600;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 1760;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 26.8224;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.007472;
+                        break;
+                    case "Knots":
+                        toNumber = num * 14.5130566018;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0217790036;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 26822.4;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 447.04;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 160934.4;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 7.472;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.0166666667;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 14.5130566018;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.00000152786228;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 1.3267991566;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 29440;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 490.6666666667;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 8.1777777778;
+                        break;
+                }
+                break;
+            case "MilesPerSecond":
+                switch (toName)
+                {
+                    case "MilesPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 160934.4;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 193536000;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 3225600;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 53760;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 19353600;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 322560;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 5793.6384;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 1.609344;
+                        break;
+                    case "Knots":
+                        toNumber = num * 3128.3146667;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 4.6876450216;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1609344;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 26822.4;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 16093440;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 1609.344;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 3128.3146667;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.00000536814903;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 466.572670157;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1760 * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 1760 * 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 1760;
+                        break;
+                }
+                break;
+            case "NauticalMilesPerHour":
+                switch (toName)
+                {
+                    case "NauticalMilesPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 51.44444;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 6076.11549;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 101.26859;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 1.68780983;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 1215.82259;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 20.2637098;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1.852;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.000514444444;
+                        break;
+                    case "Knots":
+                        toNumber = num;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.00151191133;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1852;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 30.8666667;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 5144.44444;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.514444444;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 1.15077945;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0191796574;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.00031966129;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.00000180262;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 0.156363636;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 2025.37183;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 33.7561972;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.562603287;
+                        break;
+                }
+                break;
+            case "SpeedOfLight":
+                switch (toName)
+                {
+                    case "SpeedOfLight":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 29979245800;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 98357105643.9;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 1639285094.06;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 299792458;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 19671421128.4;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 499183000;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1079252848.8;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 299792.458;
+                        break;
+                    case "Knots":
+                        toNumber = num * 582749912.28;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 881743.589;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1079252848800;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 17987547480;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 2997924580000;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 299792458;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 670616629.384;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 11176943.8231;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 186282.397051;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 582749913.01;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 874030.489;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1178027379125.4;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 19633789652.09;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 341121827.7654;
+                        break;
+                }
+                break;
+            case "SpeedOfSound":
+                switch (toName)
+                {
+                    case "SpeedOfSound":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 34300;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 111600000;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 1860000;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 340.29;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 22320000;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 5669.29;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1225.08;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.34;
+                        break;
+                    case "Knots":
+                        toNumber = num * 661.55;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 0.0013;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 1225000;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 20416.67;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 3430000;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 340.29;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 761.21;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 12.69;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.19;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 661.52;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 874030.489;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 1340800;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 22346.67;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 340.29;
+                        break;
+                }
+                break;
+            case "YardsPerHour":
+                switch (toName)
+                {
+                    case "YardsPerHour":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num / 10936;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num / 3;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num / 180;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num / 10800;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 5;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num / 216;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.0009144;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 2.54e-7;
+                        break;
+                    case "Knots":
+                        toNumber = num / 2025;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 2.09e-10;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.9144;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.01524;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 91.44;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.000254;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.00056818;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 9.4697e-6;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 2.6417e-8;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.00049374;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 0.00032808;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 8.671e-6;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num / 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num / 3600;
+                        break;
+                }
+                break;
+            case "YardsPerMinute":
+                switch (toName)
+                {
+                    case "YardsPerMinute":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num / 54.680664916885;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 180;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 3;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 0.05;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 36;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 0.6;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 0.018288;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 5.08e-5;
+                        break;
+                    case "Knots":
+                        toNumber = num / 101.2685914268;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 6.7167e-9;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.54864;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.009144;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 91.44;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.0001524;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.036000036;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.0006000006;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 1.6666667e-5;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.032397408207344;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 2.1665119333923e-8;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 5.7339396993037e-7;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 60;
+                        break;
+                    case "YardsPerSecond":
+                        toNumber = num * 0.016666667;
+                        break;
+                }
+                break;
+            case "YardsPerSecond":
+                switch (toName)
+                {
+                    case "YardsPerSecond":
+                        toNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        toNumber = num * 91.44;
+                        break;
+                    case "FeetPerHour":
+                        toNumber = num * 1968.5;
+                        break;
+                    case "FeetPerMinute":
+                        toNumber = num * 32.8084;
+                        break;
+                    case "FeetPerSecond":
+                        toNumber = num * 3;
+                        break;
+                    case "InchesPerMinute":
+                        toNumber = num * 393.701;
+                        break;
+                    case "InchesPerSecond":
+                        toNumber = num * 36;
+                        break;
+                    case "KilometersPerHour":
+                        toNumber = num * 1.09728;
+                        break;
+                    case "KilometersPerSecond":
+                        toNumber = num * 0.0003048;
+                        break;
+                    case "Knots":
+                        toNumber = num * 1.6878098571012;
+                        break;
+                    case "MachNumber":
+                        toNumber = num * 1.1269668511162e-6;
+                        break;
+                    case "MetersPerHour":
+                        toNumber = num * 0.9144;
+                        break;
+                    case "MetersPerMinute":
+                        toNumber = num * 0.01524;
+                        break;
+                    case "MetersPerSecond":
+                        toNumber = num * 0.9144;
+                        break;
+                    case "MilesPerHour":
+                        toNumber = num * 0.68181818181818;
+                        break;
+                    case "MilesPerMinute":
+                        toNumber = num * 0.011363636363636;
+                        break;
+                    case "MilesPerSecond":
+                        toNumber = num * 0.00018939393939394;
+                        break;
+                    case "NauticalMilesPerHour":
+                        toNumber = num * 0.5924838012959;
+                        break;
+                    case "SpeedOfLight":
+                        toNumber = num * 3.9625636317905e-10;
+                        break;
+                    case "SpeedOfSound":
+                        toNumber = num * 1.0492101694184e-8;
+                        break;
+                    case "YardsPerHour":
+                        toNumber = num * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        toNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        toNumber = num * 5486.4;
+                        break;
+                }
+                break;
+        }
+
+        toNumber = Math.Round(toNumber, 6);
+    }
+    public async Task ConvertTo(double num)
+    {
+        switch (toName)
+        {
+            case "CentimeterPerMinute":
+                switch (fromName)
+                {
+                    case "CentimeterPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 0.0328084;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 0.0328084 / 60;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.0328084 / 3600;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 0.393701 / 60;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 0.393701 / 3600;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num / 100000;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num / 6000000;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.00000539956803;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0000294935;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num / 100;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num / 6000;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num / 60000;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.00000621371192;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.00000621371192 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.00000621371192 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.00000539956803 / 1.852;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 1.80309e-14;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.00000220472441;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 0.0109361;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.0109361 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.0109361 / 3600;
+                        break;
+                }
+                break;
+            case "CentimeterPerSecond":
+                switch (fromName)
+                {
+                    case "CentimeterPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 0.0328084 * 3600;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 0.0328084 * 60;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.0328084;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 0.393701 * 60;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 0.393701;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.036;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.00001;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0194384;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.000030581;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.01 * 3600;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.01 * 60;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.01;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0223694;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0223694 * 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0223694 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0194384 / 1.852;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 3.33564e-11;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0000328084;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 0.0109361 * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.0109361 * 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.0109361;
+                        break;
+                }
+                break;
+            case "FeetPerHour":
+                switch (fromName)
+                {
+                    case "FeetPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 0.0000846666666667;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 0.0508;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num / 3600;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 12 / 60;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 12 / 3600;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.0000846666666667 / 1000;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0000846666666667 / 3600;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0000459278350515;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 8.2519577347235e-8;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.0000254;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.0001524;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.0003048 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0000157828282828;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0000157828282828 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0000157828282828 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0000137149028078;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 9.87986276e-16;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0000876524034296;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 0.000277777777778;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.000277777777778 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.000277777777778 / 3600;
+                        break;
+                }
+                break;
+            case "FeetPerMinute":
+                switch (fromName)
+                {
+                    case "FeetPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 30.48 / 60;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 30.48;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 12;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 12 / 60;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.018288;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.018288 / 3600;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0113636363636;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.000020507373;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 18.288;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 18.288 / 60;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 18.288 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0113636363636;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0113636363636 / 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0113636363636 / 3600;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0098747300216;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 7.093342018e-10;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.000621503073196;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 20;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 20 / 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 20 / 3600;
+                        break;
+                }
+                break;
+            case "FeetPerSecond":
+                switch (fromName)
+                {
+                    case "FeetPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 30.48;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 1828.8;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 720;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 12;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1.09728;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0003048;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.5924838013;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0008877729258;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1097.28;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 18.288;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.3048;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.6818181818;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0113636363636 * 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0113636363636;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.5924838013 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 9.1120709863e-9;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.00018939393939;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1181.8181818;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 19.696969697;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 3.280839895;
+                        break;
+                }
+                break;
+            case "InchesPerMinute":
+                switch (fromName)
+                {
+                    case "InchesPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 0.4233333333;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 0.04166666667;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 0.006944444444;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.0001157407407;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 25.4;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 0.01666666667;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.001016;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 2.681666667e-6;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0005399568035;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 8.072837755e-7;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.0254;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.0004233333333;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 7.055555556e-6;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0006306306306;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.00001051051051;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 1.751751752e-7;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0005399568035 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 3.335640951e-10;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 6.932628798e-7;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 0.02777777778;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.000462962963;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 7.716049383e-6;
+                        break;
+                }
+                break;
+            case "InchesPerSecond":
+                switch (fromName)
+                {
+                    case "InchesPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 2.54;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 88;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 1.466666667;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.08333333333;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 152.4;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.0254;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0000254;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.01371490281;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.00002039904019;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.0254 * 100;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.0254 * 100 / 60;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.0254 * 100 / 3600;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.01578282828;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.000263047138;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.000004384119;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.01371490281 * 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 8.225916457e-9;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.00001711584342;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 0.02777777778 * 3;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.000462962963 * 3;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 7.716049383e-6 * 3;
+                        break;
+                }
+                break;
+            case "KilometersPerHour":
+                switch (fromName)
+                {
+                    case "KilometersPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 27.77777778;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 3280.839895;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 54.68066492;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.9113444154;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 653.5418547;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 10.89236425;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 1666.666667;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0002777777778;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.5399568035;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0008166820978;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1000;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 16.66666667;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.2777777778;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.6213711922;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.01035618654;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0001726027757;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.5399568035 / 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.0000009265664165;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0003402713689;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1093.613298;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 18.2268883;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.3037814717;
+                        break;
+                }
+                break;
+            case "KilometersPerSecond":
+                switch (fromName)
+                {
+                    case "KilometersPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 100000;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 1181102.3622047;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 19685.03937008;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 328.0839895013;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 236220.47244094;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 3937.0078740157;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 6000000;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 1943.8444924406;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 2958.0037038766;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1000000;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 16666.666666667;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 1000;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 2236.9362920544;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 37.2822715342;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.6213711922;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 1943.8444924406 / 1.150779448;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.00000299792458;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0011253281253;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1093610.2362205;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 18226.837270342;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 1093.6132983377;
+                        break;
+                }
+                break;
+            case "Knots":
+                switch (fromName)
+                {
+                    case "Knots":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 51.4444444444;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 6076.1154855643;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 101.2685914261;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 1.6878098571;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 1215.2239921962;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 20.2537332033;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1.852;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0005144444444;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 3086.6666666667;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0015118727683;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1852;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 30.8666666667;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.5144444444;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 1.150779448;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0191796575;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.000319661;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 1.827494519e-9;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0006878098571;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 2025.3718285214;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 33.756197142;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.5626032857;
+                        break;
+                }
+                break;
+            case "MachNumber":
+                switch (fromName)
+                {
+                    case "MachNumber":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 34300;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 111600000;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 1860000;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 30800;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 22320000;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 372000;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1235.523613;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.3428722404;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 666.7399999835;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 2058333.3333333333;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1235523.613;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 20592.0602169;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 342.8722404;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 767.2691482726;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 12.7878191379;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.2131303189;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 666.7399999835;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 1.1289728895e-6;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1351443.4056204806;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 22524.0567603413;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 375.4009460057;
+                        break;
+                }
+                break;
+            case "MetersPerHour":
+                switch (fromName)
+                {
+                    case "MetersPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num / 360;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 3.280839895;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 0.0546806649;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.0009113444;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 2.072869159;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 0.0345478193;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num / 1000;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num / 3600000;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0005399568;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0000000029;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num / 0.06;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num / 3600;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0006213712;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0000103562;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0000001726;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0005399568;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.0000000010792528488;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0000896860986;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1.0936132983;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.0182268883;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.0003037815;
+                        break;
+                }
+                break;
+            case "MetersPerMinute":
+                switch (fromName)
+                {
+                    case "MetersPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 196.850394;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 3.280839895;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.0546806649;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 78.74015748;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 1.312335958;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num / 16.666666667;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num / 60000;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.0323974082;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0000001749;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num / 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 100;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num / 60;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.0372822715;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0006213712;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0000103562;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.0323974082;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.0000000647989;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0000054681;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 2.1872265967;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 0.0364537766;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.0006075629;
+                        break;
+                }
+                break;
+            case "MetersPerSecond":
+                switch (fromName)
+                {
+                    case "MetersPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 100;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 11811.023622;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 196.8503937;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 3.280839895;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 3937.007874;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 39.37007874;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 3.6;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num / 1000;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 1.943844492;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.002938669;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 6000;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 2.236936292;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0372822715;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0006213712;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 1.943844492;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.0000000033356;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0029154519;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 3937.007874;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 65.6167979;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 1.0936132983;
+                        break;
+                }
+                break;
+            case "MilesPerHour":
+                switch (fromName)
+                {
+                    case "MilesPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 44.704;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 5280;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 88;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 1.4666666667;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 1056;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 17.6;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1.609344;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.00044704;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 0.8689762419;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0013033208;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1609.344;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 26.8224;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 160934.4;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.44704;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0166666667;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0002777778;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.8689762419;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.000000091437376;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.0793039704;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1760;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 29.3333333333;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.4888888889;
+                        break;
+                }
+                break;
+            case "MilesPerMinute":
+                switch (fromName)
+                {
+                    case "MilesPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 746.6666666667;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 88000;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 1466.6666666667;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 24.4444444444;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 105600;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 1760;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 26.8224;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.007472;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 14.5130566018;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0217790036;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 26822.4;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 447.04;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 160934.4;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 7.472;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.0166666667;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 14.5130566018;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.00000152786228;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 1.3267991566;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 29440;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 490.6666666667;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 8.1777777778;
+                        break;
+                }
+                break;
+            case "MilesPerSecond":
+                switch (fromName)
+                {
+                    case "MilesPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 160934.4;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 193536000;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 3225600;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 53760;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 19353600;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 322560;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 5793.6384;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 1.609344;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 3128.3146667;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 4.6876450216;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1609344;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 26822.4;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 16093440;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 1609.344;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 3128.3146667;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.00000536814903;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 466.572670157;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1760 * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 1760 * 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 1760;
+                        break;
+                }
+                break;
+            case "NauticalMilesPerHour":
+                switch (fromName)
+                {
+                    case "NauticalMilesPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 51.44444;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 6076.11549;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 101.26859;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 1.68780983;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 1215.82259;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 20.2637098;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1.852;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.000514444444;
+                        break;
+                    case "Knots":
+                        fromNumber = num;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.00151191133;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1852;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 30.8666667;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 5144.44444;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.514444444;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 1.15077945;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0191796574;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.00031966129;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.00000180262;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 0.156363636;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 2025.37183;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 33.7561972;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.562603287;
+                        break;
+                }
+                break;
+            case "SpeedOfLight":
+                switch (fromName)
+                {
+                    case "SpeedOfLight":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 29979245800;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 98357105643.9;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 1639285094.06;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 299792458;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 19671421128.4;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 499183000;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1079252848.8;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 299792.458;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 582749912.28;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 881743.589;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1079252848800;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 17987547480;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 2997924580000;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 299792458;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 670616629.384;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 11176943.8231;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 186282.397051;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 582749913.01;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 874030.489;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1178027379125.4;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 19633789652.09;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 341121827.7654;
+                        break;
+                }
+                break;
+            case "SpeedOfSound":
+                switch (fromName)
+                {
+                    case "SpeedOfSound":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 34300;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 111600000;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 1860000;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 340.29;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 22320000;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 5669.29;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1225.08;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.34;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 661.55;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 0.0013;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 1225000;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 20416.67;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 3430000;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 340.29;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 761.21;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 12.69;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.19;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 661.52;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 874030.489;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 1340800;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 22346.67;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 340.29;
+                        break;
+                }
+                break;
+            case "YardsPerHour":
+                switch (fromName)
+                {
+                    case "YardsPerHour":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num / 10936;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num / 3;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num / 180;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num / 10800;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 5;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num / 216;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.0009144;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 2.54e-7;
+                        break;
+                    case "Knots":
+                        fromNumber = num / 2025;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 2.09e-10;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.9144;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.01524;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 91.44;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.000254;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.00056818;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 9.4697e-6;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 2.6417e-8;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.00049374;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 0.00032808;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 8.671e-6;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num / 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num / 3600;
+                        break;
+                }
+                break;
+            case "YardsPerMinute":
+                switch (fromName)
+                {
+                    case "YardsPerMinute":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num / 54.680664916885;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 180;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 3;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 0.05;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 36;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 0.6;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 0.018288;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 5.08e-5;
+                        break;
+                    case "Knots":
+                        fromNumber = num / 101.2685914268;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 6.7167e-9;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.54864;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.009144;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 91.44;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.0001524;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.036000036;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.0006000006;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 1.6666667e-5;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.032397408207344;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 2.1665119333923e-8;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 5.7339396993037e-7;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 60;
+                        break;
+                    case "YardsPerSecond":
+                        fromNumber = num * 0.016666667;
+                        break;
+                }
+                break;
+            case "YardsPerSecond":
+                switch (fromName)
+                {
+                    case "YardsPerSecond":
+                        fromNumber = num;
+                        break;
+                    case "CentimeterPerSecond":
+                        fromNumber = num * 91.44;
+                        break;
+                    case "FeetPerHour":
+                        fromNumber = num * 1968.5;
+                        break;
+                    case "FeetPerMinute":
+                        fromNumber = num * 32.8084;
+                        break;
+                    case "FeetPerSecond":
+                        fromNumber = num * 3;
+                        break;
+                    case "InchesPerMinute":
+                        fromNumber = num * 393.701;
+                        break;
+                    case "InchesPerSecond":
+                        fromNumber = num * 36;
+                        break;
+                    case "KilometersPerHour":
+                        fromNumber = num * 1.09728;
+                        break;
+                    case "KilometersPerSecond":
+                        fromNumber = num * 0.0003048;
+                        break;
+                    case "Knots":
+                        fromNumber = num * 1.6878098571012;
+                        break;
+                    case "MachNumber":
+                        fromNumber = num * 1.1269668511162e-6;
+                        break;
+                    case "MetersPerHour":
+                        fromNumber = num * 0.9144;
+                        break;
+                    case "MetersPerMinute":
+                        fromNumber = num * 0.01524;
+                        break;
+                    case "MetersPerSecond":
+                        fromNumber = num * 0.9144;
+                        break;
+                    case "MilesPerHour":
+                        fromNumber = num * 0.68181818181818;
+                        break;
+                    case "MilesPerMinute":
+                        fromNumber = num * 0.011363636363636;
+                        break;
+                    case "MilesPerSecond":
+                        fromNumber = num * 0.00018939393939394;
+                        break;
+                    case "NauticalMilesPerHour":
+                        fromNumber = num * 0.5924838012959;
+                        break;
+                    case "SpeedOfLight":
+                        fromNumber = num * 3.9625636317905e-10;
+                        break;
+                    case "SpeedOfSound":
+                        fromNumber = num * 1.0492101694184e-8;
+                        break;
+                    case "YardsPerHour":
+                        fromNumber = num * 3600;
+                        break;
+                    case "YardsPerMinute":
+                        fromNumber = num * 60;
+                        break;
+                    case "CentimeterPerMinute":
+                        fromNumber = num * 5486.4;
+                        break;
+                }
+                break;
+        }
+
+        fromNumber = Math.Round(fromNumber, 6);
+    }
+}
